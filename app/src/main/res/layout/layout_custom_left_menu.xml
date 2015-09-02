@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/login_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/DodgerBlue"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_image_iv"
+            android:layout_width="80dip"
+            android:layout_height="80dip"
+            android:layout_marginTop="16dip"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:paddingTop="5dip"
+            android:layout_marginBottom="5dip"
+            android:text="未登录"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <include android:id="@+id/item_menu_1"
+            layout="@layout/layout_item1_left_menu"/>
+
+        <include android:id="@+id/item_menu_2"
+            layout="@layout/layout_item2_left_menu"/>
+
+        <include android:id="@+id/item_menu_3"
+            layout="@layout/layout_item3_left_menu"/>
+
+        <include android:id="@+id/item_menu_4"
+            layout="@layout/layout_item4_left_menu"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

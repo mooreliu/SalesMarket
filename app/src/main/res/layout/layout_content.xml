@@ -1,0 +1,38 @@
+<!--主布局-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--可滑动的布局内容-->
+    <include layout="@layout/layout_toolbar"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        />
+
+    <ImageButton
+        android:layout_margin="15dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ic_trash"
+        android:background="@drawable/circle"
+        android:id="@+id/imageButton"
+        android:layout_gravity="right|bottom" />
+    <!--<com.gc.materialdesign.views.ButtonFloat-->
+        <!--android:id="@+id/buttonFloat"-->
+        <!--materialdesign:iconDrawable="@mipmap/ic_launcher"-->
+        <!--android:layout_width="60dip"-->
+        <!--android:layout_height="60dip"-->
+        <!--android:background="#8BC34A"-->
+        <!--android:layout_marginRight="5dip"-->
+        <!--android:layout_gravity="bottom|right"-->
+        <!--/>-->
+    <!--materialdesign:animate="true"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+</LinearLayout>
