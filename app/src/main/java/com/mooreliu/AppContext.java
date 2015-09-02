@@ -3,10 +3,13 @@ package com.mooreliu;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.mooreliu.service.ServiceCheckNetConnect;
+import com.mooreliu.util.LogUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -21,6 +24,7 @@ import timber.log.Timber;
  * Created by liuyi on 15/8/28.
  */
 public class AppContext extends Application {
+    public static final String TAG ="AppContext";
     public final static boolean DEBUG= BuildConfig.DEBUG;
     private List<Activity> acitivityList = new ArrayList<Activity>();
     public static  HashMap<String ,WeakReference<Activity>> mContext =
@@ -49,6 +53,14 @@ public class AppContext extends Application {
         initPackage();
         refWatcher = LeakCanary.install(this);
     }
+
+    private void beginTestService() {
+//        Intent intent = new Intent("com.mooreliu.subService");
+        Intent intent = new Intent(AppContext.getContext(), ServiceCheckNetConnect.class);
+        startService(intent);
+        LogUtil.e(TAG, "startService(intent);");
+    }
+
 
     public static Context getContext() {
         return  context;

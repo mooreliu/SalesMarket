@@ -5,11 +5,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import com.mooreliu.adapter.OnProductClickListener;
 import com.mooreliu.model.ProductModel;
 import com.mooreliu.model.ProductModelNet;
 import com.mooreliu.net.HttpUtil;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 
@@ -35,8 +37,8 @@ public class MainPageFragment extends Fragment {
     private List<ProductModel> mList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
-    private StaggeredGridLayoutManager layoutManager;
-
+//    private StaggeredGridLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_mainpage, container, false);
@@ -64,12 +66,35 @@ public class MainPageFragment extends Fragment {
     private void setClick() {
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e(TAG,"onResume");
+        if(!NetWorkUtil.isNetworkConnected())
+            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtil.e(TAG,"onPause");
+        if(!NetWorkUtil.isNetworkConnected())
+            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+
+    }
 
     private void initList(){
         mList = new ArrayList<>();
         //GzipTest();
-        TaskGetProductListFromServer getProductListTast = new TaskGetProductListFromServer();
-        getProductListTast.execute();
+        if(NetWorkUtil.isNetworkConnected()) {
+            TaskGetProductListFromServer getProductListTast = new TaskGetProductListFromServer();
+            getProductListTast.execute();
+        } else {
+            LogUtil.e(TAG,getString(R.string.networkNotAvail));
+            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+            GzipTest(Constants.jsonProductList ,false);
+            initRecyclerView();
+        }
     }
 
     private class TaskGetProductListFromServer extends AsyncTask<Void,Void ,Boolean> {
@@ -122,8 +147,10 @@ public class MainPageFragment extends Fragment {
         }
     }
     private void initRecyclerView() {
+        LogUtil.e(TAG,"mList size"+mList.size());
         mRecyclerView =(RecyclerView)getActivity().findViewById(R.id.mainpage_recyclerview);
-        layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+//        layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
         //LogUtil.e(TAG, "layoutmanager " + layoutManager);
         mRecyclerView.setLayoutManager(layoutManager);
 //        LogUtil.e(TAG, "getActivity :" + getActivity());

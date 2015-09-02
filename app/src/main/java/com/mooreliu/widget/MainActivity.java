@@ -5,6 +5,8 @@ package com.mooreliu.widget;
  * createTime:2015-08-29
  * MainActivity主界面
  */
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
@@ -23,6 +25,7 @@ import com.mooreliu.R;
 import com.mooreliu.adapter.TabFragmentAdapter;
 import com.mooreliu.event.EventType;
 import com.mooreliu.event.NotifyInfo;
+import com.mooreliu.service.BroadcastReceiverNetCheck;
 import com.mooreliu.util.LogUtil;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private static final String TAG = "MainActivity";
     public static String POSITION = "POSITION";
 
+    private BroadcastReceiverNetCheck br;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private NavigationView mNavigationView;
@@ -49,9 +53,21 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawer();
+        initBroadcastRecevier();
 //        setContentView(R.layout.activity_main);
     }
 
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(br);
+    }
+    private void initBroadcastRecevier() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        br = new BroadcastReceiverNetCheck();
+        registerReceiver(br, intentFilter);
+
+    }
     @Override
     public void findView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
