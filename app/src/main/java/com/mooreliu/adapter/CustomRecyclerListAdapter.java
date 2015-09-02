@@ -96,7 +96,8 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         Bitmap mBitmap = getBitmapFromLruCache(key);
         DiskLruCache.Snapshot snapShot = null;
         try {
-            snapShot = mDiskLruCache.get(key);
+            if(mDiskLruCache != null)
+                snapShot = mDiskLruCache.get(key);
         }catch (IOException e) {
             e.printStackTrace();
         }
