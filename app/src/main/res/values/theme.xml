@@ -7,15 +7,18 @@
         <!--<item name="colorPrimary">@color/DodgerBlue</item>-->
         <!--<item name="colorPrimaryDark">@color/material_primary_color_dark</item>-->
         <!--<item name="android:windowBackground">@color/dim_foreground_material_dark</item>-->
-        <item name="android:windowBackground">@color/light_blue</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverflowButtonStyle</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
     <style name="AppTheme.OverflowButtonStyle" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_more_vert_white_36dp</item>
+        <!--<item name="android:src">@drawable/ic_more_vert_white_36dp</item>-->
+        <item name="android:color">@color/white</item>
+        <item name="color">@color/white</item>
     </style>
 
     <!-- Customize your theme here. -->
@@ -23,4 +26,9 @@
 
     </style>
 
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/white</item>
+    </style>
 </resources>

@@ -59,6 +59,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(br);
     }
     private void initBroadcastRecevier() {
@@ -106,15 +107,16 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mViewPager = (ViewPager)findViewById(R.id.viewPager);
         mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
-        List<String> tabList = new ArrayList<String>();
-        tabList.add("首页");
-        tabList.add("购物车");
-        tabList.add("我的taobao");
+//        List<String> tabList = new ArrayList<String>();
+//        tabList.add("首页");
+//        tabList.add("购物车");
+//        tabList.add("我的taobao");
 //        tabLayout.setTabTextColors(android.R.color.white, android.R.color.holo_red_dark);//设置TabLayout两种状态
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(1)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(2)));
-
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(1)));
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(2)));
+        for(int i = 0;i<3;i++)
+            mTabLayout.addTab(mTabLayout.newTab());
         List<Fragment> fragmentList = new ArrayList<>();
         Fragment mMainPageFragment = new MainPageFragment();
         MyPageFragment mMyPageFragment = new MyPageFragment();
@@ -126,10 +128,11 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
 
         TabFragmentAdapter fragmentAdapter =
-                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
+                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
+
     }
 
     public void setViewPager() {

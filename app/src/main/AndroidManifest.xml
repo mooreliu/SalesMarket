@@ -21,6 +21,11 @@
         </activity>
 
         <activity android:name=".widget.MainActivity"></activity>
+        <activity
+            android:name=".widget.OrderActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
 
         <!--<service android:enabled="true" android:name="com.mooreliu.service.ServiceCheckNetConnect"/>-->
         <!--<receiver android:name=".service.BroadcastReceiverNetCheck">-->

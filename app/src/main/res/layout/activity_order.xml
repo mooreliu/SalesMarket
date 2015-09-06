@@ -1,0 +1,192 @@
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_marginBottom="40dp"
+    android:fillViewport="true">
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical">
+
+        <!-- content goes here -->
+        <include layout="@layout/layout_toolbar"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <com.mooreliu.view.RatioImageView
+                android:id="@+id/orderpage_product_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+            />
+            <TextView
+                android:id="@+id/product_desc"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_marginBottom="3dp"
+                android:text="月饼"
+                />
+            <include layout="@layout/layout_divider"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="$890"
+                    android:textSize="15pt"
+                    android:textColor="@color/DodgerBlue"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight="500"/>
+
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <LinearLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/product_minus_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:src="@mipmap/sub_black_64px"
+                        android:text="-"/>
+                    <AutoCompleteTextView
+                        android:id="@+id/product_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:singleLine="true"
+                        android:background="@null"
+                        android:numeric="integer"
+                        android:text="1"
+                        android:maxLines="1"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:id="@+id/product_add_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:text="+"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/add_black_64px"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </LinearLayout>
+            <include layout="@layout/layout_divider"/>
+
+            <com.mooreliu.view.RatioImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/orderpage_product_image1"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                />
+
+            <com.mooreliu.view.RatioImageView
+                android:id="@+id/orderpage_product_image2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/bg_card"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                />
+
+            <com.mooreliu.view.RatioImageView
+                android:id="@+id/orderpage_product_image3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitXY"
+                />
+        </LinearLayout>
+        <!-- stretching frame layout, using layout_weight -->
+        <!--<FrameLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_weight="1">-->
+
+
+        <!--</FrameLayout>-->
+
+        <!-- content fixated to the bottom of the screen -->
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+            <!--&lt;!&ndash; your bottom content &ndash;&gt;-->
+        <!--</LinearLayout>-->
+    </LinearLayout>
+</ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/layout_divider"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <ImageView
+                    android:src="@mipmap/ic_add_shopping_cart_white_24dp"
+                    android:tint="@color/DodgerBlue"
+                    android:tintMode="src_in"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="1dp"
+                    android:layout_margin="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/add_to_shoppinglist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/DodgerBlue"
+                    android:text="放入购物车"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

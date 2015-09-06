@@ -3,8 +3,6 @@
     <!-- Base application theme. -->
     <!-- Base application theme. -->
 
-
-
     <!-- TAB style-->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <!--<item name="tabMaxWidth">@dimen/tab_max_width</item>-->

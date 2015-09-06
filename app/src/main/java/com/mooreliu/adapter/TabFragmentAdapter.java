@@ -1,5 +1,7 @@
 package com.mooreliu.adapter;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,13 +17,15 @@ import com.mooreliu.util.LogUtil;
 import java.util.List;
 
 /**
- * Description:
+ * Description:  ViewPager适配器
  * User: mooreliu
  * Date: 2015/8/29
  * Time: 15:12
  */
 
 public class TabFragmentAdapter extends FragmentStatePagerAdapter {
+    private final static String TAG = "TabFragmentAdapter";
+
     int[] imageResId={
         R.mipmap.main_navigation_home,
         R.mipmap.main_navigation_car,
@@ -29,12 +33,12 @@ public class TabFragmentAdapter extends FragmentStatePagerAdapter {
 
     };
     private List<Fragment> mFragments;
-    private List<String> mTitles;
+//    private List<String> mTitles;
 
-    public TabFragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public TabFragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragments = fragments;
-        mTitles = titles;
+//        mTitles = titles;
     }
 
     @Override
@@ -48,12 +52,12 @@ public class TabFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
 
+
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
-        // return tabTitles[position];
-        //LogUtil.e("getPageTitle",position+" positoin");
+//        LogUtil.e(TAG,position+" positoin");
         Drawable image = AppContext.getContext().getResources().getDrawable(imageResId[position]);
+        image.mutate().setColorFilter(Color.argb(255,255, 255, 255), PorterDuff.Mode.SRC_IN);
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
