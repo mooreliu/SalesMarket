@@ -5,6 +5,7 @@ package com.mooreliu.widget;
  * createTime:2015-08-29
  * MainActivity主界面
  */
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.mooreliu.R;
@@ -164,6 +166,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent( this , LoginActivity.class);
+            startActivity(intent);
             Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
             return true;
         } else  if (id == R.id.action_share) {
@@ -172,6 +176,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         } else if(id == R.id.action_trash) {
             Toast.makeText(this,"删除",Toast.LENGTH_SHORT).show();
             return true;
+        } else if(id == R.id.action_settings) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -189,9 +195,10 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 //            mUserNameTv.setText(getResources().getString(R.string.no_login));
 //            mRecordModels.clear();
 //            mAdapter.refreshDate(mRecordModels);
-        }else if(eventType.equals(EventType.EVENT_ADD_RECORD)){
-//            getRecord();
         }
+//        else if(eventType.equals(EventType.EVENT_ADD_RECORD)){
+//            getRecord();
+//        }
     }
 
     @Override
