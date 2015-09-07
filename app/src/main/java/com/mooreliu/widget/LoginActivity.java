@@ -65,7 +65,7 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
         int id = view.getId();
         switch(id) {
             case R.id.btn_login:
-                CommonUtil.toastMessage("µÇÂ½");
+                CommonUtil.toastMessage(getResources().getString(R.string.login));
                 break;
 
             case R.id.btn_register:

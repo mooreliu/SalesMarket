@@ -46,7 +46,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
     @Override
     public void initView() {
-
+        setToolBarTitle(getResources().getString(R.string.register));
     }
 
     @Override
