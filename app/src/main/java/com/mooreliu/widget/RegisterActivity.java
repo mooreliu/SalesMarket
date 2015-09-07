@@ -4,6 +4,7 @@ package com.mooreliu.widget;
  * Created by mooreliu on 2015/9/7.
  */
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +35,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         mEditTextPassword = (EditText) findViewById(R.id.input_password);
         mEditTextComfirmPassword = (EditText) findViewById(R.id.input_comfirm_password);
 
-        mButtonGetRegisterNumber
+        mButtonRegister = (Button) findViewById(R.id.btn_do_register);
+        mButtonGetRegisterNumber = (Button) findViewById(R.id.btn_do_send_register_number)
     }
 
     @Override
@@ -44,7 +46,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
     @Override
     public void setOnClick() {
-
+        mButtonRegister.setOnClickListener(this);
+        mButtonGetRegisterNumber.setOnClickListener(this);
     }
 
     @Override
@@ -61,10 +64,32 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case 1:
+            case R.id.btn_do_register:
+                CommonUtil.toastMessage("зЂВс");
+                break;
+            case R.id.btn_do_send_register_number:
+
                 break;
             default:
                 CommonUtil.toastMessage("error in register Acitivyt");
         }
+    }
+
+    class getRegisterNumberCountDownTask extends AsyncTask<Integer , Integer ,Void> {
+        @Override
+        public Integer doInBackground(Integer ... countDown) {
+
+        }
+        @Override
+        public void onPostExecute(Void v) {
+
+        }
+        @Override
+        public void onProgressUpdate(Integer ... count) {
+
+        }
+
+
+
     }
 }
