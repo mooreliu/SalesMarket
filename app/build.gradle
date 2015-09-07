@@ -42,7 +42,7 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
 
 //    //avoscloud-sdk 为 LeanCloud基础包
-//    compile 'cn.leancloud.android:avoscloud-sdk:v3.7.2'
+    compile 'cn.leancloud.android:avoscloud-sdk:v3.7.2'
 //
 //    //avoscloud-push 与 Java-WebSocket 为推送与IM需要的包
 //    compile 'cn.leancloud.android:avoscloud-push:v3.7.2@aar'
