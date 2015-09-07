@@ -8,4 +8,9 @@
 
     <string name="connectivityChanged">网络连接changed</string>
     <string name="networkNotAvail">无法连接到网络</string>
+
+    <string name="login">登\t\t\t\t\t陆</string>
+    <string name="register">注\t\t\t\t\t册</string>
+    <string name="username">账\t号(手机号)</string>
+    <string name="password">密\t码</string>
 </resources>

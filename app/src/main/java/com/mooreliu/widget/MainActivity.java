@@ -5,6 +5,7 @@ package com.mooreliu.widget;
  * createTime:2015-08-29
  * MainActivity主界面
  */
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.mooreliu.R;
@@ -59,6 +61,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(br);
     }
     private void initBroadcastRecevier() {
@@ -106,15 +109,16 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mViewPager = (ViewPager)findViewById(R.id.viewPager);
         mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
 
-        List<String> tabList = new ArrayList<String>();
-        tabList.add("首页");
-        tabList.add("购物车");
-        tabList.add("我的taobao");
+//        List<String> tabList = new ArrayList<String>();
+//        tabList.add("首页");
+//        tabList.add("购物车");
+//        tabList.add("我的taobao");
 //        tabLayout.setTabTextColors(android.R.color.white, android.R.color.holo_red_dark);//设置TabLayout两种状态
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(1)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(2)));
-
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(1)));
+//        mTabLayout.addTab(mTabLayout.newTab().setText(tabList.get(2)));
+        for(int i = 0;i<3;i++)
+            mTabLayout.addTab(mTabLayout.newTab());
         List<Fragment> fragmentList = new ArrayList<>();
         Fragment mMainPageFragment = new MainPageFragment();
         MyPageFragment mMyPageFragment = new MyPageFragment();
@@ -126,10 +130,11 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
 
         TabFragmentAdapter fragmentAdapter =
-                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
+                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
+
     }
 
     public void setViewPager() {
@@ -161,6 +166,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent( this , LoginActivity.class);
+            startActivity(intent);
             Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
             return true;
         } else  if (id == R.id.action_share) {
@@ -169,6 +176,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         } else if(id == R.id.action_trash) {
             Toast.makeText(this,"删除",Toast.LENGTH_SHORT).show();
             return true;
+        } else if(id == R.id.action_settings) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -186,9 +195,10 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 //            mUserNameTv.setText(getResources().getString(R.string.no_login));
 //            mRecordModels.clear();
 //            mAdapter.refreshDate(mRecordModels);
-        }else if(eventType.equals(EventType.EVENT_ADD_RECORD)){
-//            getRecord();
         }
+//        else if(eventType.equals(EventType.EVENT_ADD_RECORD)){
+//            getRecord();
+//        }
     }
 
     @Override

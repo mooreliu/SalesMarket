@@ -15,22 +15,20 @@ import android.widget.ImageView;
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
 import com.mooreliu.model.ProductModel;
-import com.mooreliu.util.BitmapUtil;
+import com.mooreliu.util.DiskLruCacheUtil;
 import com.mooreliu.util.LogUtil;
-import com.mooreliu.util.StorageUtil;
+import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.util.TextUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import libcore.io.DiskLruCache;
 
 /**
  * Created by liuyi on 15/8/30.
- * recyclerView鏄墍鏈夊厓绱犲悓鏃跺埛鏂帮紝杩樻槸鎸夌収鍙鎯呭喌鏉ワ紵锛�
+ * recyclerView
  */
 public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecyclerListAdapter.ViewHolder>{
     private static final String TAG = "CustomRecyclerListAdapter";
@@ -47,31 +45,10 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         mProductList = list;
         mResources = resources;
         mContext = context;
-        initLruCache();
-        initDiskLruCache();
-
-
-    }
-    private void initLruCache() {
-        int cacheSize = (int)Runtime.getRuntime().maxMemory()/8;
-        mLruBitmapCache = new LruCache<String ,Bitmap>(cacheSize) {
-            @Override
-            public int sizeOf(String key,Bitmap bitmap) {
-                return bitmap.getByteCount();
-            }
-        };
+        mLruBitmapCache = AppContext.getLruBitmapCache();//初始化LruCache
+        mDiskLruCache = AppContext.getDistLruCache();//初始化DiskLruCache
     }
 
-    private void initDiskLruCache() {
-        try {
-            File cacheDir = StorageUtil.getDiskCacheDir(mContext , "product");
-            if (!cacheDir.exists())
-                cacheDir.mkdir();
-            mDiskLruCache =DiskLruCache.open(cacheDir , AppContext.versionCode ,1 ,10*1024*1024);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent ,int position) {
         //LogUtil.e(TAG,"onCreateViewHolder");
@@ -89,30 +66,21 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
     @Override
     public void onBindViewHolder(ViewHolder viewHolder ,int postion) {
         ProductModel mProductModel = mProductList.get(postion);
+        viewHolder.productModel = mProductModel;
         String key = TextUtil.hashKeyForDisk(mProductModel.getUrl());
-       // LogUtil.e(TAG,"getResId :"+mProductModel.getResId());
-       // viewHolder.imageView.setImageBitmap(
-       //         BitmapUtil.bitmapDecode(mResources, mProductModel.getResId(), 400, 400));
-        Bitmap mBitmap = getBitmapFromLruCache(key);
-        DiskLruCache.Snapshot snapShot = null;
-        try {
-            if(mDiskLruCache != null)
-                snapShot = mDiskLruCache.get(key);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        Bitmap mBitmap = LruCacheUtil.get(key);
+
+
         if(mBitmap !=null) {//在LruCache中查询
             viewHolder.imageView.setImageBitmap(mBitmap);
-            LogUtil.e(TAG,"in LruCache");
+            LogUtil.e(TAG,"in LruCache"+key);
             return;
         } else { //如果没有在LruCache中
-            if(snapShot != null) { //在DiskLruCache中查询
-                LogUtil.e(TAG,"in DiskLruCache");
-                InputStream is = snapShot.getInputStream(0);
-                Bitmap bitmap = BitmapFactory.decodeStream(is);
-                viewHolder.imageView.setImageBitmap(bitmap);
-                //然后再放入到LruCache中
-                addBitmapToLruCache(key,bitmap);
+            Bitmap bitmap = DiskLruCacheUtil.get(key);
+            viewHolder.imageView.setImageBitmap(bitmap);
+            if(bitmap != null) {
+
+                LruCacheUtil.add(key, bitmap);
                 return;
             } else {
                 //如果都没有的话，就去URL下载
@@ -135,13 +103,11 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ProductModel productModel;
-//        SimpleDraweeView imageView;
         ImageView imageView;
+
         public ViewHolder(View itemView) {
             super(itemView);
-//            imageView = (SimpleDraweeView)itemView.findViewById(R.id.product_image);
             imageView = (ImageView)itemView.findViewById(R.id.product_image);
-
             imageView.setOnClickListener(this);
         }
 
@@ -152,69 +118,32 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         }
     }
 
-    public Bitmap getBitmapFromLruCache(String key) {
-        //url ==key
-        if(key != null)
-            return mLruBitmapCache.get(key);
-        return null;
-    }
-    public void addBitmapToLruCache(String key ,Bitmap bitmap) {
-        if (getBitmapFromLruCache( key) == null)
-            mLruBitmapCache.put(key ,bitmap);
-
-    }
     class  downloadBitmapTask extends AsyncTask<ProductModel, Void , Bitmap> {
-        Bitmap mbitmap = null;
         String url = null;
         int resId = -1;
         @Override
         protected Bitmap doInBackground(ProductModel ...parms) {
             this.url = parms[0].getUrl();
             this.resId = parms[0].getResId();
-            //LogUtil.e(TAG,"onInBackGround"+url);
-            //mbitmap = BitmapUtil.bitmapFromUrl(this.url,40,40);
-            LogUtil.e(TAG,"NO CACHE MUSH DOWNLOAD");
+//            LogUtil.e(TAG,"NO CACHE MUSH DOWNLOAD");
             String key = TextUtil.hashKeyForDisk(this.url);
-            try {
-                DiskLruCache.Editor editor = mDiskLruCache.edit(key);
-                if (editor != null) {
-                    OutputStream outputStream = editor.newOutputStream(0);
-                    mbitmap = BitmapUtil.bitmapFromUrl(this.url,40,40,outputStream);
-                    if (mbitmap !=null) {
-                        editor.commit();
-                        LogUtil.e(TAG, "Editor.commit()");
-                    } else {
-                        LogUtil.e(TAG,"Editor.abort()");
-                        editor.abort();
-                    }
-                }
-                mDiskLruCache.flush();
-                LogUtil.e(TAG, "mDiskLruCache.flush()");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if(null !=mbitmap ){
-                return mbitmap;
-            }
-            return null;
+            return DiskLruCacheUtil.addToDiskLruCache(key, this.url);
         }
 
         @Override
         public void onPostExecute(Bitmap bitmap) {
             String key = TextUtil.hashKeyForDisk(this.url);
-           // ImageView imageView =(ImageView) mRecyclerView.findViewWithTag(this.resId);
             ImageView imageView =(ImageView) mRecyclerView.findViewWithTag(key);
-//            SimpleDraweeView imageView =(SimpleDraweeView) mRecyclerView.findViewWithTag(key);
             if(imageView == null) {
-                LogUtil.e(TAG,"findViewWithTag null****"+this.url);
+//                LogUtil.e(TAG,"findViewWithTag null****"+this.url);
             }
             if(bitmap == null) {
-                LogUtil.e(TAG,"BITmap is NULL");
+//                LogUtil.e(TAG,"BITmap is NULL");
             }
             if(bitmap !=null && imageView != null) {
                 imageView.setImageBitmap(bitmap);
-                LogUtil.e(TAG,"addToLruCache "+key);
-                addBitmapToLruCache(key , bitmap);
+//                LogUtil.e(TAG,"addToLruCache "+key);
+                LruCacheUtil.add(key, bitmap);
 
             } else{
                 if(imageView != null)

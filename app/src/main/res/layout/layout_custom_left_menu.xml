@@ -13,13 +13,16 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <com.mooreliu.view.RatioImageView
             android:id="@+id/user_image_iv"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:layout_marginTop="16dip"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:tint="@color/white"
+            android:tintMode="src_in"
+            android:src="@mipmap/avatar_black_128px"/>
 
         <TextView
             android:id="@+id/username_tv"

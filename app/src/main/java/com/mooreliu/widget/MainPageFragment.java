@@ -1,6 +1,7 @@
 package com.mooreliu.widget;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +54,6 @@ public class MainPageFragment extends Fragment {
     public void onActivityCreated(Bundle onSavedInstanceState) {
         super.onActivityCreated(onSavedInstanceState);
         initList();
-
-        //LogUtil.w(TAG, Constants.jsonProductList);
-
     }
 
     private void findView() {
@@ -143,23 +142,22 @@ public class MainPageFragment extends Fragment {
         //for(int i =0 ;i< Constants.productUrls.length ;i++) {
         //mList.add(new ProductModel(Constants.productUrls[i],i));
         for(int i =0 ;i< retList.size()-1 ;i++) {
-            mList.add(new ProductModel(retList.get(i).getUrl(),i));
+            mList.add(new ProductModel(retList.get(i).getUrl(), i));
         }
     }
     private void initRecyclerView() {
-        LogUtil.e(TAG,"mList size"+mList.size());
         mRecyclerView =(RecyclerView)getActivity().findViewById(R.id.mainpage_recyclerview);
-//        layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         layoutManager = new LinearLayoutManager(getActivity());
-        //LogUtil.e(TAG, "layoutmanager " + layoutManager);
         mRecyclerView.setLayoutManager(layoutManager);
-//        LogUtil.e(TAG, "getActivity :" + getActivity());
         mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
             public void onTouch(View v, ProductModel model) {
-                //Toast.makeText(getActivity(),"product clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity() , OrderActivity.class);
+                intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getUrl()));
+                startActivity(intent);
+                //getActivity().finish();
             }
         });
 

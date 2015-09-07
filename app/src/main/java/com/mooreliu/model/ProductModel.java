@@ -5,7 +5,7 @@ package com.mooreliu.model;
  */
 public class ProductModel {
     public int resId;
-    public String url;
+    public String url = null;
     public ProductModel(String url) {
         this.url = url;
     }

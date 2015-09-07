@@ -9,7 +9,9 @@ import java.security.NoSuchAlgorithmException;
 public class TextUtil {
 
     public static boolean isEmpty(String inputString) {
-        return (inputString.length() == 0);
+        if(inputString != null)
+            return (inputString.length() == 0);
+        return true;
     }
 
     public static String hashKeyForDisk(String key) {
