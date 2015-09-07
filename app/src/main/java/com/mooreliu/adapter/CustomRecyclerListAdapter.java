@@ -3,7 +3,6 @@ package com.mooreliu.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.LruCache;
@@ -20,8 +19,6 @@ import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.util.TextUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import libcore.io.DiskLruCache;

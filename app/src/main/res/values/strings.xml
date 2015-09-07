@@ -13,4 +13,12 @@
     <string name="register">注\t\t\t\t\t册</string>
     <string name="username">账\t号(手机号)</string>
     <string name="password">密\t码</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="please_input_username">请输入账号(手机号)</string>
+    <string name="telephone_number">手机号码</string>
+    <string name="register_number">注册码</string>
+    <string name="comfirm_password">确认密码</string>
+    <string name="input_password">输入密码</string>
+    <string name="get_register_number">获取注册码</string>
+
 </resources>

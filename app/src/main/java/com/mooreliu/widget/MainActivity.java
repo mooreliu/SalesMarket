@@ -8,19 +8,17 @@ package com.mooreliu.widget;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.mooreliu.R;
@@ -49,14 +47,12 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private View mLeftMenu3;
     private View mLeftMenu4;
 
-
     @Override
-    public  void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawer();
         initBroadcastRecevier();
-//        setContentView(R.layout.activity_main);
     }
 
     @Override

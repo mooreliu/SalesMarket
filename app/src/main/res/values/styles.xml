@@ -1,6 +1,4 @@
 <resources>
-
-    <!-- Base application theme. -->
     <!-- Base application theme. -->
 
     <!-- TAB style-->
@@ -8,9 +6,6 @@
         <item name="tabMaxWidth">@dimen/tab_max_width</item>
         <item name="tabIndicatorColor">@color/white</item>
         <item name="tabIndicatorHeight">5dp</item>
-
-        <!--<item name="tabPaddingStart">12dp</item>-->
-        <!--<item name="tabPaddingEnd">12dp</item>-->
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
@@ -30,5 +25,32 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/dialog_bg</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="CustomEditText"  parent="android:Widget.EditText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">@dimen/activity_login_margin_left_right</item>
+        <item name="android:layout_marginRight">@dimen/activity_login_margin_left_right</item>
+        <item name="android:layout_marginTop">@dimen/activity_login_margin_top_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/activity_login_margin_top_bottom</item>
+    </style>
+
+    <style name="RegisterEditText"  parent="android:Widget.EditText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">@dimen/activity_register_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/activity_register_margin_right</item>
+        <item name="android:layout_marginTop">@dimen/activity_register_margin_top_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/activity_register_margin_top_bottom</item>
+    </style>
+    <!-- custom edittext-->
+    <style name="CustomTextView" parent="android:Widget.TextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/activity_login_margin_left_right</item>
+
     </style>
 </resources>

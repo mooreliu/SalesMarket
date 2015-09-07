@@ -22,6 +22,7 @@
 
         <activity android:name=".widget.MainActivity"></activity>
         <activity android:name=".widget.LoginActivity"></activity>
+        <activity android:name=".widget.RegisterActivity"></activity>
         <activity
             android:name=".widget.OrderActivity"
             android:configChanges="keyboardHidden|orientation"

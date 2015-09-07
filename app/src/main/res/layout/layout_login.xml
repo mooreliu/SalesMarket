@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,18 +11,15 @@
     <TextView
         android:text="@string/username"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
-        android:layout_marginLeft="@dimen/activity_login_margin_left_right"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_login_margin_left_right"
+        android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
 
         />
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_login_margin_left_right"
-        android:layout_marginRight="@dimen/activity_login_margin_left_right"
-        android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
-        android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
+        android:id="@+id/login_username"
+        android:hint="@string/please_input_username"
+        style="@style/CustomEditText"
         />
 
     <TextView
@@ -32,16 +30,14 @@
         />
 
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_login_margin_left_right"
-        android:layout_marginRight="@dimen/activity_login_margin_left_right"
-        android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
-        android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
+        android:id="@+id/login_password"
+        android:password="true"
+        android:hint="@string/please_input_password"
+        style="@style/CustomEditText"
         />
 
-
     <Button
+        android:id="@+id/btn_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_login_margin_left_right"
@@ -51,11 +47,11 @@
         android:background="@color/DodgerBlue"
         />
     <Button
+        android:id="@+id/btn_register"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_login_margin_left_right"
         android:layout_marginRight="@dimen/activity_login_margin_left_right"
-
         android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
         android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
         android:background="@color/light_blue"

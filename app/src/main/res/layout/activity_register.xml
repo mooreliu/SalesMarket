@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                style="@style/CustomTextView"
+                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
+                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                android:text="@string/telephone_number" />
+            <EditText
+                android:id="@+id/input_telephone_number"
+                style="@style/RegisterEditText"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                style="@style/CustomTextView"
+                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
+                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+            android:text="@string/register_number" />
+            <EditText
+                style="@style/RegisterEditText"
+                android:id="@+id/input_register_number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                style="@style/CustomTextView"
+                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
+                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                android:text="@string/input_password" />
+            <EditText
+                style="@style/RegisterEditText"
+                android:id="@+id/input_password"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                style="@style/CustomTextView"
+                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
+                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                android:text="@string/comfirm_password" />
+            <EditText
+                style="@style/RegisterEditText"
+                android:id="@+id/input_comfirm_password"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_do_register"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_login_margin_left_right"
+            android:layout_marginRight="@dimen/activity_login_margin_left_right"
+            android:layout_marginTop="5dp"
+            android:text="@string/register"
+            android:background="@color/DodgerBlue"
+            />
+        <Button
+            android:id="@+id/btn_do_send_register_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_login_margin_left_right"
+            android:layout_marginRight="@dimen/activity_login_margin_left_right"
+            android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
+            android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
+            android:background="@color/DodgerBlue"
+            android:text="@string/get_register_number"
+            />
+    </LinearLayout>
+</LinearLayout>
