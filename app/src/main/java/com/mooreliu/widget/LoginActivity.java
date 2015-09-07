@@ -67,10 +67,12 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
             case R.id.btn_login:
                 CommonUtil.toastMessage("µÇÂ½");
                 break;
+
             case R.id.btn_register:
                 Intent intent = new Intent(this , RegisterActivity.class);
                 startActivity(intent);
                 break;
+
             default:
                 CommonUtil.toastMessage("Error in LoginAcitity");
         }

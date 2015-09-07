@@ -10,7 +10,7 @@ import com.mooreliu.AppContext;
 public class CommonUtil {
 
     public static void toastMessage(String message) {
-        Toast.makeText(AppContext.getContext(), message ,Toast.LENGTH_SHORT);
+        Toast.makeText(AppContext.getContext(), message ,Toast.LENGTH_SHORT).show();
     }
 
 }

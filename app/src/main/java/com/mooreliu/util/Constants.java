@@ -4,6 +4,8 @@ package com.mooreliu.util;
  * Created by liuyi on 15/8/31.
  */
 public class Constants {
+
+     public static final int TIMEOUT = 60;
       public static final String productUrls[]={
         "http://ww3.sinaimg.cn/bmiddle/005EM0nggw1evjg5s5nkuj30hs0bvgmi.jpg",
         "http://ww1.sinaimg.cn/bmiddle/005EM0nggw1evjg5shlgfj30hs0bv0tn.jpg",
