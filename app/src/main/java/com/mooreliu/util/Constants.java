@@ -27,5 +27,13 @@ public class Constants {
         "{\"url\":\"http://ww3.sinaimg.cn/bmiddle/7e31b83cgw1evkde67c01g20au05kgyx.gif\"}," +
         "]";
 
+    public static final int AVOS_ERROR_CODE_USER_HAS_BEEN_TAKEN = 202;
+    public static final int AVOS_ERROR_CODE_USERNAME_AND_PASSWORD_MISMATCH_ = 210;//The username and password mismatch.
+    public static final int AVOS_ERROR_CODE_COUND_NOT_FIND_USER = 211;
+    //Could not find user.
+    public static final int AVOS_ERROR_CODE_MOBILE_PHONE_NUMBER_HAS_BEEN_TAKEN_ = 214;
+
+    public static final int AVOS_ERROR_CODE_INVALID_SNS_CODE = 603;
+    //214 Mobile phone number has already been taken.
 }
 

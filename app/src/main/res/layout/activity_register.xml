@@ -37,7 +37,7 @@
                 style="@style/CustomTextView"
                 android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
                 android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
-            android:text="@string/register_number" />
+                android:text="@string/register_number" />
             <EditText
                 style="@style/RegisterEditText"
                 android:id="@+id/input_register_number"/>
@@ -83,6 +83,9 @@
             android:text="@string/register"
             android:background="@color/DodgerBlue"
             />
+        <TextView
+            android:id="@+id/register_error_message"
+            style="@style/CustomTextView" />
         <Button
             android:id="@+id/btn_do_send_register_number"
             android:layout_width="fill_parent"
@@ -94,5 +97,8 @@
             android:background="@color/DodgerBlue"
             android:text="@string/get_register_number"
             />
+        <TextView
+            android:id="@+id/sms_error_message"
+            style="@style/CustomTextView" />
     </LinearLayout>
 </LinearLayout>

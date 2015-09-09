@@ -20,5 +20,10 @@
     <string name="comfirm_password">确认密码</string>
     <string name="input_password">输入密码</string>
     <string name="get_register_number">获取注册码</string>
-
+    <string name="password_cannot_empty">密码不能为空</string>
+    <string name="password_comfirm_error">两次密码输入不一致</string>
+    <string name="telephone_number_length_error">手机号码长度非法</string>
+    <string name="user_mobile_phonenumber_taken">手机号已经存在</string>
+    <string name="register_succuess">注册成功</string>
+    <string name="invalid_sms_code">短信注册码错误，请重新获取注册码</string>
 </resources>
