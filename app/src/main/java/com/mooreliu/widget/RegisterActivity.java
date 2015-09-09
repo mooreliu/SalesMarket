@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -136,6 +137,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                         CommonUtil.toastMessage(getResources().getString(R.string.invalid_sms_code));
                     }
                 }
+                Message msg = new Message();
+                msg.what = VERIFY_SMS_OVER_MSG;
+                handler.sendMessage(msg);
 
             }
         });
@@ -144,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        displayErrorMessage();
+//        displayErrorMessage();
     }
 
     private boolean verify_phonenumber_password_validation() {
@@ -193,6 +197,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                         }
                         e.printStackTrace();
                     }
+                Message msg = new Message();
+                msg.what = SIGN_UP_OVER_MSG;
+                handler.sendMessage(msg);
             }
         });
 //        Thread thread = new Thread(new Runnable() {
@@ -218,6 +225,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 //            }
 //        });
 //        thread.start();
+
         return  true;
     }
     private boolean getRegisterNumber() {//点击获取注册码按钮
@@ -237,15 +245,14 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                     LogUtil.e(TAG, "requestMobilePhoneVerifyInBackground rror code" + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
                     isGetRegisterNumberSuccess = false;
                 }
+                Message msg = new Message();
+                msg.what = REQUEST_SMS_OVER_MSG;
+                handler.sendMessage(msg);
 
             }
         });
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        displayErrorMessage();
+
+//        displayErrorMessage();
         return isGetRegisterNumberSuccess;
 
     }
