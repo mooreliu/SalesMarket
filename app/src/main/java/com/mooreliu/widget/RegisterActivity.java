@@ -135,6 +135,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                     VERIFY_SMS_ERROR_MSG = e.getLocalizedMessage();
                     if(e.getCode() == Constants.AVOS_ERROR_CODE_INVALID_SNS_CODE) {
                         CommonUtil.toastMessage(getResources().getString(R.string.invalid_sms_code));
+                        VERIFY_SMS_ERROR_MSG = getResources().getString(R.string.invalid_sms_code);
                     }
                 }
                 Message msg = new Message();
@@ -191,8 +192,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                         SIGNUP_ERROR_CODE = e.getCode();
                         SIGNUP_ERROR_MSG = e.getLocalizedMessage();
                         if (e.getCode() == AVException.USER_MOBILE_PHONENUMBER_TAKEN) {
-                            LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
-                            LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
+//                            LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
+//                            LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
+                            SIGNUP_ERROR_MSG = getResources().getString(R.string.user_mobile_phonenumber_taken);
                             //  CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
                         }
                         e.printStackTrace();
@@ -202,29 +204,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                 handler.sendMessage(msg);
             }
         });
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    user.signUp();
-//                } catch (AVException e) {
-//                    if (e == null) {
-//
-//                    } else {
-//                        isGetRegisterNumberSuccess = false;
-//                        SIGNUP_ERROR_CODE = e.getCode();
-//                        SIGNUP_ERROR_MSG = e.getLocalizedMessage();
-//                        if (e.getCode() == AVException.USER_MOBILE_PHONENUMBER_TAKEN) {
-//                            LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
-//                            LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
-//                            //  CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
-//                        }
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//        thread.start();
 
         return  true;
     }
@@ -258,27 +237,27 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     }
 
 
-    private void displayErrorMessage() {
-        LogUtil.e(TAG,"SIGNUP_ERROR_MSG"+SIGNUP_ERROR_MSG);
-        LogUtil.e(TAG,"REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG"+REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
-        LogUtil.e(TAG,"VERIFY_SMS_ERROR_MSG"+VERIFY_SMS_ERROR_MSG);
-        if(!TextUtil.isEmpty(SIGNUP_ERROR_MSG)) {
-            mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
-        }
-        else if(!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG)) {
-            mTextViewSMSErrorMsg.setText(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
-        } else {
-            mTextViewSMSErrorMsg.setText("");
-        }
-        if(!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG)) {
-            mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
-        } else {
-            mTextViewRegisterErrorMsg.setText("");
-        }
-        SIGNUP_ERROR_MSG = "";
-        REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = "";
-        VERIFY_SMS_ERROR_MSG = "";
-    }
+//    private void displayErrorMessage() {
+//        LogUtil.e(TAG,"SIGNUP_ERROR_MSG"+SIGNUP_ERROR_MSG);
+//        LogUtil.e(TAG,"REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG"+REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
+//        LogUtil.e(TAG,"VERIFY_SMS_ERROR_MSG"+VERIFY_SMS_ERROR_MSG);
+//        if(!TextUtil.isEmpty(SIGNUP_ERROR_MSG)) {
+//            mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
+//        }
+//        else if(!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG)) {
+//            mTextViewSMSErrorMsg.setText(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
+//        } else {
+//            mTextViewSMSErrorMsg.setText("");
+//        }
+//        if(!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG)) {
+//            mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
+//        } else {
+//            mTextViewRegisterErrorMsg.setText("");
+//        }
+//        SIGNUP_ERROR_MSG = "";
+//        REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = "";
+//        VERIFY_SMS_ERROR_MSG = "";
+//    }
     @Override
     public void onClick(View view) {
         int id = view.getId();

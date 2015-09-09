@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mooreliu.R;
@@ -46,6 +47,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private View mLeftMenu2;
     private View mLeftMenu3;
     private View mLeftMenu4;
+
+    private ImageView login_avatar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mLeftMenu2 =findViewById(R.id.item_menu_2);
         mLeftMenu3 =findViewById(R.id.item_menu_3);
         mLeftMenu4 =findViewById(R.id.item_menu_4);
+        login_avatar = (ImageView) findViewById(R.id.user_image_iv);
     }
 
     @Override
@@ -144,6 +148,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mLeftMenu3.setOnClickListener(this);
         mLeftMenu4.setOnClickListener(this);
 
+        login_avatar.setOnClickListener(this);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,8 +168,6 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent( this , LoginActivity.class);
-            startActivity(intent);
             Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
             return true;
         } else  if (id == R.id.action_share) {
@@ -261,6 +265,10 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 mLeftMenu4.setBackgroundResource(R.color.gray);
                 //Toast.makeText(this,"menu4", Toast.LENGTH_SHORT).show();
 
+                break;
+            case R.id.user_image_iv:
+                Intent intent = new Intent(this , LoginActivity.class);
+                startActivity(intent);
                 break;
         }
     }
