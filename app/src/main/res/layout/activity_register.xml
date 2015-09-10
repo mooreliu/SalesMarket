@@ -23,8 +23,9 @@
                 android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
                 android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
                 android:text="@string/telephone_number" />
-            <EditText
+            <com.mooreliu.view.ClearableEditText
                 android:id="@+id/input_telephone_number"
+                android:hint="@string/please_input_username"
                 style="@style/RegisterEditText"/>
         </LinearLayout>
 
@@ -37,24 +38,13 @@
                 style="@style/CustomTextView"
                 android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
                 android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
-                android:text="@string/register_number" />
-            <EditText
-                style="@style/RegisterEditText"
-                android:id="@+id/input_register_number"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
-            <TextView
-                style="@style/CustomTextView"
-                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
-                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
                 android:text="@string/input_password" />
-            <EditText
+            <com.mooreliu.view.ClearableEditText
                 style="@style/RegisterEditText"
+                android:hint="@string/please_input_password"
+                android:password="true"
+                android:maxLength="10"
+                android:digits="qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"
                 android:id="@+id/input_password"/>
         </LinearLayout>
 
@@ -68,9 +58,31 @@
                 android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
                 android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
                 android:text="@string/comfirm_password" />
-            <EditText
+            <com.mooreliu.view.ClearableEditText
                 style="@style/RegisterEditText"
+                android:hint="@string/please_input_confirm_password"
+                android:password="true"
+                android:maxLength="10"
+                android:digits="@string/login_only_can_input"
                 android:id="@+id/input_comfirm_password"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+            <TextView
+                style="@style/CustomTextView"
+                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
+                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                android:text="@string/register_number" />
+            <com.mooreliu.view.ClearableEditText
+                style="@style/RegisterEditText"
+                android:hint="@string/please_input_register_number"
+                android:maxLength="6"
+                android:numeric="integer"
+                android:id="@+id/input_register_number"/>
         </LinearLayout>
 
         <Button

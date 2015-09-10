@@ -2,7 +2,6 @@ package com.mooreliu.util;
 
 import android.widget.Toast;
 
-import com.avos.avoscloud.AVUser;
 import com.mooreliu.AppContext;
 
 /**
@@ -15,6 +14,16 @@ public class CommonUtil {
         Toast.makeText(AppContext.getContext(), message ,Toast.LENGTH_SHORT).show();
     }
 
+    private static long lastClickTime;
+    public static boolean isFastDoubleClick() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if ( 0 < timeD && timeD < 2000) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
 
 
 }

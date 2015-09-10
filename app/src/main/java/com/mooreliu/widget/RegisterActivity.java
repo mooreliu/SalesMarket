@@ -8,8 +8,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,8 +27,6 @@ import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.TextUtil;
-
-import java.io.IOException;
 
 public class RegisterActivity extends BaseActivity implements OnClickListener{
     private static final String TAG = "RegisterActivity";
@@ -46,7 +45,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     private String mPasswordInput;
     private String mPasswordComfirmInput;
     private String mRegisterNumberInput;
-    private boolean isGetRegisterNumberSuccess =false;
     private AVUser user;
     private int SIGNUP_ERROR_CODE;
     private int VERIFY_SMS_ERROR_CODE;
@@ -55,15 +53,70 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     private String REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG;
 
     private Handler handler = null;
-    private static final int SIGN_UP_OVER_MSG = 1;
-    private static final int REQUEST_SMS_OVER_MSG = 3;
-    private static final int VERIFY_SMS_OVER_MSG = 5;
+    private static final int SIGN_UP_FAIL_MSG = 1;
+    private static final int REQUEST_SMS_FAIL_MSG = 2;
+    private static final int VERIFY_SMS_FAIL_MSG = 3;
 
+    private static final int SIGN_UP_SUCCESS_MSG =4;
+    private static final int VERIFY_SMS_SUCCESS_MSG =5;
+    private static final int REQUEST_SMS_SUCCESS_MSG =6;
+
+    private int SIGN_UP_FAIL_ERROR_CODE;
+    private int REQUEST_SMS_FAIL_ERROR_CODE;
+    private int VERIFY_SMS_FAIL_ERROR_CODE;
+
+    private boolean IS_SIGN_UP_SUCCESS;
+    private boolean IS_VERIFY_SMS_SUCCESS;
+    private boolean IS_REQUEST_SMS_SUCCESS;
+
+    private DigitsKeyListener mDigitsKeyListender;
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
         super.onCreate(onSavedInstanceState);
         setContentView(R.layout.activity_register);
+        initHandler();
     }
+    private void initHandler() {
+        handler = new Handler() {
+            @Override
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case SIGN_UP_FAIL_MSG:
+                        LogUtil.e(TAG ," "+SIGNUP_ERROR_MSG);
+                        if(!TextUtil.isEmpty(SIGNUP_ERROR_MSG))
+                            mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
+                        break;
+
+                    case VERIFY_SMS_FAIL_MSG:
+                        LogUtil.e(TAG ," "+VERIFY_SMS_ERROR_MSG);
+                        if(!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG))
+                            mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
+                        break;
+
+                    case REQUEST_SMS_FAIL_MSG:
+                        LogUtil.e(TAG ," "+REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
+                        if(!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG))
+                            mTextViewSMSErrorMsg.setText(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
+                        break;
+
+                    case SIGN_UP_SUCCESS_MSG:
+                        getRegisterNumber();
+                        break;
+
+                    case VERIFY_SMS_SUCCESS_MSG:
+                        CommonUtil.toastMessage(getResources().getString(R.string.register_succuess));
+                        break;
+
+                    case REQUEST_SMS_SUCCESS_MSG:
+                        getRegisterNumberButtonStateCountDown();
+                        break;
+
+                }
+
+            }
+        };
+    }
+
     @Override
     public void findView() {
         mEditTextTelephoneNumber = (EditText) findViewById(R.id.input_telephone_number);
@@ -82,30 +135,45 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     @Override
     public void initView() {
         setToolBarTitle(getResources().getString(R.string.register));
-        handler = new Handler() {
+        mDigitsKeyListender = new DigitsKeyListener() {
             @Override
-            public void handleMessage(android.os.Message msg) {
-                switch (msg.what) {
-                case SIGN_UP_OVER_MSG:
-                    if(!TextUtil.isEmpty(SIGNUP_ERROR_MSG))
-                    mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
-                    break;
-
-                case VERIFY_SMS_OVER_MSG:
-                    if(!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG))
-                        mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
-                    break;
-                case REQUEST_SMS_OVER_MSG:
-                    if(!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG))
-                        mTextViewSMSErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
-                    break;
-
-                }
-
+            public int getInputType() {
+                return InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            }
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] data = getResources().getString(R.string.login_only_can_input).toCharArray();
+                return data;
             }
         };
+        mEditTextPassword.setKeyListener(mDigitsKeyListender);
+        mEditTextComfirmPassword.setKeyListener(mDigitsKeyListender);
     }
 
+    private void getRegisterNumberButtonStateCountDown() {
+        LogUtil.e(TAG,"发送SMS成功");
+        mButtonGetRegisterNumber.setBackgroundColor(getResources().getColor(R.color.snow));
+        timer = new CountDownTimer(Constants.TIMEOUT * 1000, 1000) {
+            @Override
+            public void onTick(long remainTime) {
+                 int remain = (int) (remainTime / 1000L);
+                if (remain != 1) {
+                    mButtonGetRegisterNumber.setClickable(false);
+                    mButtonGetRegisterNumber.setText("(" + remain + ")s后重新发送");
+                } else {
+                     mButtonGetRegisterNumber.setText(getResources().getString(R.string.get_register_number));
+                }
+            }
+            @Override
+            public void onFinish() {
+                mButtonGetRegisterNumber.setClickable(true);
+                mButtonGetRegisterNumber.setBackgroundColor(getResources().getColor(R.color.DodgerBlue));
+            }
+        };
+        timer.start();
+        LogUtil.e(TAG, "发送注册号码");
+        CommonUtil.toastMessage("发送注册号码");
+    }
     @Override
     public void setOnClick() {
         mButtonRegister.setOnClickListener(this);
@@ -123,33 +191,33 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     }
 
     private void registerUser() {//点击注册按钮
+        if(!verify_phonenumber_password_validation())
+            return;
         LogUtil.e(TAG ,"registerUser");
         mRegisterNumberInput = mEditTextRegisterNumber.getText().toString();
         AVUser.verifyMobilePhoneInBackground(mRegisterNumberInput, new AVMobilePhoneVerifyCallback() {
             @Override
             public void done(AVException e) {
                 // TODO Auto-generated method stub
+                Message msg = new Message();
                 if( e == null) {
-                    CommonUtil.toastMessage(getResources().getString(R.string.register_succuess));
+                    IS_VERIFY_SMS_SUCCESS = true;
+                    msg.what = VERIFY_SMS_SUCCESS_MSG;
                 }else {
+                    IS_VERIFY_SMS_SUCCESS = false;
+                    msg.what = VERIFY_SMS_FAIL_MSG;
                     VERIFY_SMS_ERROR_MSG = e.getLocalizedMessage();
+                    VERIFY_SMS_FAIL_ERROR_CODE = e.getCode();
                     if(e.getCode() == Constants.AVOS_ERROR_CODE_INVALID_SNS_CODE) {
                         CommonUtil.toastMessage(getResources().getString(R.string.invalid_sms_code));
                         VERIFY_SMS_ERROR_MSG = getResources().getString(R.string.invalid_sms_code);
                     }
                 }
-                Message msg = new Message();
-                msg.what = VERIFY_SMS_OVER_MSG;
                 handler.sendMessage(msg);
 
             }
         });
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//        displayErrorMessage();
+
     }
 
     private boolean verify_phonenumber_password_validation() {
@@ -157,20 +225,24 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         mTelephoneNumberInput =  mEditTextTelephoneNumber.getText().toString();
         mPasswordInput = mEditTextPassword.getText().toString();
         mPasswordComfirmInput = mEditTextComfirmPassword.getText().toString();
+        if(mTelephoneNumberInput.length() != 11) {
+            CommonUtil.toastMessage(getResources().getString(R.string.telephone_number_length_error));
+            return false;
+        }
         if(mPasswordInput.isEmpty()) {
             CommonUtil.toastMessage(getResources().getString(R.string.password_cannot_empty));
             return false;
         }
-
+        if(mPasswordComfirmInput.isEmpty()) {
+            CommonUtil.toastMessage(getResources().getString(R.string.comfirm_password_cannot_empty));
+            return false;
+        }
         if(!mPasswordInput.equals(mPasswordComfirmInput)) {
             LogUtil.e(TAG , "密码 ="+mPasswordInput+"  确认密码 "+mPasswordComfirmInput);
             CommonUtil.toastMessage(getResources().getString(R.string.password_comfirm_error));
             return false;
         }
-        if(mTelephoneNumberInput.length() != 11) {
-            CommonUtil.toastMessage(getResources().getString(R.string.telephone_number_length_error));
-            return false;
-        }
+
         return  true;
     }
 
@@ -181,136 +253,75 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         user.setUsername(mTelephoneNumberInput);
         user.setPassword(mPasswordInput);
         user.setMobilePhoneNumber(mTelephoneNumberInput);
-        isGetRegisterNumberSuccess = true;
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(AVException e) {
+                Message msg = new Message();
                 if (e == null) {
-
+                        IS_SIGN_UP_SUCCESS =true;
+                        msg.what = SIGN_UP_SUCCESS_MSG;
                     } else {
-                        isGetRegisterNumberSuccess = false;
-                        SIGNUP_ERROR_CODE = e.getCode();
+                        IS_SIGN_UP_SUCCESS =false;
+                        msg.what = SIGN_UP_FAIL_MSG;
+                        SIGN_UP_FAIL_ERROR_CODE = e.getCode();
                         SIGNUP_ERROR_MSG = e.getLocalizedMessage();
                         if (e.getCode() == AVException.USER_MOBILE_PHONENUMBER_TAKEN) {
-//                            LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
-//                            LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
-                            SIGNUP_ERROR_MSG = getResources().getString(R.string.user_mobile_phonenumber_taken);
+                           SIGNUP_ERROR_MSG = getResources().getString(R.string.user_mobile_phonenumber_taken);
+                            // LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
+                            //  LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
                             //  CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
                         }
                         e.printStackTrace();
                     }
-                Message msg = new Message();
-                msg.what = SIGN_UP_OVER_MSG;
                 handler.sendMessage(msg);
             }
         });
 
         return  true;
     }
-    private boolean getRegisterNumber() {//点击获取注册码按钮
-        LogUtil.e(TAG ,"getRegisterNumber");
-       if( !signUp())
-           return false;
+    private void getRegisterNumber() {//点击获取注册码按钮
         AVUser.requestMobilePhoneVerifyInBackground(mTelephoneNumberInput, new RequestMobileCodeCallback() {
             @Override
             public void done(AVException e) {
-                //发送了验证码以后做点什么呢
-                LogUtil.e(TAG, "in done");
-                if (e == null) {
-                    LogUtil.e(TAG, "Register Number send no error" + mTelephoneNumberInput);
-                    isGetRegisterNumberSuccess = true;
-                } else {
-                    REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = e.getLocalizedMessage();
-                    LogUtil.e(TAG, "requestMobilePhoneVerifyInBackground rror code" + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
-                    isGetRegisterNumberSuccess = false;
-                }
                 Message msg = new Message();
-                msg.what = REQUEST_SMS_OVER_MSG;
-                handler.sendMessage(msg);
+                if (e == null) {
+                    IS_REQUEST_SMS_SUCCESS = true;
+                    msg.what = REQUEST_SMS_SUCCESS_MSG;
+                    LogUtil.e(TAG, "Register Number send no error" + mTelephoneNumberInput);
 
+                } else {
+                    IS_REQUEST_SMS_SUCCESS = false;
+                    msg.what = REQUEST_SMS_FAIL_MSG;
+                    REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = e.getLocalizedMessage();
+                    REQUEST_SMS_FAIL_ERROR_CODE = e.getCode();
+                    LogUtil.e(TAG, "requestMobilePhoneVerifyInBackground error code  " + REQUEST_SMS_FAIL_ERROR_CODE);
+                }
+                handler.sendMessage(msg);
             }
         });
-
-//        displayErrorMessage();
-        return isGetRegisterNumberSuccess;
 
     }
 
 
-//    private void displayErrorMessage() {
-//        LogUtil.e(TAG,"SIGNUP_ERROR_MSG"+SIGNUP_ERROR_MSG);
-//        LogUtil.e(TAG,"REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG"+REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
-//        LogUtil.e(TAG,"VERIFY_SMS_ERROR_MSG"+VERIFY_SMS_ERROR_MSG);
-//        if(!TextUtil.isEmpty(SIGNUP_ERROR_MSG)) {
-//            mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
-//        }
-//        else if(!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG)) {
-//            mTextViewSMSErrorMsg.setText(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
-//        } else {
-//            mTextViewSMSErrorMsg.setText("");
-//        }
-//        if(!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG)) {
-//            mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
-//        } else {
-//            mTextViewRegisterErrorMsg.setText("");
-//        }
-//        SIGNUP_ERROR_MSG = "";
-//        REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = "";
-//        VERIFY_SMS_ERROR_MSG = "";
-//    }
     @Override
     public void onClick(View view) {
+        if(CommonUtil.isFastDoubleClick())
+            return;
         int id = view.getId();
         switch (id) {
             case R.id.btn_do_register:
                 LogUtil.e(TAG ,"注册");
+                mTextViewSMSErrorMsg.setText("");
+                mTextViewRegisterErrorMsg.setText("");
                 registerUser();
-                CommonUtil.toastMessage(getResources().getString(R.string.register));
                 break;
             case R.id.btn_do_send_register_number:
-//                try{
-//                    getRegisterNumberCountDownTask task = new getRegisterNumberCountDownTask();
-//                    if(task == null)
-//                        LogUtil.e(TAG,"task == null");
-//                    task.execute(Constants.TIMEOUT);
-//                } catch(Exception e){
-//                    e.printStackTrace();
-//                }
-                 if(getRegisterNumber()) {
-                     LogUtil.e(TAG,"发送SMS成功");
-                     mButtonGetRegisterNumber.setBackgroundColor(getResources().getColor(R.color.snow));
-                     timer = new CountDownTimer(Constants.TIMEOUT * 1000, 1000) {
-                         @Override
-                         public void onTick(long remainTime) {
-                             //                        LogUtil.e(TAG, "current thread  in onTick" + Thread.currentThread() + "remainTime"+remainTime / 1000L);
-                             int remain = (int) (remainTime / 1000L);
-                             if (remain != 1) {
-                                 mButtonGetRegisterNumber.setClickable(false);
-                                 //                            LogUtil.e(TAG, "onProgressUpdate" + remain);
-                                 mButtonGetRegisterNumber.setText("(" + remain + ")s后重新发送");
-
-                             } else {
-                                 //                            LogUtil.e(TAG, "mButtonGetRegisterNumber.setClickable(true);");
-                                 mButtonGetRegisterNumber.setText(getResources().getString(R.string.get_register_number));
-                             }
-
-                         }
-
-                         @Override
-                         public void onFinish() {
-                             //                        LogUtil.e(TAG, "onFinish");
-                             mButtonGetRegisterNumber.setClickable(true);
-                             mButtonGetRegisterNumber.setBackgroundColor(getResources().getColor(R.color.DodgerBlue));
-                         }
-                     };
-                     timer.start();
-                     LogUtil.e(TAG, "发送注册号码");
-                     CommonUtil.toastMessage("发送注册号码");
-                 }
-//                new getRegisterNumberCountDownTask().execute(Constants.TIMEOUT);
+                mTextViewSMSErrorMsg.setText("");
+                mTextViewRegisterErrorMsg.setText("");
+                signUp();
                 break;
             default:
-                CommonUtil.toastMessage("error in register Acitivyt");
+                CommonUtil.toastMessage("error in register Activity");
         }
     }
 
@@ -327,6 +338,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         }
 
     }
+}
+
 //
 //    class getRegisterNumberCountDownTask extends AsyncTask<Integer , Integer ,Void> {
 //        private CountDownTimer timer = null;
@@ -391,4 +404,3 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 //        }
 //
 //    }
-}

@@ -16,9 +16,10 @@
         android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
 
         />
-    <EditText
+    <com.mooreliu.view.ClearableEditText
         android:id="@+id/login_username"
         android:hint="@string/please_input_username"
+        android:numeric="integer"
         style="@style/CustomEditText"
         />
 
@@ -29,10 +30,11 @@
         android:text="@string/password"
         />
 
-    <EditText
+    <com.mooreliu.view.ClearableEditText
         android:id="@+id/login_password"
         android:password="true"
-        android:hint="@string/please_input_password"
+        android:digits="@string/login_only_can_input"
+        android:hint="@string/please_input_login_password"
         style="@style/CustomEditText"
         />
 

@@ -266,6 +266,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 }
                 break;
             case R.id.user_image_iv:
+                mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this , LoginActivity.class);
                 startActivity(intent);
                 break;

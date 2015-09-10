@@ -66,6 +66,9 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
                         } else{
                             mTextViewLoginErrorMsg.setText(AVOS_LOGIN_ERROR_MSG);
                         }
+                        mButtonLogin.setClickable(true);
+                        mButtonRegister.setClickable(true);
+                        break;
                 }
             }
         };
@@ -117,12 +120,19 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
         return  true;
     }
     private void doLogin() {
-        if(!checkLoginValidation())
+        mButtonLogin.setClickable(false); //此时登陆不能用了
+        mButtonRegister.setClickable(false);
+        if(!checkLoginValidation()) {
+            mButtonLogin.setClickable(true);
+            mButtonRegister.setClickable(true);
             return;
+        }
+
         AVUser.loginByMobilePhoneNumberInBackground(mUserNameInput, mPasswordInput, new LogInCallback() {
             @Override
             public void done(AVUser avUser, AVException e) {
                 if(e == null) {
+                    CommonUtil.toastMessage(getResources().getString(R.string.login_success));
                     Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGIN));//通知登录成功
                     returnToAcitivityAhead();
                 } else {
@@ -144,10 +154,11 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if(CommonUtil.isFastDoubleClick())
+                return;
         int id = view.getId();
         switch(id) {
             case R.id.btn_login:
-                CommonUtil.toastMessage(getResources().getString(R.string.login));
                 doLogin();
                 break;
 

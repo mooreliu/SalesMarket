@@ -9,4 +9,5 @@
     <dimen name="activity_register_margin_left">5dp</dimen>
     <dimen name="activity_register_margin_right">25dp</dimen>
     <dimen name="activity_register_margin_top_bottom">15dp</dimen>
+    <dimen name="margin_micro">6dp</dimen>
 </resources>

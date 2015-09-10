@@ -8,21 +8,16 @@ import com.mooreliu.event.imple.EventSubject;
 
 import java.lang.ref.WeakReference;
 
-
-
 /**
  * 带观察者模式的BaseActivity
- * @author zhiwu_yan
- * @version 1.0
- * @since 2015-06-30  14:42
  */
 public abstract class BaseObserverActivity extends BaseActivity {
-
     private ActivityEventObserver mActivityEventObserver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityEventObserver=new ActivityEventObserver(this);
+        mActivityEventObserver = new ActivityEventObserver(this);
         registerObserver(mActivityEventObserver);
     }
 
@@ -34,9 +29,9 @@ public abstract class BaseObserverActivity extends BaseActivity {
 
 
     public void registerObserver(EventObserver observer) {
-        final String[] observerEventTypes=getObserverEventType();//获取所有需要监听的业务类型
-        if(observerEventTypes!=null && observerEventTypes.length>0){
-            final EventSubject eventSubject=EventSubject.getInstance();
+        final String[] observerEventTypes = getObserverEventType();//获取所有需要监听的业务类型
+        if(observerEventTypes!= null && observerEventTypes.length>0){
+            final EventSubject eventSubject = EventSubject.getInstance();
             for(String eventType:observerEventTypes){
                 eventSubject.registerObserver(eventType,observer);
             }
@@ -47,9 +42,9 @@ public abstract class BaseObserverActivity extends BaseActivity {
     }
 
     public void removeObserver(EventObserver observer) {
-        final String[] observerEventTypes=getObserverEventType();//获取所有需要监听的业务类型
-        if(observerEventTypes!=null && observerEventTypes.length>0){
-            final EventSubject eventSubject=EventSubject.getInstance();
+        final String[] observerEventTypes = getObserverEventType();//获取所有需要监听的业务类型
+        if(observerEventTypes!= null && observerEventTypes.length>0){
+            final EventSubject eventSubject = EventSubject.getInstance();
             for(String eventType:observerEventTypes){
                 eventSubject.removeObserver(eventType, observer);
             }
@@ -80,8 +75,8 @@ public abstract class BaseObserverActivity extends BaseActivity {
 
         @Override
         public void onChange(NotifyInfo notifyInfo) {
-            BaseObserverActivity activity=mActivity.get();
-            if(activity!=null){
+            BaseObserverActivity activity = mActivity.get();
+            if(activity != null){
                 activity.onChange(notifyInfo);
             }
         }
