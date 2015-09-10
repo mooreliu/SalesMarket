@@ -159,7 +159,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                  int remain = (int) (remainTime / 1000L);
                 if (remain != 1) {
                     mButtonGetRegisterNumber.setClickable(false);
-                    mButtonGetRegisterNumber.setText("(" + remain + ")s后重新发送");
+                    mButtonGetRegisterNumber.setText("(" + remain + ")s后可重新发送");
                 } else {
                      mButtonGetRegisterNumber.setText(getResources().getString(R.string.get_register_number));
                 }
