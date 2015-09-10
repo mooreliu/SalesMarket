@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVOSCloud;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mooreliu.service.ServiceCheckNetConnect;
@@ -69,8 +70,13 @@ public class AppContext extends Application {
         initPackage();
         initDiskLruCache();
         initLruCache();
+        initAVOS();
         refWatcher = LeakCanary.install(this);
+    }
+
+    private void initAVOS() {
         AVOSCloud.initialize(this, Config.APP_ID, Config.APP_KEY);
+        AVAnalytics.enableCrashReport(this, true);
     }
 
     private void initLruCache() {

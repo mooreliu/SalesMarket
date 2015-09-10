@@ -41,6 +41,7 @@
         <!--</service>-->
         <meta-data android:value="55e6b81ae0f55a1d8100350f" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="Tencent" android:name="UMENG_CHANNEL"/>
+        <meta-data android:name="Tencent" android:value="LeanCloud"/>
     </application>
     <!-- permissoin -->
     <uses-permission android:name="android.permission.INTERNET" />

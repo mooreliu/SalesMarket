@@ -46,6 +46,15 @@
         android:text="@string/login"
         android:background="@color/DodgerBlue"
         />
+    <TextView
+        android:id="@+id/login_error_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_login_margin_left_right"
+        android:layout_marginRight="@dimen/activity_login_margin_left_right"
+        android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
+        android:textColor="@android:color/holo_red_dark"
+        />
     <Button
         android:id="@+id/btn_register"
         android:layout_width="fill_parent"

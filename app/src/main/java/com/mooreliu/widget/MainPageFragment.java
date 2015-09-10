@@ -25,6 +25,7 @@ import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.TextUtil;
+import com.mooreliu.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,10 +155,14 @@ public class MainPageFragment extends Fragment {
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
             public void onTouch(View v, ProductModel model) {
-                Intent intent = new Intent(getActivity() , OrderActivity.class);
-                intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getUrl()));
-                startActivity(intent);
-                //getActivity().finish();
+                if(UserUtil.isLogined()) {
+                    Intent intent = new Intent(getActivity(), OrderActivity.class);
+                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getUrl()));
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity() , LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

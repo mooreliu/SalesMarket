@@ -5,6 +5,7 @@ package com.mooreliu.widget;
  * createTime:2015-08-29
  * MainActivity主界面
  */
+
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -20,14 +21,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mooreliu.R;
 import com.mooreliu.adapter.TabFragmentAdapter;
 import com.mooreliu.event.EventType;
+import com.mooreliu.event.Notify;
 import com.mooreliu.event.NotifyInfo;
 import com.mooreliu.service.BroadcastReceiverNetCheck;
+import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +52,24 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private View mLeftMenu2;
     private View mLeftMenu3;
     private View mLeftMenu4;
-
     private ImageView login_avatar;
-
+    private TextView mTextViewUserName;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawer();
         initBroadcastRecevier();
+        checkUserState();
+    }
+
+    private void checkUserState() {
+        // 检查用户登陆状态
+        if(UserUtil.isLogined()) {
+            Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGIN));
+        }else {
+            Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGINOUT));
+        }
     }
 
     @Override
@@ -63,6 +77,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         super.onDestroy();
         unregisterReceiver(br);
     }
+
     private void initBroadcastRecevier() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -70,6 +85,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         registerReceiver(br, intentFilter);
 
     }
+
     @Override
     public void findView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +95,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mLeftMenu3 =findViewById(R.id.item_menu_3);
         mLeftMenu4 =findViewById(R.id.item_menu_4);
         login_avatar = (ImageView) findViewById(R.id.user_image_iv);
+        mTextViewUserName = (TextView) findViewById(R.id.username_tv);
+
     }
 
     @Override
@@ -89,7 +107,6 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     }
 
     private void setDrawer(){
-        //创建返回键，并实现打开关/闭监听
         mActionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.open, R.string.close) {
             @Override
@@ -108,7 +125,6 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     public void setTabLayout() {
         mViewPager = (ViewPager)findViewById(R.id.viewPager);
         mTabLayout = (TabLayout)findViewById(R.id.tabLayout);
-
 //        List<String> tabList = new ArrayList<String>();
 //        tabList.add("首页");
 //        tabList.add("购物车");
@@ -128,13 +144,11 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         fragmentList.add(mShoppingListPageFragment);
         fragmentList.add(mMyPageFragment);
 
-
         TabFragmentAdapter fragmentAdapter =
                 new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
-
     }
 
     public void setViewPager() {
@@ -147,26 +161,18 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mLeftMenu2.setOnClickListener(this);
         mLeftMenu3.setOnClickListener(this);
         mLeftMenu4.setOnClickListener(this);
-
         login_avatar.setOnClickListener(this);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
             return true;
@@ -176,29 +182,23 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         } else if(id == R.id.action_trash) {
             Toast.makeText(this,"删除",Toast.LENGTH_SHORT).show();
             return true;
-        } else if(id == R.id.action_settings) {
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onChange(NotifyInfo notifyInfo) {
         String eventType = notifyInfo.getEventType();
-        if(eventType.equals(EventType.EVENT_LOGIN)){
-            supportInvalidateOptionsMenu();
-                //mUserNameTv.setText(LoginHelper.getCurrentUser().getUsername());
-            //getRecord();
-        }else if(eventType.equals(EventType.EVENT_LOGINOUT)){
-//            supportInvalidateOptionsMenu();
-//            mUserNameTv.setText(getResources().getString(R.string.no_login));
-//            mRecordModels.clear();
-//            mAdapter.refreshDate(mRecordModels);
+        if(eventType.equals(EventType.EVENT_LOGIN)) {
+            login_avatar.setImageResource(R.drawable.avatar_logined);
+            login_avatar.setClickable(false);
+            mTextViewUserName.setText("已登陆");
+        } else if(eventType.equals(EventType.EVENT_LOGINOUT)) {
+            login_avatar.setImageResource(R.drawable.avatar_logout);
+            mTextViewUserName.setText(getResources().getString(R.string.unlogined));
+            login_avatar.setClickable(true);
         }
-//        else if(eventType.equals(EventType.EVENT_ADD_RECORD)){
-//            getRecord();
-//        }
+
     }
 
     @Override
@@ -232,7 +232,6 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        //LogUtil.e(TAG,"View clicked :"+view);
         int id = view.getId();
         switch(id) {
             case R.id.item_menu_1:
@@ -240,14 +239,12 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.white);
-               // Toast.makeText(this,"menu1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.item_menu_2:
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.gray);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.white);
-                //Toast.makeText(this,"menu2", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.item_menu_3:
@@ -255,7 +252,6 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.gray);
                 mLeftMenu4.setBackgroundResource(R.color.white);
-               // Toast.makeText(this,"menu3", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.item_menu_4:
@@ -263,8 +259,11 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.gray);
-                //Toast.makeText(this,"menu4", Toast.LENGTH_SHORT).show();
-
+                UserUtil.loginout();
+                if(UserUtil.isLoginoutSuccess()) {
+                    Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGINOUT));//通知登录成功
+                    CommonUtil.toastMessage("注销成功");
+                }
                 break;
             case R.id.user_image_iv:
                 Intent intent = new Intent(this , LoginActivity.class);

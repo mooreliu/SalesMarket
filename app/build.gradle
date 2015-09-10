@@ -52,7 +52,7 @@ dependencies {
 //    compile 'cn.leancloud.android:avoscloud-push:v3.7.2@aar'
 //    compile 'cn.leancloud.android:Java-WebSocket:1.2.0-leancloud'
 
-//    compile 'cn.leancloud.android:avoscloud-statistics:v3.7.2@aar'
+    compile 'cn.leancloud.android:avoscloud-statistics:v3.7.2@aar'
 
 //    compile 'cn.leancloud.android:avoscloud-search:v3.7.2@aar'
 //    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'

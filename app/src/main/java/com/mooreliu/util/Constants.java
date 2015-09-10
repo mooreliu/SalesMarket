@@ -30,10 +30,13 @@ public class Constants {
     public static final int AVOS_ERROR_CODE_USER_HAS_BEEN_TAKEN = 202;
     public static final int AVOS_ERROR_CODE_USERNAME_AND_PASSWORD_MISMATCH_ = 210;//The username and password mismatch.
     public static final int AVOS_ERROR_CODE_COUND_NOT_FIND_USER = 211;
-    //Could not find user.
+    //该用户未注册
     public static final int AVOS_ERROR_CODE_MOBILE_PHONE_NUMBER_HAS_BEEN_TAKEN_ = 214;
-
-    public static final int AVOS_ERROR_CODE_INVALID_SNS_CODE = 603;
     //214 Mobile phone number has already been taken.
+    public static final int AVOS_ERROR_CODE_INVALID_SNS_CODE = 603;
+    public static final int AVOS_ERROR_CODE_PHONENUMBER_ISNOT_VERIFIED = 603;
+    //Mobile phone number isn't verified.
+
+
 }
 
