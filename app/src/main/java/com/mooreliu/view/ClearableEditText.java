@@ -12,10 +12,6 @@ import android.widget.EditText;
 
 import com.mooreliu.R;
 
-/**
- * Created by rxy on 15/7/9.
- * E£­mail:rxywxsy@163.com
- */
 public class ClearableEditText extends EditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
     private Drawable _right;

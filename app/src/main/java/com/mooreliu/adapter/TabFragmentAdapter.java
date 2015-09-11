@@ -26,6 +26,7 @@ import java.util.List;
 public class TabFragmentAdapter extends FragmentStatePagerAdapter {
     private final static String TAG = "TabFragmentAdapter";
 
+//    private ReloadFragment mReloadFragment;
     int[] imageResId={
         R.mipmap.main_navigation_home,
         R.mipmap.main_navigation_car,
@@ -38,24 +39,29 @@ public class TabFragmentAdapter extends FragmentStatePagerAdapter {
     public TabFragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragments = fragments;
-//        mTitles = titles;
+//        mReloadFragment = new ReloadFragment();
     }
 
     @Override
     public Fragment getItem(int position) {
+        LogUtil.e(TAG ,"getItem +"+position);
         return mFragments.get(position);
+//        if(NetWorkUtil.isNetworkConnected())
+//            return mFragments.get(position);
+//        else
+//            return mFragments.get(3);
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        LogUtil.e(TAG ,"getCount() return mFragments.size() :"+mFragments.size());
+        return mFragments.size()-1;
     }
-
 
 
     @Override
     public CharSequence getPageTitle(int position) {
-//        LogUtil.e(TAG,position+" positoin");
+        LogUtil.e(TAG,position+" positoin");
         Drawable image = AppContext.getContext().getResources().getDrawable(imageResId[position]);
         image.mutate().setColorFilter(Color.argb(255,255, 255, 255), PorterDuff.Mode.SRC_IN);
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());

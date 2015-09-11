@@ -46,7 +46,7 @@
         android:layout_marginRight="@dimen/activity_login_margin_left_right"
         android:layout_marginTop="50dp"
         android:text="@string/login"
-        android:background="@color/DodgerBlue"
+        android:background="@drawable/drawable_loginbutton"
         />
     <TextView
         android:id="@+id/login_error_msg"
@@ -65,7 +65,7 @@
         android:layout_marginRight="@dimen/activity_login_margin_left_right"
         android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
         android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
-        android:background="@color/light_blue"
+        android:background="@drawable/drawable_registerbutton"
         android:text="@string/register"
         />
 

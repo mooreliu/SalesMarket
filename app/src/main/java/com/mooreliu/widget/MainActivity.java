@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -31,7 +32,6 @@ import com.mooreliu.event.Notify;
 import com.mooreliu.event.NotifyInfo;
 import com.mooreliu.service.BroadcastReceiverNetCheck;
 import com.mooreliu.util.CommonUtil;
-import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.UserUtil;
 
 import java.util.ArrayList;
@@ -54,6 +54,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private View mLeftMenu4;
     private ImageView login_avatar;
     private TextView mTextViewUserName;
+    private TextView mLoginOrLoginout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mLeftMenu4 =findViewById(R.id.item_menu_4);
         login_avatar = (ImageView) findViewById(R.id.user_image_iv);
         mTextViewUserName = (TextView) findViewById(R.id.username_tv);
-
+        mLoginOrLoginout = (TextView) findViewById(R.id.left_menu4_tv);
     }
 
     @Override
@@ -104,6 +105,10 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         setToolBarTitle("首页");
         setTabLayout();
         setViewPager();
+        if(UserUtil.isLogined())
+            mLoginOrLoginout.setText(getResources().getString(R.string.logout));
+        else
+            mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
     }
 
     private void setDrawer(){
@@ -139,11 +144,12 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         Fragment mMainPageFragment = new MainPageFragment();
         MyPageFragment mMyPageFragment = new MyPageFragment();
         ShoppingListPageFragment mShoppingListPageFragment = new ShoppingListPageFragment();
+        ReloadFragment mReloadFragment = new ReloadFragment();
 
         fragmentList.add(mMainPageFragment);
         fragmentList.add(mShoppingListPageFragment);
         fragmentList.add(mMyPageFragment);
-
+        fragmentList.add(mReloadFragment);
         TabFragmentAdapter fragmentAdapter =
                 new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
@@ -192,10 +198,12 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         if(eventType.equals(EventType.EVENT_LOGIN)) {
             login_avatar.setImageResource(R.drawable.avatar_logined);
             login_avatar.setClickable(false);
+            mLoginOrLoginout.setText(getResources().getString(R.string.tv_logout));
             mTextViewUserName.setText("已登陆");
         } else if(eventType.equals(EventType.EVENT_LOGINOUT)) {
             login_avatar.setImageResource(R.drawable.avatar_logout);
             mTextViewUserName.setText(getResources().getString(R.string.unlogined));
+            mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
             login_avatar.setClickable(true);
         }
 
@@ -224,45 +232,73 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        LogUtil.e(TAG, "onBackPressed");
         ExitDialog dialog=new ExitDialog(MainActivity.this);
         dialog.show();
-        //super.onBackPressed();
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        Handler handler = new Handler();
         switch(id) {
             case R.id.item_menu_1:
                 mLeftMenu1.setBackgroundResource(R.color.gray);
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.white);
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        mLeftMenu1.setBackgroundResource(R.color.white);
+                    }
+                };
+                handler.postDelayed(r , 140);
                 break;
             case R.id.item_menu_2:
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.gray);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.white);
-
+                 r = new Runnable() {
+                    @Override
+                    public void run() {
+                        mLeftMenu2.setBackgroundResource(R.color.white);
+                    }
+                };
+                handler.postDelayed(r, 140);
                 break;
             case R.id.item_menu_3:
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.gray);
                 mLeftMenu4.setBackgroundResource(R.color.white);
-
+                r = new Runnable() {
+                    @Override
+                    public void run() {
+                        mLeftMenu3.setBackgroundResource(R.color.white);
+                    }
+                };
+                handler.postDelayed(r, 140);
                 break;
             case R.id.item_menu_4:
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.white);
                 mLeftMenu4.setBackgroundResource(R.color.gray);
-                UserUtil.loginout();
-                if(UserUtil.isLoginoutSuccess()) {
-                    Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGINOUT));//通知登录成功
-                    CommonUtil.toastMessage("注销成功");
+                if(UserUtil.isLogined()){
+                    UserUtil.loginout();
+                    if(UserUtil.isLoginoutSuccess()) {
+                        Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGINOUT));//通知登录成功
+                        CommonUtil.toastMessage("注销成功");
+                        mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
+                        mLeftMenu4.setBackgroundResource(R.color.white);
+                    }
+                }else {
+                    mLoginOrLoginout.setText(getResources().getString(R.string.tv_logout));
+                    Intent intent = new Intent(this , LoginActivity.class);
+                    startActivity(intent);
+                    mLeftMenu4.setBackgroundResource(R.color.white);
+
                 }
                 break;
             case R.id.user_image_iv:

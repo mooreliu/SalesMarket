@@ -107,7 +107,7 @@
             android:layout_marginRight="@dimen/activity_login_margin_left_right"
             android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
             android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
-            android:background="@color/DodgerBlue"
+            android:background="@drawable/drawable_reload"
             android:text="@string/get_register_number"
             />
         <TextView
