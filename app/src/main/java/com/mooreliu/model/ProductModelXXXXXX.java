@@ -3,10 +3,10 @@ package com.mooreliu.model;
 /**
  * Created by liuyi on 15/8/30.
  */
-public class ProductModel {
+public class ProductModelXXXXXX {
     public int resId;
     public String url = null;
-    public ProductModel(String url) {
+    public ProductModelXXXXXX(String url) {
         this.url = url;
     }
 
@@ -14,12 +14,12 @@ public class ProductModel {
         return this.url;
     }
 
-    public ProductModel(String url ,int resId) {
+    public ProductModelXXXXXX(String url, int resId) {
         this.url = url;
         this.resId = resId;
     }
 
-    public ProductModel(int resId) {
+    public ProductModelXXXXXX(int resId) {
         this.resId = resId;
     }
 

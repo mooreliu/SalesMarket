@@ -23,8 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mooreliu.R;
 import com.mooreliu.adapter.CustomRecyclerListAdapter;
 import com.mooreliu.adapter.OnProductClickListener;
-import com.mooreliu.model.ProductModel;
-import com.mooreliu.model.ProductModelNet;
+import com.mooreliu.db.model.ProductModel;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
@@ -205,14 +204,14 @@ public class MainPageFragment extends Fragment {
 //        }catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        List<ProductModelNet> retList = gson.fromJson(response,
+        List<ProductModel> retList = gson.fromJson(response,
 //        List<ProductModelNet> retList = gson.fromJson(Constants.jsonProductList,
-                new TypeToken<List<ProductModelNet>>() {
+                new TypeToken<List<ProductModel>>() {
                 }.getType());
         //for(int i =0 ;i< Constants.productUrls.length ;i++) {
         //mList.add(new ProductModel(Constants.productUrls[i],i));
         for(int i =0 ;i< retList.size()-1 ;i++) {
-            mList.add(new ProductModel(retList.get(i).getUrl(), i));
+            mList.add(new ProductModel(retList.get(i).getProductImageUrl()));
         }
     }
     private void initRecyclerView() {
@@ -226,7 +225,7 @@ public class MainPageFragment extends Fragment {
             public void onTouch(View v, ProductModel model) {
                 if(UserUtil.isLogined()) {
                     Intent intent = new Intent(getActivity(), OrderActivity.class);
-                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getUrl()));
+                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getProductImageUrl()));
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getActivity() , LoginActivity.class);

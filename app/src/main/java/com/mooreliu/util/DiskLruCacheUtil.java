@@ -47,7 +47,6 @@ public class DiskLruCacheUtil {
     }
 
     public static Bitmap get(String key)  {
-        //url ==key
         DiskLruCache mDiskLruCache = AppContext.getDistLruCache();
         DiskLruCache.Snapshot snapShot = null;
         if(key != null) {

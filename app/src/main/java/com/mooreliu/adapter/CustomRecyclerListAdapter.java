@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
-import com.mooreliu.model.ProductModel;
+import com.mooreliu.db.model.ProductModel;
 import com.mooreliu.util.DiskLruCacheUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
@@ -64,7 +64,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
     public void onBindViewHolder(ViewHolder viewHolder ,int postion) {
         ProductModel mProductModel = mProductList.get(postion);
         viewHolder.productModel = mProductModel;
-        String key = TextUtil.hashKeyForDisk(mProductModel.getUrl());
+        String key = TextUtil.hashKeyForDisk(mProductModel.getProductImageUrl());
         Bitmap mBitmap = LruCacheUtil.get(key);
 
 
@@ -117,12 +117,11 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
 
     class  downloadBitmapTask extends AsyncTask<ProductModel, Void , Bitmap> {
         String url = null;
-        int resId = -1;
+        //int resId = -1;
         @Override
-        protected Bitmap doInBackground(ProductModel ...parms) {
-            this.url = parms[0].getUrl();
-            this.resId = parms[0].getResId();
-//            LogUtil.e(TAG,"NO CACHE MUSH DOWNLOAD");
+        protected Bitmap doInBackground(ProductModel...parms) {
+            this.url = parms[0].getProductImageUrl();
+           // this.resId = parms[0].getResId();
             String key = TextUtil.hashKeyForDisk(this.url);
             return DiskLruCacheUtil.addToDiskLruCache(key, this.url);
         }

@@ -2,7 +2,7 @@ package com.mooreliu.adapter;
 
 import android.view.View;
 
-import com.mooreliu.model.ProductModel;
+import com.mooreliu.db.model.ProductModel;
 
 /**
  * Created by liuyi on 15/8/30.
