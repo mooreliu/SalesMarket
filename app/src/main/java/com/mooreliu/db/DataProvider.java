@@ -7,8 +7,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.facebook.common.internal.Preconditions;
 import com.mooreliu.db.model.BaseColumns;
+import com.mooreliu.db.model.OrderColumns;
 import com.mooreliu.db.model.ProductColumns;
+import com.mooreliu.db.model.UserColumns;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 
@@ -22,6 +25,13 @@ public class DataProvider extends ContentProvider implements IDataProvider{
 
     public static final int PRODUCT = 1;
     public static final int PRODUCT_ID = 2;
+
+    public static final int USER= 3;
+    public static final int USER_ID = 4;
+
+    public static final int ORDER = 5;
+    public static final int ORDER_ID = 6;
+
     private static UriMatcher sUriMatcher;
     static {
         LogUtil.e(TAG,"Sales DataProvider static data initilize");
@@ -44,6 +54,14 @@ public class DataProvider extends ContentProvider implements IDataProvider{
                 return ProductColumns.CONTENT_TYPE;
             case PRODUCT_ID:
                 return ProductColumns.CONTENT_ITEM_TYPE;
+            case USER:
+                return UserColumns.CONTENT_TYPE;
+            case USER_ID:
+                return UserColumns.CONTENT_ITEM_TYPE;
+            case ORDER:
+                return OrderColumns.CONTENT_TYPE;
+            case ORDER_ID:
+                return OrderColumns.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
@@ -52,13 +70,16 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     @Override
     public Cursor query(Uri uri ,String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (sUriMatcher.match(uri)) {
+            case ORDER_ID:
+            case USER_ID:
             case PRODUCT_ID:
                 LogUtil.e(TAG, "case PRODUCT_ID  query " + uri);
                 return queryById(uri);
+            case USER:
+            case ORDER:
             case PRODUCT:
                 LogUtil.e(TAG, "case PRODUCT query " + uri);
                 return queryAllList(uri, projection, selection, selectionArgs, sortOrder);
-
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
@@ -67,8 +88,12 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     @Override
     public int update(Uri uri, ContentValues value , String selection, String[] selectionArgs) {
         switch (sUriMatcher.match(uri)) {
+            case USER:
+            case ORDER:
             case PRODUCT:
                 return updateByCondition(uri, value, selection, selectionArgs);
+            case ORDER_ID:
+            case USER_ID:
             case PRODUCT_ID:
                 return updateByUri(uri, value);
             default:
@@ -79,21 +104,51 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     @Override
     public Uri insert(Uri uri, ContentValues value) {
         switch (sUriMatcher.match(uri)) {
+            case USER:
+            case ORDER:
             case PRODUCT:
                 LogUtil.e(TAG, "insert  "+uri);
                 insertItemByUri(uri, value);
                 return  uri;
+            case ORDER_ID:
+            case USER_ID:
             case PRODUCT_ID:
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
 
     }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        Preconditions.checkNotNull(uri);
+        int numberInserted = 0;
+        String tableName = uri.getPathSegments().get(0);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for(ContentValues value : values) {
+                long id = db.insert(tableName, null, value);
+                if(id>0)
+                    numberInserted++;
+            }
+            db.setTransactionSuccessful();;
+            getContext().getContentResolver().notifyChange(uri, null);
+        } finally {
+            db.endTransaction();
+        }
+        return  numberInserted;
+
+    }
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         switch (sUriMatcher.match(uri)) {
+            case USER:
+            case ORDER:
             case PRODUCT:
                 return deleteItemByCondition(uri, selection, selectionArgs);
+            case ORDER_ID:
+            case USER_ID:
             case PRODUCT_ID:
                 return  deleteItemByUri(uri);
             default:
