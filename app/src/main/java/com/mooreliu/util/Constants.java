@@ -6,7 +6,7 @@ package com.mooreliu.util;
 public class Constants {
 
     public static final String PACKAGE_NAME = "com.mooreliu";
-    public static final String AUTHORITY = Constants.PACKAGE_NAME + "provider";
+    public static final String AUTHORITY = Constants.PACKAGE_NAME + ".provider2";
     public static final int TIMEOUT = 60;
     public static final String productUrls[]={
         "http://ww3.sinaimg.cn/bmiddle/005EM0nggw1evjg5s5nkuj30hs0bvgmi.jpg",

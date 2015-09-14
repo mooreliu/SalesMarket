@@ -18,16 +18,19 @@ public class DbHelper extends SQLiteOpenHelper{
     public static final int DATABASE_VERSION = 1;
     public DbHelper(Context context) {
         super(context, DATABASE_NAME , null , DATABASE_VERSION);
+        LogUtil.e(TAG, "DbHelper Construction");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        LogUtil.e(TAG, "onCreate");
+        db.execSQL("DROP TABLE IF EXISTS " + ProductColumns.TABLE_NAME);
         db.execSQL(ProductColumns.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db ,int oldVersion , int newVersion) {
-        LogUtil.e(TAG, "SQListe database version changed");
+        LogUtil.e(TAG, "SQLite database version changed");
         db.execSQL("DROP TABLE IF EXISTS " + ProductColumns.TABLE_NAME);
         onCreate(db);
     }

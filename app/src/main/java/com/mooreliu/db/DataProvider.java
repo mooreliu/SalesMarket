@@ -1,4 +1,4 @@
-package com.mooreliu.db.model;
+package com.mooreliu.db;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -7,8 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.mooreliu.db.DbHelper;
-import com.mooreliu.db.IDataProvider;
+import com.mooreliu.db.model.BaseColumns;
+import com.mooreliu.db.model.ProductColumns;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 
@@ -20,17 +20,21 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     private static final String TAG = "DataProvider";
     private DbHelper dbHelper;
 
-    private static final int PRODUCT = 1;
-    private static final int PRODUCT_ID = 2;
+    public static final int PRODUCT = 1;
+    public static final int PRODUCT_ID = 2;
     private static UriMatcher sUriMatcher;
     static {
+        LogUtil.e(TAG,"Sales DataProvider static data initilize");
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(Constants.AUTHORITY, ProductColumns.TABLE_NAME , PRODUCT);
         sUriMatcher.addURI(Constants.AUTHORITY, ProductColumns.TABLE_NAME+"id/*" , PRODUCT_ID);
     }
+
     @Override
     public boolean onCreate() {
+        LogUtil.e(TAG, "DataProvider onCreate()");
         dbHelper = new DbHelper(getContext());
+        dbHelper.getWritableDatabase();
         return true;
     }
     @Override
@@ -48,10 +52,13 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     @Override
     public Cursor query(Uri uri ,String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (sUriMatcher.match(uri)) {
-            case PRODUCT:
-                return  queryAllList(uri, projection, selection, selectionArgs, sortOrder);
             case PRODUCT_ID:
+                LogUtil.e(TAG, "case PRODUCT_ID  query " + uri);
                 return queryById(uri);
+            case PRODUCT:
+                LogUtil.e(TAG, "case PRODUCT query " + uri);
+                return queryAllList(uri, projection, selection, selectionArgs, sortOrder);
+
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
@@ -73,6 +80,7 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     public Uri insert(Uri uri, ContentValues value) {
         switch (sUriMatcher.match(uri)) {
             case PRODUCT:
+                LogUtil.e(TAG, "insert  "+uri);
                 insertItemByUri(uri, value);
                 return  uri;
             case PRODUCT_ID:
@@ -94,9 +102,15 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     }
     public Cursor  queryAllList(Uri uri, String[] columns, String selection, String[] selectionArgs, String orderBy) {
         String tableName = uri.getPathSegments().get(0);
-        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(tableName, null ,selection, selectionArgs, null, null , orderBy);
-        return queryWithNotification(cursor, uri);
+        LogUtil.e(TAG,"queryAllList tableName="+tableName);
+        if(dbHelper != null) {
+            SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.query(tableName, null, selection, selectionArgs, null, null, orderBy);
+            return queryWithNotification(cursor, uri);
+        }else {
+            LogUtil.e(TAG, "queryAllList dbHelper is null");
+            return  null;
+        }
     }
 
 
@@ -112,16 +126,24 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     }
 
     public void insertItemByUri(Uri uri ,ContentValues value) {
+        LogUtil.e(TAG , "insertItemByUri");
         if(value == null) {
             LogUtil.e(TAG ,"insertItemByUri value is null");
             return;
         }
         String tableName = uri.getPathSegments().get(0);
-        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        long rowId = sqLiteDatabase.insert(tableName, null, value);
-        getContext().getContentResolver().notifyChange(uri, null);
-        if(rowId > 0) {
-            LogUtil.e(TAG, "insertItemByUri success new item rows id =" + rowId);
+        SQLiteDatabase sqLiteDatabase;
+        if(dbHelper != null) {
+            sqLiteDatabase = dbHelper.getWritableDatabase();
+            long rowId = sqLiteDatabase.insert(tableName, null, value);
+            getContext().getContentResolver().notifyChange(uri, null);
+            if (rowId > 0) {
+                LogUtil.e(TAG, "insertItemByUri success new item rows id =" + rowId);
+            } else {
+                LogUtil.e(TAG, "insert rowId<0  rowId =" + rowId);
+            }
+        } else {
+            LogUtil.e(TAG, "dbHelper is null");
         }
     }
 
