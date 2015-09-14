@@ -46,7 +46,7 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
         LogUtil.e(TAG, DateUtil.getCurrentTime());
         //mdataProvider = new DataProvider();
         mContentResolver = getActivity().getContentResolver();
-        insertTextData();
+        //insertTextData();
         findViews();
         initViews();
         setOnclick();

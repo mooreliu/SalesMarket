@@ -9,7 +9,7 @@ import com.mooreliu.util.Constants;
  * Created by mooreliu on 2015/9/14.
  */
 public class UserColumns extends  BaseColumns{
-    public static final String TABLE_NAME = "user";
+    public static final String TABLE_NAME = "t_user";
     public static final String USER_NAME = "user_name";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_PHONE_NUMBER = "user_phone_number";

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * ÓÃÓÚ¶ÔÊ±¼ä½øĞĞ²Ù×÷
+
  * @author zhiwu_yan
  * @version 1.0
  * @since 2015-06-19  16:34
@@ -18,10 +18,9 @@ public class DateUtil {
     }
 
     /**
-     * ¹¦ÄÜ: ½«²åÈëµÄ×Ö·û´®°´¸ñÊ½×ª»»³É¶ÔÓ¦µÄÈÕÆÚ¶ÔÏó
      *
-     * @param str ×Ö·û´®
-     * @param pattern ¸ñÊ½
+     * @param str ï¿½Ö·ï¿½
+     * @param pattern ï¿½ï¿½Ê½
      * @return Date
      */
     public static Date StringToDate(String str, String pattern) {
@@ -37,11 +36,11 @@ public class DateUtil {
     }
 
     /**
-     * ¹¦ÄÜ£º·µ»Ø´«ÈëÈÕÆÚ¶ÔÏó£¨date£©Ö®ºóafterDaysÌìÊıµÄÈÕÆÚ¶ÔÏó
+     * ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½dateï¿½ï¿½Ö®ï¿½ï¿½afterDaysï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½
      *
-     * @param date ÈÕÆÚ¶ÔÏó
-     * @param afterDays ÍùÇ°ÌìÊı
-     * @return java.util.Date ·µ»ØÖµ
+     * @param date ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½
+     * @param afterDays ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+     * @return java.util.Date ï¿½ï¿½ï¿½ï¿½Öµ
      */
     public static Date getBeferDay(Date date, int afterDays) {
         Calendar cal = Calendar.getInstance();
@@ -51,16 +50,16 @@ public class DateUtil {
     }
 
     /**
-     * µÃµ½ºó¼¸Ìì ÌìÔÂµÄ×Ö·û´®
-     * @return java.util.Date ·µ»ØÖµ
+     * ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Âµï¿½ï¿½Ö·ï¿½
+     * @return java.util.Date ï¿½ï¿½ï¿½ï¿½Öµ
      */
     public static String getNowDayMothString(int beferDays) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(getBeferDay(Calendar.getInstance().getTime(),beferDays));
         if(beferDays==0){
-            return "½ñÌì";
+            return "ï¿½ï¿½ï¿½ï¿½";
         }else if(beferDays==1){
-            return "×òÌì";
+            return "ï¿½ï¿½ï¿½ï¿½";
         }else{
             int month = (cal.get(Calendar.MONTH))+1;
             int day_of_month = cal.get(Calendar.DAY_OF_MONTH);
@@ -72,13 +71,13 @@ public class DateUtil {
     public static String getDate(String timeString){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.valueOf(timeString));
-        SimpleDateFormat sf=new SimpleDateFormat("MMÔÂddÈÕ HH:mm");
+        SimpleDateFormat sf=new SimpleDateFormat("MMï¿½ï¿½ddï¿½ï¿½ HH:mm");
         return  sf.format(calendar.getTime());
     }
 
 
     /**
-     * ±È½Ï2¸öÊ±¼äÊÇ·ñÏóÏàµÈ£¬ÕâÀïµÄÏàµÈÊÇÖ¸Äê¡¢ÔÂ¡¢ÈÕÏàµÈ£¬¾ßÌåÊ±¼ä²»×ö±È½Ï
+     * ï¿½È½ï¿½2ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ê¡¢ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä²»ï¿½ï¿½ï¿½È½ï¿½
      * @param time1
      * @param time2
      * @return

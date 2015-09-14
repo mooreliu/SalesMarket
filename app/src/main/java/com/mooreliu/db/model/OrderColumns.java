@@ -17,19 +17,19 @@ public class OrderColumns extends BaseColumns {
     public static final String ORDER_PRODUCT_ID = "order_product_id"; // 订单商品ID
     public static final String ORDER_EXPRESS_STATE = "order_express_state"; // 订单快递状态
 
-    public static final String TABLE_NAME = "order";
+    public static final String TABLE_NAME = "t_order";
     public static final Uri BASE_URI = Uri.parse("content://"+ Constants.AUTHORITY);
     public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_URI, TABLE_NAME);
 
     public static final String CREATE_TABLE = "create table "
-            + TABLE_NAME + "( "
-            + _ID + "  integer primary key autoincrement , "
-            + ORDER_PRODUCT_ID + " integer , "
-            + ORDER_EXPRESS_STATE + " text not null , "
-            + ORDER_STATE + " text not null , "
-            + CREATE_TIME + " text not null, "
-            + UPDATE_TIME + " text not null "
-            +" ) ";
+            + TABLE_NAME + "("
+            + _ID + " integer primary key autoincrement,"
+            + ORDER_PRODUCT_ID + " integer,"
+            + ORDER_EXPRESS_STATE + " text not null,"
+            + ORDER_STATE + " text not null,"
+            + CREATE_TIME + " text not null,"
+            + UPDATE_TIME + " text not null"
+            +")";
 
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.mooreliu.order";

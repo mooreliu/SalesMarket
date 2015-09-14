@@ -3,7 +3,7 @@ package com.mooreliu.util;
 import android.content.res.Resources;
 
 /**
- * px 和dip之间转换方法
+ * px
  * @author zhiwu_yan
  * @version 1.0
  * @since 2015-06-19  11:29

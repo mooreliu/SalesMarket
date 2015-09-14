@@ -10,7 +10,7 @@ import com.mooreliu.util.Constants;
  */
 public class ProductColumns extends BaseColumns {
 
-    public static final String TABLE_NAME = "product";
+    public static final String TABLE_NAME = "t_product";
     public static final String PRODUCT_ID = "product_id";
     public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_DESCRIPTION = "product_description";
