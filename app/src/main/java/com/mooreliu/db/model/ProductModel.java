@@ -7,6 +7,7 @@ import android.os.Parcel;
  */
 public class ProductModel extends BaseModel{
 
+    private int productId;
     private String productName;
     private String productPrice;
     private String productDescription;
@@ -14,11 +15,6 @@ public class ProductModel extends BaseModel{
 
     public ProductModel(String imageUrl) {
         this.productImageUrl = imageUrl;
-    }
-
-    @Override
-    public void readBase(Parcel in) {
-        super.readBase(in);
     }
 
     @Override
@@ -36,6 +32,12 @@ public class ProductModel extends BaseModel{
 
     }
 
+    public int getProductId() {
+        return this.productId;
+    }
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
     public String getProductName() {
         return this.productName;
     }

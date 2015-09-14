@@ -102,7 +102,7 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     }
     public Cursor  queryAllList(Uri uri, String[] columns, String selection, String[] selectionArgs, String orderBy) {
         String tableName = uri.getPathSegments().get(0);
-        LogUtil.e(TAG,"queryAllList tableName="+tableName);
+//        LogUtil.e(TAG,"queryAllList tableName="+tableName);
         if(dbHelper != null) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
             Cursor cursor = sqLiteDatabase.query(tableName, null, selection, selectionArgs, null, null, orderBy);
@@ -126,7 +126,7 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     }
 
     public void insertItemByUri(Uri uri ,ContentValues value) {
-        LogUtil.e(TAG , "insertItemByUri");
+//        LogUtil.e(TAG , "insertItemByUri");
         if(value == null) {
             LogUtil.e(TAG ,"insertItemByUri value is null");
             return;
@@ -138,9 +138,9 @@ public class DataProvider extends ContentProvider implements IDataProvider{
             long rowId = sqLiteDatabase.insert(tableName, null, value);
             getContext().getContentResolver().notifyChange(uri, null);
             if (rowId > 0) {
-                LogUtil.e(TAG, "insertItemByUri success new item rows id =" + rowId);
+//                LogUtil.e(TAG, "insertItemByUri success new item rows id =" + rowId);
             } else {
-                LogUtil.e(TAG, "insert rowId<0  rowId =" + rowId);
+//                LogUtil.e(TAG, "insert rowId<0  rowId =" + rowId);
             }
         } else {
             LogUtil.e(TAG, "dbHelper is null");

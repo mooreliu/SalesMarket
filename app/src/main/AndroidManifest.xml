@@ -17,7 +17,7 @@
        >
         <provider
             android:name="com.mooreliu.db.DataProvider"
-            android:authorities="com.mooreliu.provider2"
+            android:authorities="com.mooreliu.provider"
             android:exported="false" />
         <activity
             android:name=".widget.FlashActivity"
