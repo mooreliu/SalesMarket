@@ -10,7 +10,7 @@ import android.net.Uri;
 import com.facebook.common.internal.Preconditions;
 import com.mooreliu.db.model.BaseColumns;
 import com.mooreliu.db.model.OrderColumns;
-import com.mooreliu.db.model.ProductColumns;
+import com.mooreliu.db.model.MerchandiseColumns;
 import com.mooreliu.db.model.UserColumns;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
@@ -36,8 +36,8 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     static {
         LogUtil.e(TAG,"Sales DataProvider static data initilize");
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        sUriMatcher.addURI(Constants.AUTHORITY, ProductColumns.TABLE_NAME , PRODUCT);
-        sUriMatcher.addURI(Constants.AUTHORITY, ProductColumns.TABLE_NAME+"id/*" , PRODUCT_ID);
+        sUriMatcher.addURI(Constants.AUTHORITY, MerchandiseColumns.TABLE_NAME , PRODUCT);
+        sUriMatcher.addURI(Constants.AUTHORITY, MerchandiseColumns.TABLE_NAME+"id/*" , PRODUCT_ID);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)) {
             case PRODUCT:
-                return ProductColumns.CONTENT_TYPE;
+                return MerchandiseColumns.CONTENT_TYPE;
             case PRODUCT_ID:
-                return ProductColumns.CONTENT_ITEM_TYPE;
+                return MerchandiseColumns.CONTENT_ITEM_TYPE;
             case USER:
                 return UserColumns.CONTENT_TYPE;
             case USER_ID:

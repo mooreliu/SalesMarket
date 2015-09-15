@@ -7,7 +7,8 @@ import android.os.Parcel;
  */
 public class OrderModel extends BaseModel{
 
-    private String orderProductId;
+    private int orderUserId;
+    private int orderProductId;
     private String orderState;
     private String orderExpressState;
 
@@ -19,14 +20,21 @@ public class OrderModel extends BaseModel{
     @Override
     public void writeToParcel(Parcel dest , int flag) {
         writeBase(dest);
-        dest.writeString(orderProductId);
+        dest.writeInt(orderUserId);
+        dest.writeInt(orderProductId);
         dest.writeString(orderState);
         dest.writeString(orderExpressState);
     }
-    public String getOrderProductId() {
+    public int getOrderUserId() {
+        return this.orderUserId;
+    }
+    public void setOrderUserId(int orderUserId) {
+        this.orderUserId = orderUserId;
+    }
+    public int getOrderProductId() {
         return this.orderProductId;
     }
-    public void setOrderProductId(String orderProductId) {
+    public void setOrderProductId(int orderProductId) {
         this.orderProductId = orderProductId;
     }
     public String getOrderState() {

@@ -23,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mooreliu.R;
 import com.mooreliu.adapter.CustomRecyclerListAdapter;
 import com.mooreliu.adapter.OnProductClickListener;
-import com.mooreliu.db.model.ProductModel;
+import com.mooreliu.db.model.MerchandiseModel;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
@@ -43,7 +43,7 @@ public class MainPageFragment extends Fragment {
     private final static String TAG ="MainPageFragment";
     private View noInternetView = null;
     private View mView;
-    private List<ProductModel> mList;
+    private List<MerchandiseModel> mList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
 //    private StaggeredGridLayoutManager layoutManager;
@@ -204,14 +204,12 @@ public class MainPageFragment extends Fragment {
 //        }catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        List<ProductModel> retList = gson.fromJson(response,
-//        List<ProductModelNet> retList = gson.fromJson(Constants.jsonProductList,
-                new TypeToken<List<ProductModel>>() {
+        List<MerchandiseModel> retList = gson.fromJson(response,
+        // List<MerchandiseModel> retList = gson.fromJson(Constants.jsonProductList,
+                new TypeToken<List<MerchandiseModel>>() {
                 }.getType());
-        //for(int i =0 ;i< Constants.productUrls.length ;i++) {
-        //mList.add(new ProductModel(Constants.productUrls[i],i));
         for(int i =0 ;i< retList.size()-1 ;i++) {
-            mList.add(new ProductModel(retList.get(i).getProductImageUrl()));
+            mList.add(new MerchandiseModel(retList.get(i).getmerchandiseImageUrl()));
         }
     }
     private void initRecyclerView() {
@@ -222,10 +220,10 @@ public class MainPageFragment extends Fragment {
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
-            public void onTouch(View v, ProductModel model) {
+            public void onTouch(View v, MerchandiseModel model) {
                 if(UserUtil.isLogined()) {
                     Intent intent = new Intent(getActivity(), OrderActivity.class);
-                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getProductImageUrl()));
+                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getActivity() , LoginActivity.class);

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
-import com.mooreliu.db.model.ProductModel;
+import com.mooreliu.db.model.MerchandiseModel;
 import com.mooreliu.util.DiskLruCacheUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
@@ -29,7 +29,7 @@ import libcore.io.DiskLruCache;
  */
 public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecyclerListAdapter.ViewHolder>{
     private static final String TAG = "CustomRecyclerListAdapter";
-    private List<ProductModel> mProductList;
+    private List<MerchandiseModel> mProductList;
     private OnProductClickListener mOnProductClickListener;
     private Resources mResources;
     private LruCache<String ,Bitmap> mLruBitmapCache;
@@ -37,7 +37,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
     private RecyclerView mRecyclerView;
     private Context mContext;
 
-    public CustomRecyclerListAdapter(RecyclerView rv ,Context context , List<ProductModel> list , Resources resources) {
+    public CustomRecyclerListAdapter(RecyclerView rv ,Context context , List<MerchandiseModel> list , Resources resources) {
         mRecyclerView = rv;
         mProductList = list;
         mResources = resources;
@@ -62,21 +62,23 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder ,int postion) {
-        ProductModel mProductModel = mProductList.get(postion);
-        viewHolder.productModel = mProductModel;
-        String key = TextUtil.hashKeyForDisk(mProductModel.getProductImageUrl());
+        MerchandiseModel mMerchandiseModel = mProductList.get(postion);
+        viewHolder.productModel = mMerchandiseModel;
+        String url = mMerchandiseModel.getmerchandiseImageUrl();
+        //LogUtil.e(TAG, url);
+        //LogUtil.e(TAG, mMerchandiseModel.getmerchandiseImageUrl());
+        String key = TextUtil.hashKeyForDisk(mMerchandiseModel.getmerchandiseImageUrl());
         Bitmap mBitmap = LruCacheUtil.get(key);
 
 
         if(mBitmap !=null) {//在LruCache中查询
             viewHolder.imageView.setImageBitmap(mBitmap);
-            LogUtil.e(TAG,"in LruCache"+key);
+            //LogUtil.e(TAG,"in LruCache"+key);
             return;
         } else { //如果没有在LruCache中
             Bitmap bitmap = DiskLruCacheUtil.get(key);
             viewHolder.imageView.setImageBitmap(bitmap);
             if(bitmap != null) {
-
                 LruCacheUtil.add(key, bitmap);
                 return;
             } else {
@@ -84,7 +86,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
                 viewHolder.imageView.setImageResource(R.drawable.placeholder);
                 viewHolder.imageView.setTag(key);
                 downloadBitmapTask downloadBitmap = new downloadBitmapTask();
-                downloadBitmap.execute(mProductModel);
+                downloadBitmap.execute(mMerchandiseModel);
             }
         }
 
@@ -99,7 +101,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         mOnProductClickListener = listener;
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ProductModel productModel;
+        MerchandiseModel productModel;
         ImageView imageView;
 
         public ViewHolder(View itemView) {
@@ -115,13 +117,11 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         }
     }
 
-    class  downloadBitmapTask extends AsyncTask<ProductModel, Void , Bitmap> {
+    class  downloadBitmapTask extends AsyncTask<MerchandiseModel, Void , Bitmap> {
         String url = null;
-        //int resId = -1;
         @Override
-        protected Bitmap doInBackground(ProductModel...parms) {
-            this.url = parms[0].getProductImageUrl();
-           // this.resId = parms[0].getResId();
+        protected Bitmap doInBackground(MerchandiseModel...parms) {
+            this.url = parms[0].getmerchandiseImageUrl();
             String key = TextUtil.hashKeyForDisk(this.url);
             return DiskLruCacheUtil.addToDiskLruCache(key, this.url);
         }

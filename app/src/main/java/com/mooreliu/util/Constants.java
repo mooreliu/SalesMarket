@@ -8,7 +8,7 @@ public class Constants {
     public static final String PACKAGE_NAME = "com.mooreliu";
     public static final String AUTHORITY = Constants.PACKAGE_NAME + ".provider";
     public static final int TIMEOUT = 60;
-    public static final String productUrls[]={
+    public static final String merchandiseUrls[]={
         "http://ww3.sinaimg.cn/bmiddle/005EM0nggw1evjg5s5nkuj30hs0bvgmi.jpg",
         "http://ww1.sinaimg.cn/bmiddle/005EM0nggw1evjg5shlgfj30hs0bv0tn.jpg",
         "http://ww1.sinaimg.cn/bmiddle/005EM0nggw1evjg5smc3oj30hs0bv3zl.jpg",
@@ -30,13 +30,13 @@ public class Constants {
 //        "]";
     public static final String jsonProductList =
         "[" +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/e45b26b55e998664.png\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/391d84010e240fc9.ico\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/53ad88788a956f91.png\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/22f67b33eb888654.png\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/121c8c09a6d92dc4.png\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/62cedd7ebb52262b.png\"}," +
-        "{\"productName\":\"1\",\"productPrice\":\"1\",\"productDescription\":\"1\",\"productImageUrl\":\"http://ac-rzryaqf5.clouddn.com/7e69220d525ddb54.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/e45b26b55e998664.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/391d84010e240fc9.ico\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/53ad88788a956f91.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/22f67b33eb888654.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/121c8c09a6d92dc4.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/62cedd7ebb52262b.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/7e69220d525ddb54.png\"}," +
         "]";
 
 //    public static final String jsonProductList =
