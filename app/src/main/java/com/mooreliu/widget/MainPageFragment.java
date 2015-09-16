@@ -197,9 +197,11 @@ public class MainPageFragment extends Fragment {
             getProductListTast.execute();
         } else {
             LogUtil.e(TAG,getString(R.string.networkNotAvail));
-            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
-            GzipTest(Constants.jsonProductList ,false);
-            initRecyclerView();
+            if(getActivity() != null) { // 要保证fragment没有被销毁
+                Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+                GzipTest(Constants.jsonProductList, false);
+                initRecyclerView();
+            }
         }
     }
 
@@ -222,7 +224,8 @@ public class MainPageFragment extends Fragment {
             LogUtil.e(TAG, "isSuccess" + isSuccess);
             if(isSuccess == false)
                 GzipTest(Constants.jsonProductList ,false);
-            initRecyclerView();
+            if(getActivity() != null)
+                initRecyclerView();
 
         }
 
