@@ -305,7 +305,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(CommonUtil.isFastDoubleClick())
+        if(CommonUtil.isFastDoubleClick(2*1000))
             return;
         int id = view.getId();
         switch (id) {
@@ -337,6 +337,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        LogUtil.e(TAG, "onBackPressed()");
     }
 }
 

@@ -155,7 +155,7 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(CommonUtil.isFastDoubleClick())
+        if(CommonUtil.isFastDoubleClick(2*1000)) //2 seconds
                 return;
         int id = view.getId();
         switch(id) {
@@ -171,5 +171,11 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
             default:
                 CommonUtil.toastMessage("Error in LoginAcitity");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        LogUtil.e(TAG, "onBackPressed()");
     }
 }
