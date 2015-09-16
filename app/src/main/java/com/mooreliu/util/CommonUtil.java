@@ -15,10 +15,10 @@ public class CommonUtil {
     }
 
     private static long lastClickTime;
-    public static boolean isFastDoubleClick() {
+    public static boolean isFastDoubleClick(int interval) {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if ( 0 < timeD && timeD < 2000) {
+        if ( 0 < timeD && timeD < interval) {
             return true;
         }
         lastClickTime = time;

@@ -79,6 +79,7 @@ public class LoginActivity extends  BaseActivity implements OnClickListener {
         super.onDestroy();
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle onSavedInstanceState) {
         super.onSaveInstanceState(onSavedInstanceState);

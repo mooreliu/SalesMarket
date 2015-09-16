@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
+import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.TextUtil;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.leakcanary.RefWatcher;
@@ -95,6 +97,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         RefWatcher refWatcher = AppContext.getRefWatcher(this);
         refWatcher.watch(this);
     }
+
 
 
 }

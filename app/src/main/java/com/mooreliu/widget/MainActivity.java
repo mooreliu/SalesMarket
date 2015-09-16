@@ -178,15 +178,14 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(CommonUtil.isFastDoubleClick(2*1000))
+            return false;
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
             return true;
-        } else  if (id == R.id.action_share) {
-            Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
-            return true;
-        } else if(id == R.id.action_trash) {
-            Toast.makeText(this,"删除",Toast.LENGTH_SHORT).show();
+        } else  if (id == R.id.action_refresh) {
+            Toast.makeText(this,"刷新",Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

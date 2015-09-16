@@ -1,5 +1,6 @@
 package com.mooreliu.widget;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -76,7 +77,7 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
         Uri uri = Uri.parse(MerchandiseColumns.CONTENT_URI + "");
         String where = "_id=?";
         String[] whereArgs = new String[]{String.valueOf(id)};
-        mContentResolver.delete(uri, where ,whereArgs);
+        mContentResolver.delete(uri, where, whereArgs);
     }
 
     @Override
@@ -118,6 +119,46 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onDetach();
+        LogUtil.e(TAG, "onAttach " + activity.toString());
+    }
+    @Override
+    public void onCreate(Bundle onSavedInstanceState) {
+        super.onCreate(onSavedInstanceState);
+        LogUtil.e(TAG, "onCreate");
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.e(TAG, "onDestroy");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e(TAG, "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        LogUtil.e(TAG, "onPause");
+//        if(!NetWorkUtil.isNetworkConnected())
+//            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.e(TAG,"onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.e(TAG,"onDetach");
+    }
 }
 

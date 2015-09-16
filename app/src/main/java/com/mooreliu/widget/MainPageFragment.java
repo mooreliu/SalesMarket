@@ -55,6 +55,7 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e(TAG, "onCreateView");
         mView = inflater.inflate(R.layout.layout_mainpage, container, false);
+        LogUtil.e(TAG, "onCreateView isLoadComplete"+isLoadComplete);
         return mView;
     }
 
@@ -151,27 +152,20 @@ public class MainPageFragment extends Fragment {
             LogUtil.e(TAG,"onResume isLoadComplete"+isLoadComplete);
             initList();
         }
-        //LogUtil.e(TAG, "onResume");
+        LogUtil.e(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        LogUtil.e(TAG, "onPause");
-//        if(!NetWorkUtil.isNetworkConnected())
-//            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onStop() {
         super.onStop();
         LogUtil.e(TAG,"onStop");
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        LogUtil.e(TAG,"onDetach");
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -189,6 +183,13 @@ public class MainPageFragment extends Fragment {
         super.onDestroy();
         LogUtil.e(TAG, "onDestroy");
     }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.e(TAG,"onDetach");
+    }
+
+
     private void initList(){
         mList = new ArrayList<>();
         //GzipTest();
@@ -221,7 +222,7 @@ public class MainPageFragment extends Fragment {
 
         @Override
         public void onPostExecute(Boolean isSuccess) {
-            LogUtil.e(TAG, "isSuccess" + isSuccess);
+            LogUtil.e(TAG, "download RecyclerView data from server isSuccess   " + isSuccess);
             if(isSuccess == false)
                 GzipTest(Constants.jsonProductList ,false);
             if(getActivity() != null)
@@ -255,7 +256,6 @@ public class MainPageFragment extends Fragment {
         }
     }
     private void initRecyclerView() {
-
         mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {

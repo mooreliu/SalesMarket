@@ -1,8 +1,10 @@
 package com.mooreliu.widget;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class ShoppingListPageFragment extends Fragment {
         findViews();
         initViews();
         setOnclick();
+
+
         //init();
         return mView;
     }
@@ -51,5 +55,46 @@ public class ShoppingListPageFragment extends Fragment {
 
     private void setOnclick() {
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onDetach();
+        LogUtil.e(TAG, "onAttach " + activity.toString());
+    }
+    @Override
+    public void onCreate(Bundle onSavedInstanceState) {
+        super.onCreate(onSavedInstanceState);
+        LogUtil.e(TAG, "onCreate");
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e(TAG, "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtil.e(TAG, "onPause");
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.e(TAG,"onStop");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.e(TAG, "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.e(TAG,"onDetach");
     }
 }
