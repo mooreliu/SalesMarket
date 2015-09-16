@@ -1,7 +1,13 @@
 package com.mooreliu.db.model;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Parcel;
 
+import com.facebook.common.internal.Preconditions;
+import com.mooreliu.db.DataProvider;
+import com.mooreliu.util.DataProviderHelper;
 import com.mooreliu.util.LogUtil;
 
 /**
@@ -16,9 +22,48 @@ public class MerchandiseModel extends BaseModel{
     private String merchandiseDescription;
     private String merchandiseImageUrl;
 
+    public MerchandiseModel() {
+    }
+
     public MerchandiseModel(String merchandiseImageUrl) {
         this.merchandiseImageUrl = merchandiseImageUrl;
-        //LogUtil.e(TAG, merchandiseImageUrl);
+    }
+
+    @Override
+    public String getTable() {
+        return MerchandiseColumns.TABLE_NAME;
+    }
+
+    @Override
+    public Uri getContentUri() {
+        return MerchandiseColumns.CONTENT_URI;
+    }
+
+    @Override
+    public MerchandiseModel getModel(Cursor cursor) {
+        if(cursor == null) {
+            return null;
+        }
+        MerchandiseModel model = new MerchandiseModel();
+        model.id = DataProviderHelper.parseInt(cursor, MerchandiseColumns._ID);
+        model.merchandiseId = DataProviderHelper.parseInt(cursor, MerchandiseColumns.MERCHANDISE_ID);
+        model.merchandiseName = DataProviderHelper.parseString(cursor, MerchandiseColumns.MERCHANDISE_NAME);
+        model.merchandiseDescription = DataProviderHelper.parseString(cursor, MerchandiseColumns.MERCHANDISE_DESCRIPTION);
+        model.merchandisePrice = DataProviderHelper.parseString(cursor, MerchandiseColumns.MERCHANDISE_PRICE);
+        model.merchandiseImageUrl = DataProviderHelper.parseString(cursor, MerchandiseColumns.MERCHANDISE_IMAGE_URL);
+        return model;
+    }
+
+    @Override
+    public ContentValues values() {
+        ContentValues values = ModelBase();
+        values.put(MerchandiseColumns.MERCHANDISE_ID, merchandiseId);
+        values.put(MerchandiseColumns.MERCHANDISE_NAME, merchandiseName);
+        values.put(MerchandiseColumns.MERCHANDISE_DESCRIPTION, merchandiseDescription);
+        values.put(MerchandiseColumns.MERCHANDISE_PRICE, merchandisePrice);
+        values.put(MerchandiseColumns.MERCHANDISE_IMAGE_URL, merchandiseImageUrl);
+        return values;
+
     }
 
     @Override

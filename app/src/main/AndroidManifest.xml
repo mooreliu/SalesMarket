@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mooreliu" >
+
+    <!-- permissoin -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".AppContext"
@@ -19,19 +22,38 @@
             android:name="com.mooreliu.db.DataProvider"
             android:authorities="com.mooreliu.provider"
             android:exported="false" />
+
         <activity
             android:name=".widget.FlashActivity"
             android:icon="@drawable/icon"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".widget.MainActivity"></activity>
-        <activity android:name=".widget.LoginActivity"></activity>
-        <activity android:name=".widget.RegisterActivity"></activity>
+        <activity
+            android:name=".widget.MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            />
+
+        <activity
+            android:name=".widget.LoginActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            />
+
+        <activity
+            android:name=".widget.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
+            />
+
         <activity
             android:name=".widget.OrderActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -41,19 +63,21 @@
         <meta-data android:value="55e6b81ae0f55a1d8100350f" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="Tencent" android:name="UMENG_CHANNEL"/>
         <meta-data android:name="Tencent" android:value="LeanCloud"/>
+
+        <receiver
+            android:name=".receiver.BroadcastReceiverNetCheck"
+            android:label="StartMyServiceAtBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.CONNECTIVITY_ACTIONC"></action>
+            </intent-filter>
+        </receiver>
+
+        <!--<service android:enabled="true" android:name="com.mooreliu.service.ServiceCheckNetConnect"/>-->
+
     </application>
-    <!-- permissoin -->
 
 
 </manifest>
 
-    <!--<service android:enabled="true" android:name="com.mooreliu.service.ServiceCheckNetConnect"/>-->
-    <!--<receiver android:name=".service.BroadcastReceiverNetCheck">-->
-    <!--<intent-filter>-->
-    <!--<action android:name="android.intent.action.CONNECTIVITY_ACTIONC"></action>-->
-    <!--</intent-filter>-->
-    <!--</receiver>-->
-    <!--<intent-filter>-->
-    <!--<action android:name="com.mooreliu.subService" />-->
-    <!--</intent-filter>-->
-    <!--</service>-->
+

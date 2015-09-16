@@ -36,14 +36,12 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     private static final String TAG = "MyPageFragment";
     private View mView;
     private ListView mListView;
-   // DataProvider mdataProvider;
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_mypage, container, false);
-        LogUtil.e(TAG, DateUtil.getCurrentTime());
         mContentResolver = getActivity().getContentResolver();
         findViews();
         initViews();
@@ -106,13 +104,13 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = new String[] {MerchandiseColumns.MERCHANDISE_NAME, MerchandiseColumns._ID};
-        LogUtil.e(TAG, "CursorLoader 初始化 onCreateLoader");
+        //LogUtil.e(TAG, "CursorLoader 初始化 onCreateLoader");
         return new CursorLoader(getActivity(), MerchandiseColumns.CONTENT_URI, projection, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        LogUtil.e(TAG, "数据发生变化 onLoadFinished");
+        //LogUtil.e(TAG, "数据发生变化 onLoadFinished");
         adapter.changeCursor(data);
     }
 

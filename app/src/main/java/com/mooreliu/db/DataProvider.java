@@ -11,6 +11,7 @@ import com.facebook.common.internal.Preconditions;
 import com.mooreliu.db.model.BaseColumns;
 import com.mooreliu.db.model.OrderColumns;
 import com.mooreliu.db.model.MerchandiseColumns;
+import com.mooreliu.db.model.ShoppingChartColumns;
 import com.mooreliu.db.model.UserColumns;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
@@ -32,12 +33,22 @@ public class DataProvider extends ContentProvider implements IDataProvider{
     public static final int ORDER = 5;
     public static final int ORDER_ID = 6;
 
+    public static final int SHOPPING_CHART =7;
+    public static final int SHOPPING_CHART_ID = 8;
+
     private static UriMatcher sUriMatcher;
     static {
         LogUtil.e(TAG,"Sales DataProvider static data initilize");
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        sUriMatcher.addURI(Constants.AUTHORITY, MerchandiseColumns.TABLE_NAME , PRODUCT);
+        sUriMatcher.addURI(Constants.AUTHORITY, MerchandiseColumns.TABLE_NAME, PRODUCT);
         sUriMatcher.addURI(Constants.AUTHORITY, MerchandiseColumns.TABLE_NAME+"id/*" , PRODUCT_ID);
+        sUriMatcher.addURI(Constants.AUTHORITY, OrderColumns.TABLE_NAME , USER);
+        sUriMatcher.addURI(Constants.AUTHORITY, OrderColumns.TABLE_NAME+"id/*" , USER_ID);
+        sUriMatcher.addURI(Constants.AUTHORITY, UserColumns.TABLE_NAME , ORDER);
+        sUriMatcher.addURI(Constants.AUTHORITY, UserColumns.TABLE_NAME+"id/*" , ORDER_ID);
+        sUriMatcher.addURI(Constants.AUTHORITY, ShoppingChartColumns.TABLE_NAME , SHOPPING_CHART);
+        sUriMatcher.addURI(Constants.AUTHORITY, ShoppingChartColumns.TABLE_NAME+"id/*" , SHOPPING_CHART_ID);
+
     }
 
     @Override
@@ -62,6 +73,10 @@ public class DataProvider extends ContentProvider implements IDataProvider{
                 return OrderColumns.CONTENT_TYPE;
             case ORDER_ID:
                 return OrderColumns.CONTENT_ITEM_TYPE;
+            case SHOPPING_CHART:
+                return ShoppingChartColumns.CONTENT_TYPE;
+            case SHOPPING_CHART_ID:
+                return ShoppingChartColumns.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
@@ -69,16 +84,17 @@ public class DataProvider extends ContentProvider implements IDataProvider{
 
     @Override
     public Cursor query(Uri uri ,String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        //LogUtil.e(TAG, uri+"");
         switch (sUriMatcher.match(uri)) {
             case ORDER_ID:
             case USER_ID:
             case PRODUCT_ID:
-                LogUtil.e(TAG, "case PRODUCT_ID  query " + uri);
+            case SHOPPING_CHART_ID:
                 return queryById(uri);
             case USER:
             case ORDER:
             case PRODUCT:
-                LogUtil.e(TAG, "case PRODUCT query " + uri);
+            case SHOPPING_CHART:
                 return queryAllList(uri, projection, selection, selectionArgs, sortOrder);
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
@@ -91,10 +107,12 @@ public class DataProvider extends ContentProvider implements IDataProvider{
             case USER:
             case ORDER:
             case PRODUCT:
+            case SHOPPING_CHART:
                 return updateByCondition(uri, value, selection, selectionArgs);
             case ORDER_ID:
             case USER_ID:
             case PRODUCT_ID:
+            case SHOPPING_CHART_ID:
                 return updateByUri(uri, value);
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
@@ -107,16 +125,16 @@ public class DataProvider extends ContentProvider implements IDataProvider{
             case USER:
             case ORDER:
             case PRODUCT:
-                LogUtil.e(TAG, "insert  "+uri);
+            case SHOPPING_CHART:
                 insertItemByUri(uri, value);
                 return  uri;
             case ORDER_ID:
             case USER_ID:
             case PRODUCT_ID:
+            case SHOPPING_CHART_ID:
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
         }
-
     }
 
     @Override
@@ -146,10 +164,12 @@ public class DataProvider extends ContentProvider implements IDataProvider{
             case USER:
             case ORDER:
             case PRODUCT:
+            case SHOPPING_CHART:
                 return deleteItemByCondition(uri, selection, selectionArgs);
             case ORDER_ID:
             case USER_ID:
             case PRODUCT_ID:
+            case SHOPPING_CHART_ID:
                 return  deleteItemByUri(uri);
             default:
                 throw new IllegalArgumentException("illegal arguments query"+uri);
@@ -168,7 +188,6 @@ public class DataProvider extends ContentProvider implements IDataProvider{
         }
     }
 
-
     public Cursor queryById(Uri uri) {
         String tableName = uri.getPathSegments().get(0);
         String id = uri.getPathSegments().get(2);
@@ -177,11 +196,9 @@ public class DataProvider extends ContentProvider implements IDataProvider{
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(tableName, null, where, whereArgs, null, null, null);
         return queryWithNotification(cursor, uri);
-
     }
 
     public void insertItemByUri(Uri uri ,ContentValues value) {
-//        LogUtil.e(TAG , "insertItemByUri");
         if(value == null) {
             LogUtil.e(TAG ,"insertItemByUri value is null");
             return;
@@ -191,6 +208,7 @@ public class DataProvider extends ContentProvider implements IDataProvider{
         if(dbHelper != null) {
             sqLiteDatabase = dbHelper.getWritableDatabase();
             long rowId = sqLiteDatabase.insert(tableName, null, value);
+
             getContext().getContentResolver().notifyChange(uri, null);
             if (rowId > 0) {
 //                LogUtil.e(TAG, "insertItemByUri success new item rows id =" + rowId);

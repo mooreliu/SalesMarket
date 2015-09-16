@@ -10,10 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mooreliu.R;
+import com.mooreliu.controller.ShoppingChartController;
+import com.mooreliu.db.model.ShoppingChartModel;
+import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.DiskLruCacheUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.view.RatioImageView;
+
+import task.AddToShoppingChartTask;
 
 /**
  * Created by liuyi on 15/9/3.
@@ -77,11 +82,27 @@ public class OrderActivity extends  BaseActivity implements View.OnClickListener
         mAddToShoppingList.setOnClickListener(this);
 
     }
+    private void doAddToShoppingList() {
+        ShoppingChartController sc = new ShoppingChartController();
+        ShoppingChartModel model = sc.newShoppingChartItem(1,1,Integer.valueOf(mProductNumber.getText().toString()));
+
+
+        new AddToShoppingChartTask(this,sc) {
+            @Override
+            public void postExecute(Boolean isSuccess) {
+                if(isSuccess)
+                    mAddToShoppingList.setText("yep");
+                else
+                    mAddToShoppingList.setText("Nooo...");
+            }
+        }.execute(model);
+    }
     @Override
     public void onClick(View view) {
         View v = view;
         switch (v.getId()) {
             case R.id.add_to_shoppinglist :
+                doAddToShoppingList();
                 Toast.makeText(this , "加入购物车" , Toast.LENGTH_SHORT).show();
                 break;
 

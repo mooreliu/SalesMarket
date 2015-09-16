@@ -41,7 +41,7 @@ public class TabFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //LogUtil.e(TAG ,"getItem +"+position);
+        LogUtil.e(TAG ,"getItem +"+position);
         return mFragments.get(position);
 //        if(NetWorkUtil.isNetworkConnected())
 //            return mFragments.get(position);

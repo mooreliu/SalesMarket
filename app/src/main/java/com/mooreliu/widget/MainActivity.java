@@ -30,7 +30,7 @@ import com.mooreliu.adapter.TabFragmentAdapter;
 import com.mooreliu.event.EventType;
 import com.mooreliu.event.Notify;
 import com.mooreliu.event.NotifyInfo;
-import com.mooreliu.service.BroadcastReceiverNetCheck;
+import com.mooreliu.receiver.BroadcastReceiverNetCheck;
 import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.UserUtil;
 

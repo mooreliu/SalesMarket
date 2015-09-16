@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.facebook.common.internal.Preconditions;
 import com.mooreliu.db.model.OrderColumns;
 import com.mooreliu.db.model.MerchandiseColumns;
+import com.mooreliu.db.model.ShoppingChartColumns;
 import com.mooreliu.db.model.UserColumns;
 import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.LogUtil;
@@ -35,6 +36,7 @@ public class DbHelper extends SQLiteOpenHelper{
         db.execSQL(MerchandiseColumns.CREATE_TABLE);
         db.execSQL(UserColumns.CREATE_TABLE);
         db.execSQL(OrderColumns.CREATE_TABLE);
+        db.execSQL(ShoppingChartColumns.CREATE_TABLE);
         initMerchandiseTable(db);
         initUserTable(db);
         initOrderTable(db);
@@ -46,6 +48,7 @@ public class DbHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + MerchandiseColumns.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserColumns.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + OrderColumns.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ShoppingChartColumns.TABLE_NAME);
         onCreate(db);
     }
 
@@ -88,27 +91,27 @@ public class DbHelper extends SQLiteOpenHelper{
     /**
      * 插入商品merchandise数据库Item
      * @param db
-     * @param productId
-     * @param productName
-     * @param productPrice
-     * @param productDescription
-     * @param productImageUrl
+     * @param merchandiseId
+     * @param merchandiseName
+     * @param merchandisePrice
+     * @param merchandiseDescription
+     * @param merchandiseImageUrl
      */
-    public void addProduct(SQLiteDatabase db, int productId, String productName,
-                           String productPrice, String productDescription, String productImageUrl) {
+    public void addMerchandise(SQLiteDatabase db, int merchandiseId, String merchandiseName,
+                           String merchandisePrice, String merchandiseDescription, String merchandiseImageUrl) {
         Preconditions.checkNotNull(db);
-        Preconditions.checkNotNull(productName);
-        Preconditions.checkNotNull(productPrice);
-        Preconditions.checkNotNull(productDescription);
-        Preconditions.checkNotNull(productImageUrl);
+        Preconditions.checkNotNull(merchandiseName);
+        Preconditions.checkNotNull(merchandisePrice);
+        Preconditions.checkNotNull(merchandiseDescription);
+        Preconditions.checkNotNull(merchandiseImageUrl);
 
         ContentValues insertValue = new ContentValues();
 
-        insertValue.put(MerchandiseColumns.MERCHANDISE_ID, productId);
-        insertValue.put(MerchandiseColumns.MERCHANDISE_NAME, productName);
-        insertValue.put(MerchandiseColumns.MERCHANDISE_PRICE, productPrice);
-        insertValue.put(MerchandiseColumns.MERCHANDISE_DESCRIPTION, productDescription);
-        insertValue.put(MerchandiseColumns.MERCHANDISE_IMAGE_URL, productImageUrl);
+        insertValue.put(MerchandiseColumns.MERCHANDISE_ID, merchandiseId);
+        insertValue.put(MerchandiseColumns.MERCHANDISE_NAME, merchandiseName);
+        insertValue.put(MerchandiseColumns.MERCHANDISE_PRICE, merchandisePrice);
+        insertValue.put(MerchandiseColumns.MERCHANDISE_DESCRIPTION, merchandiseDescription);
+        insertValue.put(MerchandiseColumns.MERCHANDISE_IMAGE_URL, merchandiseImageUrl);
         db.insert(MerchandiseColumns.TABLE_NAME, null, insertValue);
     }
 
@@ -134,7 +137,7 @@ public class DbHelper extends SQLiteOpenHelper{
         insertValue.put(UserColumns.USER_PASSWORD, userPassword);
         insertValue.put(UserColumns.USER_PHONE_NUMBER, userPhoneNumber);
         insertValue.put(UserColumns.USER_MAILING_ADDRESS, userMailingAddress);
-        db.insert(MerchandiseColumns.TABLE_NAME, null, insertValue);
+        db.insert(UserColumns.TABLE_NAME, null, insertValue);
 
     }
 
@@ -219,8 +222,15 @@ public class DbHelper extends SQLiteOpenHelper{
         order2.put(OrderColumns.ORDER_EXPRESS_STATE, "To be send");
         order2.put(OrderColumns.CREATE_TIME, createTime);
         order2.put(OrderColumns.UPDATE_TIME, updateTime);
-
+        ContentValues order3 = new ContentValues();
+        order3.put(OrderColumns.ORDER_USER_ID, 1);
+        order3.put(OrderColumns.ORDER_MERCHANDISE_ID, 2);
+        order3.put(OrderColumns.ORDER_STATE, "been paied");
+        order3.put(OrderColumns.ORDER_EXPRESS_STATE, "To be send");
+        order3.put(OrderColumns.CREATE_TIME, createTime);
+        order3.put(OrderColumns.UPDATE_TIME, updateTime);
         insertOrderItem(db, order1);
         insertOrderItem(db, order2);
+        insertOrderItem(db, order3);
     }
 }

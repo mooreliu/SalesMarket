@@ -71,6 +71,7 @@ public class AppContext extends Application {
         initDiskLruCache();
         initLruCache();
         initAVOS();
+        beginTestService();
         refWatcher = LeakCanary.install(this);
     }
 
@@ -105,7 +106,6 @@ public class AppContext extends Application {
         startService(intent);
         LogUtil.e(TAG, "startService(intent);");
     }
-
 
     public static Context getContext() {
         return  context;

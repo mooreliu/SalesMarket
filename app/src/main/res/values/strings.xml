@@ -38,7 +38,8 @@
     <string name="phonenumer_is_not_verified">该手机号未通过验证</string>
     <string name="login_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890</string>
     <string name="reload">重新加载</string>
+    <string name="goto_setting">打开设置</string>
     <string name="reconnect_to_internet">重新连接到网络</string>
-
+    <string name="add_to_shopping_chart">加入购物车</string>
 
 </resources>

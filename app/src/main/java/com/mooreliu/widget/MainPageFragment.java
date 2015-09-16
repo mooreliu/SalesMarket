@@ -1,11 +1,13 @@
 package com.mooreliu.widget;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,25 +48,13 @@ public class MainPageFragment extends Fragment {
     private List<MerchandiseModel> mList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
-//    private StaggeredGridLayoutManager layoutManager;
     private LinearLayoutManager layoutManager;
     private CustomProgressDialog progressDialog;
-
-
+    private boolean isLoadComplete = false;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogUtil.e(TAG, "onCreateView");
         mView = inflater.inflate(R.layout.layout_mainpage, container, false);
-        findView();
-        initView();
-        setClick();
-        initNoInternetView(mView);
-
-        if(!NetWorkUtil.isNetworkConnected()) {
-            if(noInternetView != null) {
-                noInternetView.setVisibility(View.VISIBLE);
-                noInternetView.bringToFront();
-            }
-        }
         return mView;
     }
 
@@ -72,39 +62,40 @@ public class MainPageFragment extends Fragment {
         if(view == null)
             return;
         RelativeLayout parentView = (RelativeLayout)view.findViewById(R.id.parent_view);
-
         LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         noInternetView = inflater.inflate(R.layout.layout_reload, null);
         noInternetView.setLayoutParams(
-                new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         noInternetView.setClickable(true);
         parentView.addView(noInternetView);
+        final Button btnGotoSetting = (Button)noInternetView.findViewById(R.id.goto_setting);
+        btnGotoSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
 
-        final Button button = (Button)noInternetView.findViewById(R.id.reload);
+        final Button btnReload = (Button)noInternetView.findViewById(R.id.reload);
         if(noInternetView != null)
             noInternetView.setVisibility(View.GONE);
-        button.setOnClickListener(new View.OnClickListener() {
+        btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mview) {
                 showProgress(R.string.reconnect_to_internet);
-                if (!NetWorkUtil.isNetworkConnected()) {
-                    if (noInternetView != null) {
-                        noInternetView.setVisibility(View.VISIBLE);
-                        noInternetView.bringToFront();
-                    }
-                } else {
-                    if (noInternetView != null)
-                        noInternetView.setVisibility(View.GONE);
-                }
+                checkNerworkForView();
             }
         });
     }
 
-
     @Override
     public void onActivityCreated(Bundle onSavedInstanceState) {
         super.onActivityCreated(onSavedInstanceState);
-        initList();
+        findView();
+        initView();
+        setClick();
+        LogUtil.e(TAG, "onActivityCreated");
+
     }
 
     public void showProgress(int resID) {
@@ -121,36 +112,83 @@ public class MainPageFragment extends Fragment {
                 progressDialog.dismiss();
             }
         };
-        handler.postDelayed(r,200);
+        handler.postDelayed(r, 200);
 
     }
     private void findView() {
+        mRecyclerView =(RecyclerView)mView.findViewById(R.id.mainpage_recyclerview);
 
     }
     private void initView() {
+        initNoInternetView(mView);
+        layoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
+        if(checkNerworkForView()&&isLoadComplete==false)
+            initList();
 
     }
     private void setClick() {
 
     }
+    private boolean checkNerworkForView() {
+        if (!NetWorkUtil.isNetworkConnected()) {
+            if (noInternetView != null) {
+                noInternetView.setVisibility(View.VISIBLE);
+                noInternetView.bringToFront();
+            }
+            return false;
+        } else {
+            if (noInternetView != null)
+                noInternetView.setVisibility(View.GONE);
+            return true;
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-//        LogUtil.e(TAG,"onResume");
-//        if(!NetWorkUtil.isNetworkConnected())
-//            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+        if(checkNerworkForView() ) {
+            LogUtil.e(TAG,"onResume isLoadComplete"+isLoadComplete);
+            initList();
+        }
+        //LogUtil.e(TAG, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        LogUtil.e(TAG,"onPause");
+//        LogUtil.e(TAG, "onPause");
 //        if(!NetWorkUtil.isNetworkConnected())
 //            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
-
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.e(TAG,"onStop");
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.e(TAG,"onDetach");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onDetach();
+        LogUtil.e(TAG,"onAttach "+activity.toString());
+    }
+    @Override
+    public void onCreate(Bundle onSavedInstanceState) {
+        super.onCreate(onSavedInstanceState);
+        LogUtil.e(TAG, "onCreate");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.e(TAG, "onDestroy");
+    }
     private void initList(){
         mList = new ArrayList<>();
         //GzipTest();
@@ -185,6 +223,7 @@ public class MainPageFragment extends Fragment {
             if(isSuccess == false)
                 GzipTest(Constants.jsonProductList ,false);
             initRecyclerView();
+
         }
 
 
@@ -213,33 +252,26 @@ public class MainPageFragment extends Fragment {
         }
     }
     private void initRecyclerView() {
-        mRecyclerView =(RecyclerView)getActivity().findViewById(R.id.mainpage_recyclerview);
-        layoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layoutManager);
+
         mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
             public void onTouch(View v, MerchandiseModel model) {
-                if(UserUtil.isLogined()) {
+                if (UserUtil.isLogined()) {
                     Intent intent = new Intent(getActivity(), OrderActivity.class);
                     intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(getActivity() , LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
             }
         });
 
-    }
-    @Override
-    public void onCreate(Bundle onSavedInstanceState) {
-        super.onCreate(onSavedInstanceState);
+        isLoadComplete = true;
+        LogUtil.e(TAG, " isLoadComplete" + isLoadComplete);
+
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }
