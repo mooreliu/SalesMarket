@@ -30,8 +30,8 @@ public abstract class AddToShoppingChartTask extends AsyncTask<ShoppingChartMode
         mProgressDialog.show();
     }
     @Override
-    public Boolean doInBackground(ShoppingChartModel ...parms) {
-        if(sc.insert(mContext, parms[0])!=null)
+    public Boolean doInBackground(ShoppingChartModel ...params) {
+        if(sc.insert(mContext, params[0])!=null)
             return  true;
         return false;
     }

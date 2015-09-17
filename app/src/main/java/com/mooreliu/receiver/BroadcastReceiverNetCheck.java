@@ -19,7 +19,7 @@ public class BroadcastReceiverNetCheck extends BroadcastReceiver {
         LogUtil.e(TAG,"receive an actoin");
         String action = intent.getAction();
 //        LogUtil.e(TAG ,action);
-        if(action == ConnectivityManager.CONNECTIVITY_ACTION) {
+        if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
 //            LogUtil.e(TAG ,action);
 //            LogUtil.e(TAG ,"Toast");
 //            Toast.makeText(context , R.string.connectivityChanged,Toast.LENGTH_LONG).show();

@@ -209,7 +209,7 @@ public class MainPageFragment extends Fragment {
     private class TaskGetProductListFromServer extends AsyncTask<Void,Void ,Boolean> {
         @Override
         public Boolean doInBackground(Void ...parms) {
-            String getUrl = new String("http://192.168.1.115:8080/user");
+            String getUrl = "http://192.168.1.115:8080/user";
             String response;
             response = HttpUtil.HttpGETResponseString(getUrl ,5*1000 ,5*1000);
             if(response !=null) {

@@ -130,12 +130,12 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
         public void onPostExecute(Bitmap bitmap) {
             String key = TextUtil.hashKeyForDisk(this.url);
             ImageView imageView =(ImageView) mRecyclerView.findViewWithTag(key);
-            if(imageView == null) {
+//            if(imageView == null) {
 //                LogUtil.e(TAG,"findViewWithTag null****"+this.url);
-            }
-            if(bitmap == null) {
+//            }
+//            if(bitmap == null) {
 //                LogUtil.e(TAG,"BITmap is NULL");
-            }
+//            }
             if(bitmap !=null && imageView != null) {
                 imageView.setImageBitmap(bitmap);
 //                LogUtil.e(TAG,"addToLruCache "+key);
