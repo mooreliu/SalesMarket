@@ -32,6 +32,7 @@ import com.mooreliu.event.Notify;
 import com.mooreliu.event.NotifyInfo;
 import com.mooreliu.receiver.BroadcastReceiverNetCheck;
 import com.mooreliu.util.CommonUtil;
+import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.UserUtil;
 
 import java.util.ArrayList;
@@ -142,17 +143,34 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
             mTabLayout.addTab(mTabLayout.newTab());
         List<Fragment> fragmentList = new ArrayList<>();
         Fragment mMainPageFragment = new MainPageFragment();
-        MyPageFragment mMyPageFragment = new MyPageFragment();
-        ShoppingListPageFragment mShoppingListPageFragment = new ShoppingListPageFragment();
-        ReloadFragment mReloadFragment = new ReloadFragment();
-
-        fragmentList.add(mMainPageFragment);
-        fragmentList.add(mShoppingListPageFragment);
-        fragmentList.add(mMyPageFragment);
-        fragmentList.add(mReloadFragment);
+//        MyPageFragment mMyPageFragment = new MyPageFragment();
+//        ShoppingListPageFragment mShoppingListPageFragment = new ShoppingListPageFragment();
+//        ReloadFragment mReloadFragment = new ReloadFragment();
+//
+//        fragmentList.add(mMainPageFragment);
+//        fragmentList.add(mShoppingListPageFragment);
+//        fragmentList.add(mMyPageFragment);
+//        fragmentList.add(mReloadFragment);
+//        TabFragmentAdapter fragmentAdapter =
+//                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         TabFragmentAdapter fragmentAdapter =
-                new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
+                new TabFragmentAdapter(getSupportFragmentManager());//
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(final int position, final float v, final int i2) {
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                LogUtil.e(TAG, "position onPageSelected" + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(final int position) {
+            }
+        });
+        //mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
     }

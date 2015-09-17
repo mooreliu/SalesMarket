@@ -25,6 +25,10 @@ public class ShoppingListPageFragment extends Fragment {
     private OrderController oc;
     private View mView;
 
+    public ShoppingListPageFragment() {
+        super();
+        LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_shoppinglist, container, false);
@@ -37,13 +41,22 @@ public class ShoppingListPageFragment extends Fragment {
         return mView;
     }
 
-    private void init() {
-        oc = new OrderController();
-        List<OrderModel> orderList = oc.getOrdersByUserId(getActivity(), 1);
-        OrderModel model = orderList.get(0);
-        LogUtil.e(TAG, model.getOrderExpressState());
-        LogUtil.e(TAG, "orderList.size()"+orderList.size());
+    public static ShoppingListPageFragment newInstance() {
+        ShoppingListPageFragment fragment = new ShoppingListPageFragment();
+        return  fragment;
     }
+//    public static ShoppingListPageFragment init(int position) {
+//        ShoppingListPageFragment fragment = new ShoppingListPageFragment();
+//        //Bundle args = new Bundle();
+//        //args.putInt("args",position);
+//        //fragment.setArguments(args);
+//        return fragment;
+////        oc = new OrderController();
+////        List<OrderModel> orderList = oc.getOrdersByUserId(getActivity(), 1);
+////        OrderModel model = orderList.get(0);
+////        LogUtil.e(TAG, model.getOrderExpressState());
+////        LogUtil.e(TAG, "orderList.size()"+orderList.size());
+//    }
 
     private void findViews() {
 

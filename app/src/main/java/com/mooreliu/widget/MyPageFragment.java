@@ -40,6 +40,16 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
 
+    public MyPageFragment() {
+        super();
+        LogUtil.e(TAG, "MyPageFragment 构造函数");
+    }
+
+    public static MyPageFragment newInstance() {
+        MyPageFragment fragment = new MyPageFragment();
+        return  fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_mypage, container, false);

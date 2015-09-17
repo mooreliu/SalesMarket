@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
 import com.mooreliu.db.model.MerchandiseModel;
+import com.mooreliu.listener.OnProductClickListener;
 import com.mooreliu.util.DiskLruCacheUtil;
-import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.util.TextUtil;
 

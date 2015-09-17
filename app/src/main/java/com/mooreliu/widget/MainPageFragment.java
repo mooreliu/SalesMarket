@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mooreliu.R;
 import com.mooreliu.adapter.CustomRecyclerListAdapter;
-import com.mooreliu.adapter.OnProductClickListener;
+import com.mooreliu.listener.OnProductClickListener;
 import com.mooreliu.db.model.MerchandiseModel;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
@@ -51,6 +51,16 @@ public class MainPageFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private CustomProgressDialog progressDialog;
     private boolean isLoadComplete = false;
+
+    public MainPageFragment() {
+        super();
+        LogUtil.e(TAG, "MainPageFragment构造函数");
+    }
+    public static MainPageFragment newInstance() {
+        MainPageFragment fragment = new MainPageFragment();
+        return  fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e(TAG, "onCreateView");
@@ -155,39 +165,40 @@ public class MainPageFragment extends Fragment {
         LogUtil.e(TAG, "onResume");
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//    }
+    @Override
+    public void onPause() {
+        LogUtil.e(TAG,"onPause");
+        super.onPause();
+    }
 
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        LogUtil.e(TAG,"onStop");
-//    }
-//
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onDetach();
-//        LogUtil.e(TAG,"onAttach "+activity.toString());
-//    }
-//    @Override
-//    public void onCreate(Bundle onSavedInstanceState) {
-//        super.onCreate(onSavedInstanceState);
-//        LogUtil.e(TAG, "onCreate");
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        LogUtil.e(TAG, "onDestroy");
-//    }
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        LogUtil.e(TAG,"onDetach");
-//    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogUtil.e(TAG,"onStop");
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onDetach();
+        LogUtil.e(TAG,"onAttach "+activity.toString());
+    }
+    @Override
+    public void onCreate(Bundle onSavedInstanceState) {
+        super.onCreate(onSavedInstanceState);
+        LogUtil.e(TAG, "onCreate");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtil.e(TAG, "onDestroy");
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogUtil.e(TAG,"onDetach");
+    }
 
 
     private void initList(){

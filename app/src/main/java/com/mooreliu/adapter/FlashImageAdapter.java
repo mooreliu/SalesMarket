@@ -27,7 +27,7 @@ public class FlashImageAdapter extends PagerAdapter {
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {//判断是否为view对象
-            return arg0==arg1;//官方demo给出的建议写法
+            return arg0 == arg1;//官方demo给出的建议写法
         }
 
         @Override
