@@ -155,39 +155,39 @@ public class MainPageFragment extends Fragment {
         LogUtil.e(TAG, "onResume");
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        LogUtil.e(TAG,"onStop");
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onDetach();
-        LogUtil.e(TAG,"onAttach "+activity.toString());
-    }
-    @Override
-    public void onCreate(Bundle onSavedInstanceState) {
-        super.onCreate(onSavedInstanceState);
-        LogUtil.e(TAG, "onCreate");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        LogUtil.e(TAG, "onDestroy");
-    }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        LogUtil.e(TAG,"onDetach");
-    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        LogUtil.e(TAG,"onStop");
+//    }
+//
+//
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onDetach();
+//        LogUtil.e(TAG,"onAttach "+activity.toString());
+//    }
+//    @Override
+//    public void onCreate(Bundle onSavedInstanceState) {
+//        super.onCreate(onSavedInstanceState);
+//        LogUtil.e(TAG, "onCreate");
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        LogUtil.e(TAG, "onDestroy");
+//    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        LogUtil.e(TAG,"onDetach");
+//    }
 
 
     private void initList(){
