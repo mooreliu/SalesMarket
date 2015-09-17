@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.mooreliu.R;
 import com.mooreliu.controller.OrderController;
 import com.mooreliu.db.model.OrderModel;
+import com.mooreliu.listener.OnSwitchFragmentListener;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
 
 import java.util.List;
@@ -19,14 +21,30 @@ import java.util.List;
 /**
  * Created by liuyi on 15/8/29.
  */
-public class ShoppingListPageFragment extends Fragment {
+public class ShoppingListPageFragment extends BaseFragment {
 
     private static final String TAG = "ShoppingListPageFragment";
     private OrderController oc;
     private View mView;
+    private OnSwitchFragmentListener listener;
+    @Override
+    public void onVisible() {
+        LogUtil.e(TAG, "ShoppingListPageFragment onVisible");
+        if(NetWorkUtil.isNetworkConnected()) {
+            listener.switchFragment(1, true);
+        } else {
+            listener.switchFragment(1, false);
+        }
+    }
 
     public ShoppingListPageFragment() {
         super();
+        LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
+    }
+
+    public ShoppingListPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        this.listener = listener;
         LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
     }
     @Override
@@ -35,7 +53,6 @@ public class ShoppingListPageFragment extends Fragment {
         findViews();
         initViews();
         setOnclick();
-
 
         //init();
         return mView;

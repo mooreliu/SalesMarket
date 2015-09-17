@@ -41,7 +41,7 @@ import java.util.List;
  * Created by liuyi on 15/8/29.
  * 首页
  */
-public class MainPageFragment extends Fragment {
+public class MainPageFragment extends BaseFragment {
     private final static String TAG ="MainPageFragment";
     private View noInternetView = null;
     private View mView;
@@ -51,6 +51,11 @@ public class MainPageFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private CustomProgressDialog progressDialog;
     private boolean isLoadComplete = false;
+
+    @Override
+    public void onVisible() {
+
+    }
 
     public MainPageFragment() {
         super();

@@ -13,7 +13,10 @@ import android.widget.Button;
 
 import com.mooreliu.R;
 import com.mooreliu.listener.OnSwitchFragmentListener;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.CommonUtil;
+import com.mooreliu.util.LogUtil;
+
 /**
  * Created by mooreliu on 2015/9/11.
  */
@@ -24,11 +27,13 @@ public class ReloadFragment extends Fragment implements OnClickListener {
     Button mReloadButton;
     Button mGoToSetting;
     OnSwitchFragmentListener mOnSwitchFragmentListener;
+    private int fragmentId;
     public ReloadFragment() {
         super();
     }
-    public ReloadFragment(OnSwitchFragmentListener listener) {
+    public ReloadFragment(int fragmentId, OnSwitchFragmentListener listener) {
         super();
+        this.fragmentId = fragmentId;
         mOnSwitchFragmentListener = listener;
     }
     @Override
@@ -66,8 +71,13 @@ public class ReloadFragment extends Fragment implements OnClickListener {
 
         switch (id) {
             case R.id.reload:
-                mOnSwitchFragmentListener.switchFragment();
-                CommonUtil.toastMessage(getResources().getString(R.string.reload));
+                LogUtil.e(TAG,"reload button pressed");
+                if(NetWorkUtil.isNetworkConnected())
+                    mOnSwitchFragmentListener.switchFragment(fragmentId, true);
+                else
+                    mOnSwitchFragmentListener.switchFragment(fragmentId, false);
+
+                //CommonUtil.toastMessage(getResources().getString(R.string.reload));
                 break;
             case R.id.goto_setting:
                 startActivity(new Intent(Settings.ACTION_SETTINGS));

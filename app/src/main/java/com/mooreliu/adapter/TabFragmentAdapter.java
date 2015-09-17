@@ -13,9 +13,13 @@ import android.text.style.ImageSpan;
 import com.mooreliu.AppContext;
 import com.mooreliu.R;
 import com.mooreliu.listener.OnLoadingOverListener;
+import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.widget.LoadingFragment;
+import com.mooreliu.widget.MainPageFragment;
+import com.mooreliu.widget.MyPageFragment;
+import com.mooreliu.widget.ReloadFragment;
 import com.mooreliu.widget.ShoppingListPageFragment;
 
 /**
@@ -30,10 +34,14 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
 
     private final static String TAG = "TabFragmentAdapter";
     private  Fragment mFragmentAtPos0;
+    private  Fragment mFragmentAtPos1;
+    private  Fragment mFragmentAtPos2;
+
     private FragmentManager fm;
     private int baseId = 0;
     //private List<Fragment> mFragments;
     private  MainPageFragmentListener mMainPageFragmentListener;// = new MainPageFragmentListener();
+    private SwitchFragmentListener mSwitchFragmentListener;
     int[] imageResId={
         R.mipmap.main_navigation_home,
         R.mipmap.main_navigation_car,
@@ -45,16 +53,45 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
         public void LoadingOver() {
             LogUtil.e(TAG, "MainPageFragmentListener LoadingOver回调函数");
             fm.beginTransaction().remove(mFragmentAtPos0).commit();
-            mFragmentAtPos0 =  ShoppingListPageFragment.newInstance();
-            notifyChangeInPosition(0);
+            mFragmentAtPos0 =  MainPageFragment.newInstance();
+            //notifyChangeInPosition(0);
             notifyDataSetChanged();
         }
+    }
+    private final class SwitchFragmentListener implements OnSwitchFragmentListener {
+        @Override
+        public void switchFragment(int fragmentId, boolean isNetworkAvail) {
+            LogUtil.e(TAG, "swtchFragment fragmentId= "+fragmentId+"isNetworkAvail "+isNetworkAvail);
+            switch (fragmentId) {
+                case 0:
+                    break;
+                case 1:
+                    if(isNetworkAvail) {
+                        LogUtil.e(TAG, "fragmentId =1 network is  available");
+                        fm.beginTransaction().remove(mFragmentAtPos1).commit();
+                        mFragmentAtPos1 = new ShoppingListPageFragment(mSwitchFragmentListener);
+                        //notifyChangeInPosition(0);
+                        notifyDataSetChanged();
+                    } else {
+                        LogUtil.e(TAG, "fragmentId =1 network is not available");
+                        fm.beginTransaction().remove(mFragmentAtPos1).commit();
+                        mFragmentAtPos1 = new ReloadFragment(1, mSwitchFragmentListener);
+                        //notifyChangeInPosition(0);
+                        notifyDataSetChanged();
+                    }
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
     }
 
     public TabFragmentAdapter(FragmentManager fm){//}, List<Fragment> fragments) {
         super(fm);
         this.fm = fm;
         LogUtil.e(TAG, "TabFragmentAdapter构造函数");
+        mSwitchFragmentListener = new SwitchFragmentListener();
         mMainPageFragmentListener = new MainPageFragmentListener();
         if(mMainPageFragmentListener == null) {
             LogUtil.e(TAG, "mMainPageFragmentListener为空");
@@ -68,15 +105,18 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
         switch (position) {
             case 0:
                 if(mFragmentAtPos0 == null)
-                    mFragmentAtPos0 = new LoadingFragment(mMainPageFragmentListener);
+                    mFragmentAtPos0 = new LoadingFragment();
                 return mFragmentAtPos0;
             case 1:
-                //if (!NetWorkUtil.isNetworkConnected())
-                    return new LoadingFragment();
+                LogUtil.e(TAG, "CASE 1");
+                if(mFragmentAtPos1 == null)
+                    mFragmentAtPos1 = new ShoppingListPageFragment(mSwitchFragmentListener);
+                LogUtil.e(TAG, "before return  1");
+                return mFragmentAtPos1;
             case 2:
-                return new LoadingFragment();
+                return new MyPageFragment();
             default:
-                return new LoadingFragment();
+                return new ReloadFragment();
         }
     }
 
@@ -103,19 +143,28 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
     @Override
     public int getItemPosition(Object object)
     {
-        LogUtil.e(TAG, "getItemPosition object="+object);
-        LogUtil.e(TAG, "getItemPosition mFragmentAtPos0="+mFragmentAtPos0);
-        if (object instanceof  LoadingFragment && mFragmentAtPos0 instanceof ShoppingListPageFragment) {
-            LogUtil.e(TAG, "POSITION_NONE");
-            return POSITION_NONE;
-        }
-        return POSITION_NONE;
+//        LogUtil.e(TAG, "getItemPosition object="+object);
+//        LogUtil.e(TAG, "getItemPosition mFragmentAtPos0="+mFragmentAtPos0);
+//        if (mFragmentAtPos0 instanceof MainPageFragment && object instanceof ReloadFragment) {
+//            LogUtil.e(TAG, "POSITION_NONE");
+//            return POSITION_NONE;
+//        }
+//        if (mFragmentAtPos1 instanceof ShoppingListPageFragment && object instanceof ReloadFragment) {
+//            LogUtil.e(TAG, "POSITION_NONE");
+//            return POSITION_NONE;
+//        }
+//        if (mFragmentAtPos2 instanceof MyPageFragment && object instanceof ReloadFragment) {
+//            LogUtil.e(TAG, "POSITION_NONE");
+//            return POSITION_NONE;
+//        }
+        return POSITION_UNCHANGED;
        // return POSITION_UNCHANGED;
     }
 
     @Override
     public long getItemId(int position) {
         // give an ID different from position when position has been changed
+        LogUtil.e(TAG, "getItemId position = "+position);
         return baseId + position;
     }
 
@@ -126,7 +175,8 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
      */
     public void notifyChangeInPosition(int n) {
         // shift the ID returned by getItemId outside the range of all previous fragments
-        baseId += getCount() + n;
+        baseId += n;
+        LogUtil.e(TAG,"after notifiChangedInPosition baseId= "+baseId);
     }
 
 
