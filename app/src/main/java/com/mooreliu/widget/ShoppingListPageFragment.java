@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class ShoppingListPageFragment extends BaseFragment {
     private static final String TAG = "ShoppingListPageFragment";
     private OrderController oc;
     private View mView;
+<<<<<<< HEAD
     private OnSwitchFragmentListener listener;
     @Override
     public void onVisible() {
@@ -36,7 +38,54 @@ public class ShoppingListPageFragment extends BaseFragment {
             listener.switchFragment(1, false);
         }
     }
+=======
+    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    protected boolean isVisible;
+    /**
+     * 在这里实现Fragment数据的缓加载.
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            //onInvisible();
+        }
+    }
+    protected void onVisible() {
+        LogUtil.e(TAG, "onVisible()");
+//        if(!NetWorkUtil.isNetworkConnected())
+//            mOnSwitchFragmentListener.switchFragment(0,false);
+    }
+//    @Override
+//    public void onVisible() {
+//        LogUtil.e(TAG, "onVisible()");
+//        if(!NetWorkUtil.isNetworkConnected())
+//            mOnSwitchFragmentListener.switchFragment(0,false);
+////        if(!NetWorkUtil.isNetworkConnected()) {
+////            LogUtil.e(TAG,"ShoppingListPageFragment newwork no avail");
+////            FragmentTransaction trans = getFragmentManager().beginTransaction();
+////            //trans.replace(R.id.shoppinglist_fragment_root_id, ReloadFragment.newInstance());
+////            trans.replace(R.id.shoppinglist_fragment_root_id, ReloadFragment.newInstance());
+////
+////            trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+////            trans.addToBackStack(null);
+////            trans.commit();
+////        }
+//
+//
+//    }
+>>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
 
+    public ShoppingListPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        mOnSwitchFragmentListener = listener;
+        LogUtil.e(TAG, "ShoppingListPageFragment listener 构造函数");
+    }
     public ShoppingListPageFragment() {
         super();
         LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
@@ -53,7 +102,10 @@ public class ShoppingListPageFragment extends BaseFragment {
         findViews();
         initViews();
         setOnclick();
+<<<<<<< HEAD
 
+=======
+>>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
         //init();
         return mView;
     }

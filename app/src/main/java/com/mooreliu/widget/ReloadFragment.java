@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mooreliu.R;
+import com.mooreliu.listener.OnLoadingOverListener;
 import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.CommonUtil;
@@ -20,13 +21,14 @@ import com.mooreliu.util.LogUtil;
 /**
  * Created by mooreliu on 2015/9/11.
  */
-public class ReloadFragment extends Fragment implements OnClickListener {
+public class ReloadFragment extends BaseFragment implements OnClickListener {
 
     private static final String TAG = "ReloadFragment";
     private View rootView;
     Button mReloadButton;
     Button mGoToSetting;
     OnSwitchFragmentListener mOnSwitchFragmentListener;
+<<<<<<< HEAD
     private int fragmentId;
     public ReloadFragment() {
         super();
@@ -34,6 +36,35 @@ public class ReloadFragment extends Fragment implements OnClickListener {
     public ReloadFragment(int fragmentId, OnSwitchFragmentListener listener) {
         super();
         this.fragmentId = fragmentId;
+=======
+    OnLoadingOverListener mOnLoadingOverListener;
+    private int fragmentId;
+    public static ReloadFragment newInstance(OnLoadingOverListener listener) {
+        LogUtil.e(TAG,"ReloadFragment newInstance");
+        return new ReloadFragment(listener);
+    }
+
+    public static ReloadFragment newInstance() {
+        return new ReloadFragment();
+    }
+    @Override
+    public void onVisible() {
+        if(NetWorkUtil.isNetworkConnected())
+            mOnLoadingOverListener.LoadingOver();
+        //else
+         //   mOnSwitchFragmentListener.switchFragment(fragmentId ,false);
+    }
+    public ReloadFragment() {
+        super();
+    }
+    public ReloadFragment(OnLoadingOverListener listener) {
+        super();
+        mOnLoadingOverListener = listener;
+    }
+    public ReloadFragment(int fragmentId , OnSwitchFragmentListener listener) {
+        super();
+        fragmentId = fragmentId;
+>>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
         mOnSwitchFragmentListener = listener;
     }
     @Override
@@ -71,6 +102,7 @@ public class ReloadFragment extends Fragment implements OnClickListener {
 
         switch (id) {
             case R.id.reload:
+<<<<<<< HEAD
                 LogUtil.e(TAG,"reload button pressed");
                 if(NetWorkUtil.isNetworkConnected())
                     mOnSwitchFragmentListener.switchFragment(fragmentId, true);
@@ -78,6 +110,13 @@ public class ReloadFragment extends Fragment implements OnClickListener {
                     mOnSwitchFragmentListener.switchFragment(fragmentId, false);
 
                 //CommonUtil.toastMessage(getResources().getString(R.string.reload));
+=======
+                if(NetWorkUtil.isNetworkConnected())
+                    mOnSwitchFragmentListener.switchFragment(fragmentId, true);
+//                else
+//                    mOnSwitchFragmentListener.switchFragment(fragmentId, false);
+//                CommonUtil.toastMessage(getResources().getString(R.string.reload));
+>>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
                 break;
             case R.id.goto_setting:
                 startActivity(new Intent(Settings.ACTION_SETTINGS));

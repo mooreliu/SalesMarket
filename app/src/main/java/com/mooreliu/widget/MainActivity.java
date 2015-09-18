@@ -142,7 +142,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         for(int i = 0;i<3;i++)
             mTabLayout.addTab(mTabLayout.newTab());
         List<Fragment> fragmentList = new ArrayList<>();
-        Fragment mMainPageFragment = new MainPageFragment();
+        //Fragment mMainPageFragment = new MainPageFragment();
 //        MyPageFragment mMyPageFragment = new MyPageFragment();
 //        ShoppingListPageFragment mShoppingListPageFragment = new ShoppingListPageFragment();
 //        ReloadFragment mReloadFragment = new ReloadFragment();
@@ -156,20 +156,20 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         TabFragmentAdapter fragmentAdapter =
                 new TabFragmentAdapter(getSupportFragmentManager());//
         mViewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(final int position, final float v, final int i2) {
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                LogUtil.e(TAG, "position onPageSelected" + position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(final int position) {
-            }
-        });
+//        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(final int position, final float v, final int i2) {
+//            }
+//
+//            @Override
+//            public void onPageSelected(final int position) {
+//               // LogUtil.e(TAG, "position onPageSelected" + position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(final int position) {
+//            }
+//        });
         //mViewPager.setOffscreenPageLimit(1);
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
         mTabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器

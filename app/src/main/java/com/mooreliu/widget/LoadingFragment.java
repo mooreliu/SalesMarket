@@ -22,38 +22,32 @@ public class LoadingFragment extends BaseFragment  {
     private View rootView;
     private Button show;
     protected boolean isVisible;
-    /**
-     * 在这里实现Fragment数据的缓加载.
-     * @param isVisibleToUser
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(getUserVisibleHint()) {
-            isVisible = true;
-            onVisible();
-        } else {
-            isVisible = false;
-            onInvisible();
-        }
-    }
-    protected void onVisible(){
+    private int fragmentId;
+    private int testId =-1;
+    public void onVisible(){
         LogUtil.e(TAG, "onVisible");
+        LogUtil.e(TAG, "onVisible testId = " +testId);
         if (loadingOverListener == null) {
             LogUtil.e(TAG, "loadingOverListener 为空");
         }
-        if (loadingOverListener != null)
-            loadingOverListener.LoadingOver();
+        //if (loadingOverListener != null)
+            //loadingOverListener.LoadingOver(fragmentId);
         //lazyLoad();
     }
     //protected abstract void lazyLoad();
-    protected void onInvisible(){}
+    public void onInvisible(){}
 
-    public LoadingFragment() {
+    public LoadingFragment(int testId) {
         super();
+        testId = testId;
+        LogUtil.e(TAG,"testId="+testId);
     }
-    public LoadingFragment(OnLoadingOverListener listener) {
+    public static LoadingFragment newinstance(int fragmentId, OnLoadingOverListener listener) {
+        return new LoadingFragment(fragmentId, listener);
+    }
+    public LoadingFragment(int fragmentId,OnLoadingOverListener listener) {
         loadingOverListener = listener;
+        this.fragmentId = fragmentId;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,8 +66,8 @@ public class LoadingFragment extends BaseFragment  {
                 if (loadingOverListener == null) {
                     LogUtil.e(TAG, "loadingOverListener 为空");
                 }
-                if (loadingOverListener != null)
-                    loadingOverListener.LoadingOver();
+                //if (loadingOverListener != null)
+                    //loadingOverListener.LoadingOver(fragmentId);
             }
         });
     }

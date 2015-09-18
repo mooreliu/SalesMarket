@@ -26,6 +26,7 @@ import com.mooreliu.R;
 import com.mooreliu.adapter.CustomRecyclerListAdapter;
 import com.mooreliu.listener.OnProductClickListener;
 import com.mooreliu.db.model.MerchandiseModel;
+import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
@@ -51,15 +52,27 @@ public class MainPageFragment extends BaseFragment {
     private LinearLayoutManager layoutManager;
     private CustomProgressDialog progressDialog;
     private boolean isLoadComplete = false;
+    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    @Override
+    public void onVisible() {
 
+<<<<<<< HEAD
     @Override
     public void onVisible() {
 
     }
 
+=======
+    }
+>>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
     public MainPageFragment() {
         super();
         LogUtil.e(TAG, "MainPageFragment构造函数");
+    }
+    public MainPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        mOnSwitchFragmentListener =listener;
+        LogUtil.e(TAG, "MainPageFragment listener构造函数");
     }
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
