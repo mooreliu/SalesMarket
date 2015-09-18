@@ -22,9 +22,9 @@ public  abstract class BaseFragment extends Fragment{
             onInvisible();
         }
     }
-    protected abstract void onVisible();
+    public abstract void onVisible();
 
         //lazyLoad();
     //protected abstract void lazyLoad();
-    protected void onInvisible(){}
+    public void onInvisible(){}
 }

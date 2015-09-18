@@ -26,6 +26,7 @@ import com.mooreliu.R;
 import com.mooreliu.adapter.CustomRecyclerListAdapter;
 import com.mooreliu.listener.OnProductClickListener;
 import com.mooreliu.db.model.MerchandiseModel;
+import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.Constants;
@@ -41,7 +42,7 @@ import java.util.List;
  * Created by liuyi on 15/8/29.
  * 首页
  */
-public class MainPageFragment extends Fragment {
+public class MainPageFragment extends BaseFragment {
     private final static String TAG ="MainPageFragment";
     private View noInternetView = null;
     private View mView;
@@ -51,10 +52,19 @@ public class MainPageFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private CustomProgressDialog progressDialog;
     private boolean isLoadComplete = false;
+    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    @Override
+    public void onVisible() {
 
+    }
     public MainPageFragment() {
         super();
         LogUtil.e(TAG, "MainPageFragment构造函数");
+    }
+    public MainPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        mOnSwitchFragmentListener =listener;
+        LogUtil.e(TAG, "MainPageFragment listener构造函数");
     }
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();

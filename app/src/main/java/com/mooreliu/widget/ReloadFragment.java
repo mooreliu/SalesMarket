@@ -12,23 +12,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mooreliu.R;
+import com.mooreliu.listener.OnLoadingOverListener;
 import com.mooreliu.listener.OnSwitchFragmentListener;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.CommonUtil;
+import com.mooreliu.util.LogUtil;
+
 /**
  * Created by mooreliu on 2015/9/11.
  */
-public class ReloadFragment extends Fragment implements OnClickListener {
+public class ReloadFragment extends BaseFragment implements OnClickListener {
 
     private static final String TAG = "ReloadFragment";
     private View rootView;
     Button mReloadButton;
     Button mGoToSetting;
     OnSwitchFragmentListener mOnSwitchFragmentListener;
+    OnLoadingOverListener mOnLoadingOverListener;
+    private int fragmentId;
+    public static ReloadFragment newInstance(OnLoadingOverListener listener) {
+        LogUtil.e(TAG,"ReloadFragment newInstance");
+        return new ReloadFragment(listener);
+    }
+
+    public static ReloadFragment newInstance() {
+        return new ReloadFragment();
+    }
+    @Override
+    public void onVisible() {
+        if(NetWorkUtil.isNetworkConnected())
+            mOnLoadingOverListener.LoadingOver();
+        //else
+         //   mOnSwitchFragmentListener.switchFragment(fragmentId ,false);
+    }
     public ReloadFragment() {
         super();
     }
-    public ReloadFragment(OnSwitchFragmentListener listener) {
+    public ReloadFragment(OnLoadingOverListener listener) {
         super();
+        mOnLoadingOverListener = listener;
+    }
+    public ReloadFragment(int fragmentId , OnSwitchFragmentListener listener) {
+        super();
+        fragmentId = fragmentId;
         mOnSwitchFragmentListener = listener;
     }
     @Override
@@ -66,8 +92,11 @@ public class ReloadFragment extends Fragment implements OnClickListener {
 
         switch (id) {
             case R.id.reload:
-                mOnSwitchFragmentListener.switchFragment();
-                CommonUtil.toastMessage(getResources().getString(R.string.reload));
+                if(NetWorkUtil.isNetworkConnected())
+                    mOnSwitchFragmentListener.switchFragment(fragmentId, true);
+//                else
+//                    mOnSwitchFragmentListener.switchFragment(fragmentId, false);
+//                CommonUtil.toastMessage(getResources().getString(R.string.reload));
                 break;
             case R.id.goto_setting:
                 startActivity(new Intent(Settings.ACTION_SETTINGS));

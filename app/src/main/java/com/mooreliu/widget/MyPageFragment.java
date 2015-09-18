@@ -24,6 +24,7 @@ import android.widget.ListView;
 
 import com.mooreliu.R;
 import com.mooreliu.db.model.MerchandiseColumns;
+import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.LogUtil;
 
@@ -32,19 +33,27 @@ import com.mooreliu.util.LogUtil;
 /**
  * Created by liuyi on 15/8/29.
  */
-public class MyPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MyPageFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "MyPageFragment";
     private View mView;
     private ListView mListView;
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
+    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    @Override
+    public void onVisible() {
 
+    }
     public MyPageFragment() {
         super();
         LogUtil.e(TAG, "MyPageFragment 构造函数");
     }
-
+    public MyPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        mOnSwitchFragmentListener =listener;
+        LogUtil.e(TAG, "MyPageFragment 构造函数");
+    }
     public static MyPageFragment newInstance() {
         MyPageFragment fragment = new MyPageFragment();
         return  fragment;

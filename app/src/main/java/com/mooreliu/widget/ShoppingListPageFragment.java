@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import com.mooreliu.R;
 import com.mooreliu.controller.OrderController;
 import com.mooreliu.db.model.OrderModel;
+import com.mooreliu.listener.OnSwitchFragmentListener;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
 
 import java.util.List;
@@ -24,7 +27,52 @@ public class ShoppingListPageFragment extends Fragment {
     private static final String TAG = "ShoppingListPageFragment";
     private OrderController oc;
     private View mView;
+    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    protected boolean isVisible;
+    /**
+     * 在这里实现Fragment数据的缓加载.
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            //onInvisible();
+        }
+    }
+    protected void onVisible() {
+        LogUtil.e(TAG, "onVisible()");
+//        if(!NetWorkUtil.isNetworkConnected())
+//            mOnSwitchFragmentListener.switchFragment(0,false);
+    }
+//    @Override
+//    public void onVisible() {
+//        LogUtil.e(TAG, "onVisible()");
+//        if(!NetWorkUtil.isNetworkConnected())
+//            mOnSwitchFragmentListener.switchFragment(0,false);
+////        if(!NetWorkUtil.isNetworkConnected()) {
+////            LogUtil.e(TAG,"ShoppingListPageFragment newwork no avail");
+////            FragmentTransaction trans = getFragmentManager().beginTransaction();
+////            //trans.replace(R.id.shoppinglist_fragment_root_id, ReloadFragment.newInstance());
+////            trans.replace(R.id.shoppinglist_fragment_root_id, ReloadFragment.newInstance());
+////
+////            trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+////            trans.addToBackStack(null);
+////            trans.commit();
+////        }
+//
+//
+//    }
 
+    public ShoppingListPageFragment(OnSwitchFragmentListener listener) {
+        super();
+        mOnSwitchFragmentListener = listener;
+        LogUtil.e(TAG, "ShoppingListPageFragment listener 构造函数");
+    }
     public ShoppingListPageFragment() {
         super();
         LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
@@ -35,8 +83,6 @@ public class ShoppingListPageFragment extends Fragment {
         findViews();
         initViews();
         setOnclick();
-
-
         //init();
         return mView;
     }
