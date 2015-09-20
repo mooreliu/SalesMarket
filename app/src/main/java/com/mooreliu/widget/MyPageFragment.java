@@ -33,25 +33,19 @@ import com.mooreliu.util.LogUtil;
 /**
  * Created by liuyi on 15/8/29.
  */
-public class MyPageFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MyPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "MyPageFragment";
     private View mView;
     private ListView mListView;
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
-<<<<<<< HEAD
-    @Override
-    public void onVisible() {
+//    @Override
+//    public void onVisible() {
 
-    }
-=======
+//    }
     private OnSwitchFragmentListener mOnSwitchFragmentListener;
-    @Override
-    public void onVisible() {
->>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
 
-    }
     public MyPageFragment() {
         super();
         LogUtil.e(TAG, "MyPageFragment 构造函数");

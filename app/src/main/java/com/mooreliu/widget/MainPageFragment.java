@@ -56,15 +56,8 @@ public class MainPageFragment extends BaseFragment {
     @Override
     public void onVisible() {
 
-<<<<<<< HEAD
-    @Override
-    public void onVisible() {
 
     }
-
-=======
-    }
->>>>>>> acd3e5e17d54cb8195ef69a576fe23ed2cf4e75c
     public MainPageFragment() {
         super();
         LogUtil.e(TAG, "MainPageFragment构造函数");
