@@ -58,8 +58,7 @@ public class ShoppingListPageFragment extends BaseFragment {
         return  fragment;
     }
     private void findViews() {
-        TextView tv = (TextView) mView.findViewById(R.id.test);
-        tv.setText("test");
+
     }
 
     private void initViews() {

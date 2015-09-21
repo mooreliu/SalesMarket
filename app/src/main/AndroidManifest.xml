@@ -64,14 +64,14 @@
         <meta-data android:value="Tencent" android:name="UMENG_CHANNEL"/>
         <meta-data android:name="Tencent" android:value="LeanCloud"/>
 
-        <receiver
-            android:name=".receiver.BroadcastReceiverNetCheck"
-            android:label="StartMyServiceAtBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.CONNECTIVITY_ACTIONC"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".receiver.BroadcastReceiverNetCheck"-->
+            <!--android:label="StartMyServiceAtBootReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+                <!--<action android:name="android.intent.action.CONNECTIVITY_ACTIONC"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <!--<service android:enabled="true" android:name="com.mooreliu.service.ServiceCheckNetConnect"/>-->
 

@@ -7,10 +7,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.mooreliu.AppContext;
+import com.mooreliu.R;
+import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.widget.ReloadFragment;
+import com.mooreliu.widget.ShoppingListPageFragment;
 
 /**
  * Created by mooreliu on 2015/9/2.
@@ -18,17 +24,22 @@ import com.mooreliu.util.LogUtil;
 
 public class ServiceCheckNetConnect extends IntentService {
     private static final String TAG ="ServiceCheckNetConnect";
+    private Context mContext;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             LogUtil.e(TAG,"onReceive");
+            mContext = context;
             String action = intent.getAction();
             if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 Toast.makeText(AppContext.getContext() ,"network change",Toast.LENGTH_SHORT).show();
 
             }
         }
+
     };
+
+
 
     public ServiceCheckNetConnect() {
         super("ServiceCheckNetConnect");

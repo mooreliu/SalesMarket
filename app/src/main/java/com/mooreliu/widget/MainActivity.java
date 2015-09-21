@@ -61,7 +61,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawer();
-        initBroadcastRecevier();
+        //initBroadcastRecevier();
         checkUserState();
     }
 
@@ -77,9 +77,9 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(br);
+        if(br != null)
+            unregisterReceiver(br);
     }
-
     private void initBroadcastRecevier() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);

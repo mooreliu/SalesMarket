@@ -7,11 +7,11 @@ import android.net.ConnectivityManager;
 
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.widget.MainActivity;
-
+import com.mooreliu.listener.OnNetworkChangeListener;
 /**
  * Created by mooreliu on 2015/9/2.
  */
-public class BroadcastReceiverNetCheck extends BroadcastReceiver {
+public class BroadcastReceiverNetCheck extends BroadcastReceiver implements OnNetworkChangeListener {
     private static final String TAG = "BroadcastReceiverNetCheck";
     @Override
     public void onReceive(Context context ,Intent intent) {
@@ -30,4 +30,10 @@ public class BroadcastReceiverNetCheck extends BroadcastReceiver {
             context.startActivity(newintent);
         }
     }
+
+    public void updateView() {
+
+    }
+
+
 }
