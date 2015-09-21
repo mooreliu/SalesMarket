@@ -37,7 +37,7 @@ public class MainPageRootFragment extends BaseFragment{
             transaction.replace(R.id.mainpage_fragment_root_id, mainPagePageFragment);
             //Create new fragment and transacnt);
         } else {
-            Fragment reloadFragment = new ReloadFragment(0);
+            Fragment reloadFragment = ReloadFragment.newInstance(0);
             transaction.replace(R.id.mainpage_fragment_root_id, reloadFragment);
         }
         transaction.addToBackStack(null);

@@ -15,13 +15,13 @@ import com.mooreliu.util.LogUtil;
 /**
  * Created by liuyi on 15/9/18.
  */
-public class ShoppingListRootFragment extends BaseFragment {
+public class MyPageRootFragment extends BaseFragment {
 
-    private static final String TAG = "ShoppingListRootFragment";
+    private static final String TAG = "MyPageRootFragment";
     private View rootView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_root_shopping_list, container, false);
+        rootView = inflater.inflate(R.layout.fragment_root_my_page, container, false);
         LogUtil.e(TAG, "onCreateView()");
         initViews();
         return rootView;
@@ -31,14 +31,14 @@ public class ShoppingListRootFragment extends BaseFragment {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
         if(isNetworkConnected) {
-            Fragment shoppingListPageFragment = new ShoppingListPageFragment();
+            Fragment myPageFragment = new MyPageFragment();
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack if needed
-            transaction.replace(R.id.shoppinglist_fragment_root_id, shoppingListPageFragment);
+            transaction.replace(R.id.myPage_fragment_root_id, myPageFragment);
             //Create new fragment and transacnt);
         } else {
-            Fragment reloadFragment =  ReloadFragment.newInstance(1);
-            transaction.replace(R.id.shoppinglist_fragment_root_id, reloadFragment);
+            Fragment reloadFragment = ReloadFragment.newInstance(2);
+            transaction.replace(R.id.myPage_fragment_root_id, reloadFragment);
         }
         transaction.addToBackStack(null);
         // Commit the transaction
@@ -53,7 +53,7 @@ public class ShoppingListRootFragment extends BaseFragment {
     @Override
     public void onVisible() {
         LogUtil.e(TAG, "onVisible() ");
-        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.shoppinglist_fragment_root_id);
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.myPage_fragment_root_id);
         LogUtil.e(TAG, "fragment = "+fragment);
 //        if(fragment instanceof ShoppingListRootFragment) {
 //            LogUtil.e(TAG, "fragment instanceof ShoppingListRootFragment");

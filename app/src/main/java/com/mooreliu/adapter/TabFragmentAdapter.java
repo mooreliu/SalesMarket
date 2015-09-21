@@ -24,6 +24,7 @@ import com.mooreliu.widget.MyPageFragment;
 import com.mooreliu.widget.ReloadFragment;
 import com.mooreliu.widget.ShoppingListPageFragment;
 import com.mooreliu.widget.ShoppingListRootFragment;
+import com.mooreliu.widget.MyPageRootFragment;
 
 /**
  * Description:  ViewPager适配器
@@ -62,9 +63,9 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
             case 1:
                 return new ShoppingListRootFragment();
             case 2:
-                return new MyPageFragment();
+                return new MyPageRootFragment();
             default:
-                return new ReloadFragment(0);
+                return ReloadFragment.newInstance(0);
         }
     }
 

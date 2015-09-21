@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,14 +40,19 @@ public class ReloadFragment extends BaseFragment implements OnClickListener {
     public void onVisible() {
 
     }
-    public ReloadFragment(int fragmentId) {
-        super();
-        this.fragmentId = fragmentId;
+    public static ReloadFragment newInstance(int fragmentId) {
+        ReloadFragment fragment = new ReloadFragment();
+        Bundle args = new Bundle();
+        args.putInt("fragmentId", fragmentId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
         super.onCreate(onSavedInstanceState);
+        fragmentId = getArguments() != null? getArguments().getInt("fragmentId"):0;
+        LogUtil.e(TAG, "onCreate() fragmentId = "+fragmentId);
         registerBroadcastReceiver();
     }
     @Override
@@ -71,12 +77,13 @@ public class ReloadFragment extends BaseFragment implements OnClickListener {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                LogUtil.e(TAG, "receive an action in ReloadFragment ");
+                //LogUtil.e(TAG, "receive an action in ReloadFragment ");
                 String action = intent.getAction();
                 if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                    LogUtil.e(TAG, " 网络状态发生变化 ");
                     checkNetwork();
                 } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-                    LogUtil.e(TAG, "boot completed");
+                    LogUtil.e(TAG, " 开机完成 ");
                     Intent newintent = new Intent(context, MainActivity.class);
                     newintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //注意，必须添加这个标记，否则启动会失败
                     context.startActivity(newintent);
@@ -131,9 +138,10 @@ public class ReloadFragment extends BaseFragment implements OnClickListener {
                     break;
                 case 2:
                     Fragment myPageFragment = new MyPageFragment();
-                    transaction.replace(R.id.shoppinglist_fragment_root_id, myPageFragment);
-
+                    transaction.replace(R.id.myPage_fragment_root_id, myPageFragment);
                     break;
+                default:
+                    throw new IllegalArgumentException("illegal fragmentId exception");
             }
         }
         transaction.addToBackStack(null);
