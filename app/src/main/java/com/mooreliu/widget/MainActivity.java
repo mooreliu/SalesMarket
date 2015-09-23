@@ -80,13 +80,13 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         if(br != null)
             unregisterReceiver(br);
     }
-    private void initBroadcastRecevier() {
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        br = new BroadcastReceiverNetCheck();
-        registerReceiver(br, intentFilter);
-
-    }
+//    private void initBroadcastRecevier() {
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        br = new BroadcastReceiverNetCheck();
+//        registerReceiver(br, intentFilter);
+//
+//    }
 
     @Override
     public void findView() {

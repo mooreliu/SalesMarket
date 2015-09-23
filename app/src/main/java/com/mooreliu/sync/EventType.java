@@ -15,6 +15,9 @@ public class EventType {
     public static final String LOGIN = "COM.MOORELIU.LOGIN";
     public static final String LOGIN_OUT = "COM.MOORELIU.LOGIN_OUT";
     public static final String TEST = "COM.MOORELIU.TEST";
+    public static final String NETWORK_CHANGEED="com.mooreliu.newwork.change";
+    public static final String NETWORK_OK = "com.mooreliu.network.ok";
+    public static final String NETWORK_NOT_OK = "com.mooreliu.network.notok";
 
     public static volatile EventType mEventType;
     public static Set<String> eventTypes = new HashSet<>();
@@ -24,6 +27,9 @@ public class EventType {
         eventTypes.add(LOGIN);
         eventTypes.add(LOGIN_OUT);
         eventTypes.add(TEST);
+        eventTypes.add(NETWORK_CHANGEED);
+        eventTypes.add(NETWORK_OK);
+        eventTypes.add(NETWORK_NOT_OK);
     }
 
     public static EventType getInstance() {

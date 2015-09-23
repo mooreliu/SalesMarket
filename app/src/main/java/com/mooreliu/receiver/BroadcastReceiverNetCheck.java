@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import com.mooreliu.net.NetWorkUtil;
+import com.mooreliu.sync.Notify;
+import com.mooreliu.sync.EventType;
+import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.widget.MainActivity;
 import com.mooreliu.listener.OnNetworkChangeListener;
@@ -13,16 +17,20 @@ import com.mooreliu.listener.OnNetworkChangeListener;
  */
 public class BroadcastReceiverNetCheck extends BroadcastReceiver implements OnNetworkChangeListener {
     private static final String TAG = "BroadcastReceiverNetCheck";
+
     @Override
     public void onReceive(Context context ,Intent intent) {
-//        LogUtil.e(TAG ,"Broadcast onReceive");
-        LogUtil.e(TAG,"receive an actoin");
+        LogUtil.e(TAG,"BroadcastReceiverNetCheck an action");
         String action = intent.getAction();
-//        LogUtil.e(TAG ,action);
         if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-//            LogUtil.e(TAG ,action);
-//            LogUtil.e(TAG ,"Toast");
-//            Toast.makeText(context , R.string.connectivityChanged,Toast.LENGTH_LONG).show();
+            LogUtil.e(TAG, "Connection Change");
+            NotifyInfo notifyInfo = null;
+            if(NetWorkUtil.isNetworkConnected())
+                 notifyInfo = new NotifyInfo(EventType.NETWORK_OK);
+            else
+                notifyInfo = new NotifyInfo(EventType.NETWORK_NOT_OK);
+            Notify.getInstance().notifyFragment(notifyInfo);
+
         } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             LogUtil.e(TAG, "boot completed");
             Intent newintent = new Intent(context, MainActivity.class);

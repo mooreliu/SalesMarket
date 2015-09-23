@@ -18,16 +18,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mooreliu.R;
+import com.mooreliu.sync.EventType;
 import com.mooreliu.listener.OnLoadingOverListener;
 import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.NetWorkUtil;
+import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.LogUtil;
 
 /**
  * Created by mooreliu on 2015/9/11.
  */
-public class ReloadFragment extends BaseFragment implements OnClickListener {
+public class ReloadFragment extends BaseObserverFragment implements OnClickListener {
 
     private static final String TAG = "ReloadFragment";
     private BroadcastReceiver receiver;
@@ -36,6 +38,30 @@ public class ReloadFragment extends BaseFragment implements OnClickListener {
     private Button mGoToSetting;
     private OnSwitchFragmentListener mOnSwitchFragmentListener;
     private int fragmentId;
+
+    @Override
+    public String[] getObserverEventTypes() {
+        return new String[] {
+            EventType.NETWORK_OK
+        };
+    }
+
+    @Override
+    public void onUpdate(NotifyInfo notifyInfo) {
+        LogUtil.e(TAG, "EventType ="+notifyInfo.getEventType());
+        switch (notifyInfo.getEventType()) {
+            case EventType.NETWORK_OK:
+                replaceFragment(true);
+                break;
+            default:
+                LogUtil.e(TAG, "eventType error");
+        }
+
+    }
+    @Override
+    public int setUpLayout() {
+        return R.layout.layout_reload;
+    }
     @Override
     public void onVisible() {
 
@@ -53,12 +79,12 @@ public class ReloadFragment extends BaseFragment implements OnClickListener {
         super.onCreate(onSavedInstanceState);
         fragmentId = getArguments() != null? getArguments().getInt("fragmentId"):0;
         LogUtil.e(TAG, "onCreate() fragmentId = "+fragmentId);
-        registerBroadcastReceiver();
+//        registerBroadcastReceiver();
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(receiver);
+//        if(r®getActivity().unregisterReceiver(receiver);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

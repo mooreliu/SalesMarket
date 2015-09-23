@@ -71,11 +71,11 @@ public class MainPageFragment extends BaseObserverFragment {
         super();
         LogUtil.e(TAG, "MainPageFragment构造函数");
     }
-    public MainPageFragment(OnSwitchFragmentListener listener) {
-        super();
-        mOnSwitchFragmentListener =listener;
-        LogUtil.e(TAG, "MainPageFragment listener构造函数");
-    }
+//    public MainPageFragment(OnSwitchFragmentListener listener) {
+//        super();
+//        mOnSwitchFragmentListener =listener;
+//        LogUtil.e(TAG, "MainPageFragment listener构造函数");
+//    }
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
         return  fragment;
@@ -89,35 +89,35 @@ public class MainPageFragment extends BaseObserverFragment {
         return mView;
     }
 
-    private void initNoInternetView (View view) {
-        if(view == null)
-            return;
-        RelativeLayout parentView = (RelativeLayout)view.findViewById(R.id.parent_view);
-        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        noInternetView = inflater.inflate(R.layout.layout_reload, null);
-        noInternetView.setLayoutParams(
-                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        noInternetView.setClickable(true);
-        parentView.addView(noInternetView);
-        final Button btnGotoSetting = (Button)noInternetView.findViewById(R.id.goto_setting);
-        btnGotoSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
-            }
-        });
-
-        final Button btnReload = (Button)noInternetView.findViewById(R.id.reload);
-        if(noInternetView != null)
-            noInternetView.setVisibility(View.GONE);
-        btnReload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View mview) {
-                showProgress(R.string.reconnect_to_internet);
-                checkNerworkForView();
-            }
-        });
-    }
+//    private void initNoInternetView (View view) {
+//        if(view == null)
+//            return;
+//        RelativeLayout parentView = (RelativeLayout)view.findViewById(R.id.parent_view);
+//        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        noInternetView = inflater.inflate(R.layout.layout_reload, null);
+//        noInternetView.setLayoutParams(
+//                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//        noInternetView.setClickable(true);
+//        parentView.addView(noInternetView);
+//        final Button btnGotoSetting = (Button)noInternetView.findViewById(R.id.goto_setting);
+//        btnGotoSetting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(Settings.ACTION_SETTINGS));
+//            }
+//        });
+//
+//        final Button btnReload = (Button)noInternetView.findViewById(R.id.reload);
+//        if(noInternetView != null)
+//            noInternetView.setVisibility(View.GONE);
+//        btnReload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View mview) {
+//                showProgress(R.string.reconnect_to_internet);
+//                checkNerworkForView();
+//            }
+//        });
+//    }
 
     @Override
     public void onActivityCreated(Bundle onSavedInstanceState) {
@@ -151,7 +151,7 @@ public class MainPageFragment extends BaseObserverFragment {
 
     }
     private void initView() {
-        initNoInternetView(mView);
+        //initNoInternetView(mView);
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         if(checkNerworkForView()&&isLoadComplete==false)
