@@ -7,7 +7,7 @@ import com.mooreliu.util.LogUtil;
 /**
  * Created by mooreliu on 2015/9/17.
  */
-public  abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment{
     private static final String TAG = "BaseFragment";
     protected boolean isVisible;
 
@@ -24,7 +24,7 @@ public  abstract class BaseFragment extends Fragment{
     }
     public abstract void onVisible();
 
-        //lazyLoad();
+    //lazyLoad();
     //protected abstract void lazyLoad();
     public void onInvisible(){}
 }

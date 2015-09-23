@@ -36,12 +36,13 @@ public class EventSubject implements IEventSubject {
             ArrayList<EventObserver> eventObservers = mEventObservers.get(eventType);
             if (eventObservers == null) {
                 eventObservers = new ArrayList<EventObserver>();
+                eventObservers.add(observer);
                 mEventObservers.put(eventType, eventObservers);
             }
             if(eventObservers.contains(observer)) {
                 return;
             }
-            eventObservers.add(observer);
+
         }
 
     }

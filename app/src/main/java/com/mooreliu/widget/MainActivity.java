@@ -230,8 +230,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     protected String[] getObserverEventType() {
         return new String[]{
                 EventType.EVENT_LOGIN,
-                EventType.EVENT_LOGINOUT,
-                EventType.EVENT_ADD_RECORD
+                EventType.EVENT_LOGINOUT
         };
     }
 

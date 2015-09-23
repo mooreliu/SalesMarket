@@ -12,6 +12,7 @@ import java.lang.ref.WeakReference;
  * 带观察者模式的BaseActivity
  */
 public abstract class BaseObserverActivity extends BaseActivity {
+
     private ActivityEventObserver mActivityEventObserver;
 
     @Override
@@ -35,10 +36,7 @@ public abstract class BaseObserverActivity extends BaseActivity {
             for(String eventType:observerEventTypes){
                 eventSubject.registerObserver(eventType,observer);
             }
-
-
         }
-
     }
 
     public void removeObserver(EventObserver observer) {

@@ -24,7 +24,11 @@ import android.widget.ListView;
 
 import com.mooreliu.R;
 import com.mooreliu.db.model.MerchandiseColumns;
+import com.mooreliu.sync.EventType;
+import com.mooreliu.sync.Notify;
+
 import com.mooreliu.listener.OnSwitchFragmentListener;
+import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.LogUtil;
 
@@ -90,7 +94,9 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void setOnclick() {
-
+        LogUtil.e(TAG, "setOnclick notify ");
+        NotifyInfo notifyInfo = new NotifyInfo(EventType.TEST);
+        Notify.getInstance().notifyFragment(notifyInfo);
     }
 
     private void deleteItem(int id) {

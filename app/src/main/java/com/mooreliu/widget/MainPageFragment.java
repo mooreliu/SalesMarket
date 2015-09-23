@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.mooreliu.db.model.MerchandiseModel;
 import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
+import com.mooreliu.sync.EventType;
+import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.Constants;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.TextUtil;
@@ -42,7 +45,7 @@ import java.util.List;
  * Created by liuyi on 15/8/29.
  * 首页
  */
-public class MainPageFragment extends BaseFragment {
+public class MainPageFragment extends BaseObserverFragment {
     private final static String TAG ="MainPageFragment";
     private View noInternetView = null;
     private View mView;
@@ -53,6 +56,12 @@ public class MainPageFragment extends BaseFragment {
     private CustomProgressDialog progressDialog;
     private boolean isLoadComplete = false;
     private OnSwitchFragmentListener mOnSwitchFragmentListener;
+
+    @Override
+    public int setUpLayout(){
+        return 1;
+    }
+
     @Override
     public void onVisible() {
 
@@ -297,6 +306,25 @@ public class MainPageFragment extends BaseFragment {
         isLoadComplete = true;
         LogUtil.e(TAG, " isLoadComplete" + isLoadComplete);
 
+    }
+
+    @Override
+    public String[] getObserverEventTypes() {
+        return new String[] {
+            EventType.TEST
+        };
+    }
+
+    @Override
+    public void onUpdate(NotifyInfo notifyInfo) {
+        LogUtil.e(TAG, "MainPageFragment onUpdate");
+        switch (notifyInfo.getEventType()) {
+            case EventType.TEST:
+                LogUtil.e(TAG, "onUpdate TEST");
+                break;
+            default:
+                LogUtil.e(TAG, "default");
+        }
     }
 
 }
