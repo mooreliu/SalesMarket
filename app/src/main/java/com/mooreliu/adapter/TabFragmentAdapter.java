@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -34,7 +35,7 @@ import com.mooreliu.widget.MyPageRootFragment;
  */
 
 public class TabFragmentAdapter extends FragmentPagerAdapter{
-
+//public class TabFragmentAdapter extends FragmentStatePagerAdapter {
     private final static String TAG = "TabFragmentAdapter";
     int[] imageResId={
             R.mipmap.main_navigation_home,
@@ -59,13 +60,16 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
         LogUtil.e(TAG, "getItem +" + position);
         switch (position) {
             case 0:
-                return new MainPageRootFragment();
+                //return new MainPageRootFragment();
+                return new MainPageFragment();
             case 1:
-                return new ShoppingListRootFragment();
+                //return new ShoppingListRootFragment();
+                return new ShoppingListPageFragment();
             case 2:
-                return new MyPageRootFragment();
+               // return new MyPageRootFragment();
+                return new MyPageFragment();
             default:
-                return ReloadFragment.newInstance(0);
+                return ReloadFragment.newInstance();
         }
     }
 

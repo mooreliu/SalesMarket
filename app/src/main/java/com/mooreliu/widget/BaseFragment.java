@@ -13,12 +13,15 @@ public abstract class BaseFragment extends Fragment{
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        LogUtil.e(TAG, "setUserVisibleHint");
         super.setUserVisibleHint(isVisibleToUser);
         if(getUserVisibleHint()) {
             isVisible = true;
+            LogUtil.e(TAG, " isVisible = true");
             onVisible();
         } else {
             isVisible = false;
+            LogUtil.e(TAG, " isVisible = false");
             onInvisible();
         }
     }

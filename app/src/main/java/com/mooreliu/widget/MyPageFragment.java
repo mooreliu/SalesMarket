@@ -31,34 +31,60 @@ import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.view.InternetOffLayout;
 
 //import android.database.Cursor;
 
 /**
  * Created by liuyi on 15/8/29.
  */
-public class MyPageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MyPageFragment extends BaseObserverFragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "MyPageFragment";
     private View mView;
     private ListView mListView;
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
-//    @Override
-//    public void onVisible() {
+    private InternetOffLayout mInternetOffLayout;
 
-//    }
+    @Override
+    public String[] getObserverEventTypes() {
+        return new String[] {
+                EventType.NETWORK_OK,
+                EventType.NETWORK_NOT_OK
+        };
+    }
+
+    @Override
+    public void onUpdate(NotifyInfo notifyInfo) {
+        switch (notifyInfo.getEventType()) {
+            case EventType.NETWORK_OK:
+                mInternetOffLayout.setInternetOnView();
+                break;
+
+            case EventType.NETWORK_NOT_OK:
+                mInternetOffLayout.setInternetOffView();
+                break;
+            default:
+                LogUtil.e(TAG, "default");
+        }
+    }
+
+    @Override
+    public int setUpLayout() {
+        return R.layout.layout_mypage;
+    }
+    @Override
+    public void onVisible() {
+
+    }
     private OnSwitchFragmentListener mOnSwitchFragmentListener;
 
     public MyPageFragment() {
         super();
         LogUtil.e(TAG, "MyPageFragment 构造函数");
     }
-    public MyPageFragment(OnSwitchFragmentListener listener) {
-        super();
-        mOnSwitchFragmentListener =listener;
-        LogUtil.e(TAG, "MyPageFragment 构造函数");
-    }
+
     public static MyPageFragment newInstance() {
         MyPageFragment fragment = new MyPageFragment();
         return  fragment;
@@ -79,6 +105,20 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void initViews() {
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.mypage_parent_view ) {
+            @Override
+            public void initData() {
+                initViewData();
+            }
+        };
+
+        mInternetOffLayout.showInternetOffLayout();
+        if(mInternetOffLayout.checkNerworkForView())
+            initViewData();
+
+    }
+
+    private void initViewData() {
         Uri uri = Uri.parse(MerchandiseColumns.CONTENT_URI + "");
         String[] projection = new String[] {MerchandiseColumns.MERCHANDISE_NAME, MerchandiseColumns._ID};
         Cursor cursor = mContentResolver.query(uri, projection ,null , null, null);
@@ -89,10 +129,8 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
                 CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         mListView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
-
         registerForContextMenu(mListView);
     }
-
     private void setOnclick() {
         LogUtil.e(TAG, "setOnclick notify ");
         NotifyInfo notifyInfo = new NotifyInfo(EventType.TEST);
@@ -124,10 +162,11 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.contact_item_menu, menu);
     }
+
     @Override public void onActivityCreated(Bundle onSavedInstanceState) {
         super.onActivityCreated(onSavedInstanceState);
-
     }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = new String[] {MerchandiseColumns.MERCHANDISE_NAME, MerchandiseColumns._ID};
@@ -145,6 +184,7 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onDetach();
@@ -166,15 +206,16 @@ public class MyPageFragment extends Fragment implements LoaderManager.LoaderCall
     public void onResume() {
         super.onResume();
         LogUtil.e(TAG, "onResume");
+        if(mInternetOffLayout.checkNerworkForView() ) {
+            initViewData();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        LogUtil.e(TAG, "onPause");
-//        if(!NetWorkUtil.isNetworkConnected())
-//            Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onStop() {
         super.onStop();

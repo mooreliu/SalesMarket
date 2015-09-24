@@ -19,6 +19,13 @@ public class MyPageRootFragment extends BaseFragment {
 
     private static final String TAG = "MyPageRootFragment";
     private View rootView;
+
+
+    public FragmentTransaction  getMyPageRootFragmentTransaction() {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        return transaction;
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_root_my_page, container, false);
@@ -37,7 +44,7 @@ public class MyPageRootFragment extends BaseFragment {
             transaction.replace(R.id.myPage_fragment_root_id, myPageFragment);
             //Create new fragment and transacnt);
         } else {
-            Fragment reloadFragment = ReloadFragment.newInstance(2);
+            Fragment reloadFragment = ReloadFragment.newInstance();
             transaction.replace(R.id.myPage_fragment_root_id, reloadFragment);
         }
         transaction.addToBackStack(null);

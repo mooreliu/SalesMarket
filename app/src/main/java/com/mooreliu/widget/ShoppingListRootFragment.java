@@ -3,6 +3,7 @@ package com.mooreliu.widget;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,11 @@ public class ShoppingListRootFragment extends BaseFragment {
         initViews();
         return rootView;
     }
+    public FragmentTransaction  getShoppingListRootFragmentTransaction() {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        return transaction;
+
+    }
     private void replaceFragment(boolean isNetworkConnected) {
         //FragmentTransaction transaction = getFragmentManager().beginTransaction();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -37,7 +43,7 @@ public class ShoppingListRootFragment extends BaseFragment {
             transaction.replace(R.id.shoppinglist_fragment_root_id, shoppingListPageFragment);
             //Create new fragment and transacnt);
         } else {
-            Fragment reloadFragment =  ReloadFragment.newInstance(1);
+            Fragment reloadFragment =  ReloadFragment.newInstance();
             transaction.replace(R.id.shoppinglist_fragment_root_id, reloadFragment);
         }
         transaction.addToBackStack(null);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,7 +39,37 @@ public class ReloadFragment extends BaseObserverFragment implements OnClickListe
     private Button mGoToSetting;
     private OnSwitchFragmentListener mOnSwitchFragmentListener;
     private int fragmentId;
+    public static int count = 0;
+    public int pageIndexSelected ;
+    public static volatile ReloadFragment mReloadFragment;
 
+    private Fragment recreateFragment(Fragment f)
+    {
+        try {
+            Fragment.SavedState savedState = getChildFragmentManager().saveFragmentInstanceState(f);
+
+            Fragment newInstance = f.getClass().newInstance();
+            newInstance.setInitialSavedState(savedState);
+
+            return newInstance;
+        }
+        catch (Exception e) // InstantiationException, IllegalAccessException
+        {
+            throw new RuntimeException("Cannot reinstantiate fragment " + f.getClass().getName(), e);
+        }
+    }
+    private ReloadFragment() {
+
+    }
+
+    public static ReloadFragment getInstance() {
+        if(mReloadFragment == null)
+            return newInstance();
+        return mReloadFragment;
+    }
+    public void setPageIndexSelected(int pageIndexSelected) {
+        this.pageIndexSelected = pageIndexSelected;
+    }
     @Override
     public String[] getObserverEventTypes() {
         return new String[] {
@@ -51,7 +82,16 @@ public class ReloadFragment extends BaseObserverFragment implements OnClickListe
         LogUtil.e(TAG, "EventType ="+notifyInfo.getEventType());
         switch (notifyInfo.getEventType()) {
             case EventType.NETWORK_OK:
-                replaceFragment(true);
+//                if(isVisible) {
+//                    LogUtil.e(TAG, "isVisible == true framentID = "+fragmentId);
+                new Handler().post(new Runnable() {
+                    public void run() {
+                        replaceFragment(true);
+                    }
+                });
+
+//                } else
+//                    LogUtil.e(TAG, "isVisible == false  framentID = "+fragmentId);
                 break;
             default:
                 LogUtil.e(TAG, "eventType error");
@@ -66,24 +106,37 @@ public class ReloadFragment extends BaseObserverFragment implements OnClickListe
     public void onVisible() {
 
     }
-    public static ReloadFragment newInstance(int fragmentId) {
-        ReloadFragment fragment = new ReloadFragment();
-        Bundle args = new Bundle();
-        args.putInt("fragmentId", fragmentId);
-        fragment.setArguments(args);
-        return fragment;
+    public synchronized static ReloadFragment newInstance() {
+        if(mReloadFragment == null) {
+            mReloadFragment = new ReloadFragment();
+        }
+        return mReloadFragment;
+//        ReloadFragment fragment = new ReloadFragment();
+//        Bundle args = new Bundle();
+////        args.putInt("fragmentId", fragmentId);
+////        fragment.setArguments(args);
+//        count++;
+//        LogUtil.e(TAG,"ReloadFragment newInstance count="+count);
+//        return fragment;
     }
 
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
         super.onCreate(onSavedInstanceState);
-        fragmentId = getArguments() != null? getArguments().getInt("fragmentId"):0;
-        LogUtil.e(TAG, "onCreate() fragmentId = "+fragmentId);
+//        fragmentId = getArguments() != null? getArguments().getInt("fragmentId"):0;
+        LogUtil.e(TAG, "onCreate() fragmentId = " + fragmentId);
 //        registerBroadcastReceiver();
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
+//        if(r®getActivity().unregisterReceiver(receiver);
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        count--;
+        LogUtil.e(TAG,"onDetach count="+count);
 //        if(r®getActivity().unregisterReceiver(receiver);
     }
     @Override
@@ -95,30 +148,30 @@ public class ReloadFragment extends BaseObserverFragment implements OnClickListe
         return rootView;
     }
 
-    private void registerBroadcastReceiver() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_BOOT_COMPLETED);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                //LogUtil.e(TAG, "receive an action in ReloadFragment ");
-                String action = intent.getAction();
-                if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                    LogUtil.e(TAG, " 网络状态发生变化 ");
-                    checkNetwork();
-                } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-                    LogUtil.e(TAG, " 开机完成 ");
-                    Intent newintent = new Intent(context, MainActivity.class);
-                    newintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //注意，必须添加这个标记，否则启动会失败
-                    context.startActivity(newintent);
-                }
-            }
-        };
-        getActivity().registerReceiver(receiver, filter);
-
-    }
+//    private void registerBroadcastReceiver() {
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Intent.ACTION_BOOT_COMPLETED);
+//        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//
+//        receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                //LogUtil.e(TAG, "receive an action in ReloadFragment ");
+//                String action = intent.getAction();
+//                if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+//                    LogUtil.e(TAG, " 网络状态发生变化 ");
+//                    checkNetwork();
+//                } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+//                    LogUtil.e(TAG, " 开机完成 ");
+//                    Intent newintent = new Intent(context, MainActivity.class);
+//                    newintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //注意，必须添加这个标记，否则启动会失败
+//                    context.startActivity(newintent);
+//                }
+//            }
+//        };
+//        getActivity().registerReceiver(receiver, filter);
+//
+//    }
     @Override
     public void onActivityCreated(Bundle onSavedInstanceState) {
         super.onActivityCreated(onSavedInstanceState);
@@ -141,13 +194,28 @@ public class ReloadFragment extends BaseObserverFragment implements OnClickListe
     }
 
     public void checkNetwork() {
-        if(NetWorkUtil.isNetworkConnected())
-            replaceFragment(true);
-        else
-            replaceFragment(false);
+        if(NetWorkUtil.isNetworkConnected()) {
+            new Handler().post(new Runnable() {
+                public void run() {
+                    replaceFragment(true);
+                }
+            });
+        }
+        else {
+            new Handler().post(new Runnable() {
+                public void run() {
+                    replaceFragment(false);
+                }
+            });
+        }
     }
     private void replaceFragment(boolean isNetworkConnected) {
+        if(getActivity() == null) {
+            LogUtil.e(TAG, "getActivity() == null  replaceFragment fragmentId ="+fragmentId);
+            return;
+        }
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        LogUtil.e(TAG, "replaceFragment fragmentId = "+fragmentId);
         //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         if(isNetworkConnected) {
             switch (fragmentId) {

@@ -20,6 +20,12 @@ public class MainPageRootFragment extends BaseFragment{
 
     private static final String TAG = "MainPageRootFragment";
     private View rootView;
+
+    public FragmentTransaction  getMainPageRootFragmentTransaction() {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        return transaction;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_root_main_page, container, false);
@@ -30,18 +36,22 @@ public class MainPageRootFragment extends BaseFragment{
     private void replaceFragment(boolean isNetworkConnected) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
+        LogUtil.e(TAG, "getChildFragmentManager().findFragmentById(R.id.mainpage_fragment_root_id)"
+                +getChildFragmentManager().findFragmentById(R.id.mainpage_fragment_root_id));
+        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.mainpage_fragment_root_id);
         if(isNetworkConnected) {
-            Fragment mainPagePageFragment = new MainPageFragment();
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack if needed
-            transaction.replace(R.id.mainpage_fragment_root_id, mainPagePageFragment);
-            //Create new fragment and transacnt);
+            if(fragment == null || fragment instanceof  ReloadFragment) {
+                Fragment mainPagePageFragment = new MainPageFragment();
+                transaction.replace(R.id.mainpage_fragment_root_id, mainPagePageFragment);
+           }
         } else {
-            Fragment reloadFragment = ReloadFragment.newInstance(0);
-            transaction.replace(R.id.mainpage_fragment_root_id, reloadFragment);
+//            if(getChildFragmentManager().findFragmentById(R.id.mainpage_fragment_root_id) instanceof  MainPageFragment) {if(fragment == null || fragment instanceof  ReloadFragment)
+            if(fragment == null || fragment instanceof  MainPageFragment) {
+                Fragment reloadFragment = ReloadFragment.newInstance();
+                transaction.replace(R.id.mainpage_fragment_root_id, reloadFragment);
+            }
         }
         transaction.addToBackStack(null);
-        // Commit the transaction
         transaction.commit();
     }
 

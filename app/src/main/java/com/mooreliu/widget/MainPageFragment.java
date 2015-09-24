@@ -37,6 +37,7 @@ import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.TextUtil;
 import com.mooreliu.util.UserUtil;
 import com.mooreliu.view.CustomProgressDialog;
+import com.mooreliu.view.InternetOffLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,36 +47,31 @@ import java.util.List;
  * 首页
  */
 public class MainPageFragment extends BaseObserverFragment {
+
     private final static String TAG ="MainPageFragment";
-    private View noInternetView = null;
     private View mView;
     private List<MerchandiseModel> mList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
     private LinearLayoutManager layoutManager;
-    private CustomProgressDialog progressDialog;
+    private InternetOffLayout mInternetOffLayout;
     private boolean isLoadComplete = false;
-    private OnSwitchFragmentListener mOnSwitchFragmentListener;
+    private static int count = 0;
 
     @Override
     public int setUpLayout(){
-        return 1;
+        return R.layout.layout_mainpage;
     }
 
     @Override
     public void onVisible() {
-
-
     }
     public MainPageFragment() {
         super();
-        LogUtil.e(TAG, "MainPageFragment构造函数");
+        count++;
+        LogUtil.e(TAG, "MainPageFragment 构造函数  count=" + count);
     }
-//    public MainPageFragment(OnSwitchFragmentListener listener) {
-//        super();
-//        mOnSwitchFragmentListener =listener;
-//        LogUtil.e(TAG, "MainPageFragment listener构造函数");
-//    }
+
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
         return  fragment;
@@ -85,39 +81,15 @@ public class MainPageFragment extends BaseObserverFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LogUtil.e(TAG, "onCreateView");
         mView = inflater.inflate(R.layout.layout_mainpage, container, false);
-        LogUtil.e(TAG, "onCreateView isLoadComplete"+isLoadComplete);
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.mainpage_parent_view) {
+            public void initData() {
+                initList();
+            }
+        };
+        //LogUtil.e(TAG, "onCreateView isLoadComplete"+isLoadComplete);
         return mView;
     }
 
-//    private void initNoInternetView (View view) {
-//        if(view == null)
-//            return;
-//        RelativeLayout parentView = (RelativeLayout)view.findViewById(R.id.parent_view);
-//        LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        noInternetView = inflater.inflate(R.layout.layout_reload, null);
-//        noInternetView.setLayoutParams(
-//                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//        noInternetView.setClickable(true);
-//        parentView.addView(noInternetView);
-//        final Button btnGotoSetting = (Button)noInternetView.findViewById(R.id.goto_setting);
-//        btnGotoSetting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(Settings.ACTION_SETTINGS));
-//            }
-//        });
-//
-//        final Button btnReload = (Button)noInternetView.findViewById(R.id.reload);
-//        if(noInternetView != null)
-//            noInternetView.setVisibility(View.GONE);
-//        btnReload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View mview) {
-//                showProgress(R.string.reconnect_to_internet);
-//                checkNerworkForView();
-//            }
-//        });
-//    }
 
     @Override
     public void onActivityCreated(Bundle onSavedInstanceState) {
@@ -126,59 +98,27 @@ public class MainPageFragment extends BaseObserverFragment {
         initView();
         setClick();
         LogUtil.e(TAG, "onActivityCreated");
-
     }
 
-    public void showProgress(int resID) {
-        if (progressDialog != null) {
-            progressDialog.cancel();
-        }
-        progressDialog = new CustomProgressDialog(getActivity(), getResources()
-                .getString(resID));
-        progressDialog.show();
-        Handler handler = new Handler();
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-            }
-        };
-        handler.postDelayed(r, 200);
-
-    }
     private void findView() {
         mRecyclerView =(RecyclerView)mView.findViewById(R.id.mainpage_recyclerview);
 
     }
     private void initView() {
-        //initNoInternetView(mView);
+        mInternetOffLayout.showInternetOffLayout();
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        if(checkNerworkForView()&&isLoadComplete==false)
-            initList();
-
+        if(mInternetOffLayout.checkNerworkForView()&&isLoadComplete==false)
+                initList();
     }
     private void setClick() {
 
-    }
-    private boolean checkNerworkForView() {
-        if (!NetWorkUtil.isNetworkConnected()) {
-            if (noInternetView != null) {
-                noInternetView.setVisibility(View.VISIBLE);
-                noInternetView.bringToFront();
-            }
-            return false;
-        } else {
-            if (noInternetView != null)
-                noInternetView.setVisibility(View.GONE);
-            return true;
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(checkNerworkForView() ) {
+        if(mInternetOffLayout.checkNerworkForView() ) {
             LogUtil.e(TAG,"onResume isLoadComplete"+isLoadComplete);
             initList();
         }
@@ -197,11 +137,9 @@ public class MainPageFragment extends BaseObserverFragment {
         LogUtil.e(TAG,"onStop");
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onDetach();
-        LogUtil.e(TAG,"onAttach "+activity.toString());
     }
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
@@ -212,16 +150,17 @@ public class MainPageFragment extends BaseObserverFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.e(TAG, "onDestroy");
+        LogUtil.e(TAG, this+"onDestroy");
     }
     @Override
     public void onDetach() {
         super.onDetach();
-        LogUtil.e(TAG,"onDetach");
+        count--;
+        LogUtil.e(TAG, "MainPageFragment onDetach  count=" + count);
     }
 
-
     private void initList(){
+        //LogUtil.e(TAG,"initList");
         mList = new ArrayList<>();
         //GzipTest();
         if(NetWorkUtil.isNetworkConnected()) {
@@ -232,6 +171,7 @@ public class MainPageFragment extends BaseObserverFragment {
             if(getActivity() != null) { // 要保证fragment没有被销毁
                 Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
                 GzipTest(Constants.jsonProductList, false);
+                LogUtil.e(TAG, "initRecyclerView");
                 initRecyclerView();
             }
         }
@@ -256,12 +196,11 @@ public class MainPageFragment extends BaseObserverFragment {
             LogUtil.e(TAG, "download RecyclerView data from server isSuccess   " + isSuccess);
             if(isSuccess == false)
                 GzipTest(Constants.jsonProductList ,false);
-            if(getActivity() != null)
+            if(getActivity() != null) {
+                LogUtil.e(TAG, "getActivity() != null");
                 initRecyclerView();
-
+            }
         }
-
-
     }
 
     private void GzipTest(String response,boolean downloadSuccess) {
@@ -287,6 +226,7 @@ public class MainPageFragment extends BaseObserverFragment {
         }
     }
     private void initRecyclerView() {
+        LogUtil.e(TAG, "initRecyclerView start");
         mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
@@ -311,16 +251,20 @@ public class MainPageFragment extends BaseObserverFragment {
     @Override
     public String[] getObserverEventTypes() {
         return new String[] {
-            EventType.TEST
+            EventType.NETWORK_OK,
+            EventType.NETWORK_NOT_OK
         };
     }
 
     @Override
     public void onUpdate(NotifyInfo notifyInfo) {
-        LogUtil.e(TAG, "MainPageFragment onUpdate");
         switch (notifyInfo.getEventType()) {
-            case EventType.TEST:
-                LogUtil.e(TAG, "onUpdate TEST");
+            case EventType.NETWORK_OK:
+                mInternetOffLayout.setInternetOnView();
+                break;
+
+            case EventType.NETWORK_NOT_OK:
+                mInternetOffLayout.setInternetOffView();
                 break;
             default:
                 LogUtil.e(TAG, "default");

@@ -16,27 +16,53 @@ import com.mooreliu.controller.OrderController;
 import com.mooreliu.db.model.OrderModel;
 import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.NetWorkUtil;
+import com.mooreliu.sync.EventType;
+import com.mooreliu.sync.NotifyInfo;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.view.InternetOffLayout;
 
 import java.util.List;
 
 /**
  * Created by liuyi on 15/8/29.
  */
-public class ShoppingListPageFragment extends BaseFragment {
+public class ShoppingListPageFragment extends BaseObserverFragment {
 
     private static final String TAG = "ShoppingListPageFragment";
+    private InternetOffLayout mInternetOffLayout;
     private OrderController oc;
     private View mView;
-    private OnSwitchFragmentListener listener;
 
-    private OnSwitchFragmentListener mOnSwitchFragmentListener;
-    protected boolean isVisible;
-
-
-    public void onVisible() {
-
+    @Override
+    public String[] getObserverEventTypes() {
+        return new String[] {
+                EventType.NETWORK_OK,
+                EventType.NETWORK_NOT_OK
+        };
     }
+
+    @Override
+    public void onUpdate(NotifyInfo notifyInfo) {
+        switch (notifyInfo.getEventType()) {
+            case EventType.NETWORK_OK:
+                mInternetOffLayout.setInternetOnView();
+                break;
+
+            case EventType.NETWORK_NOT_OK:
+                mInternetOffLayout.setInternetOffView();
+                break;
+            default:
+                LogUtil.e(TAG, "default");
+        }
+    }
+
+    @Override
+    public int setUpLayout() {
+        return R.layout.layout_mypage;
+    }
+    public void onVisible() {
+    }
+
     public ShoppingListPageFragment() {
         super();
         LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
@@ -47,12 +73,16 @@ public class ShoppingListPageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_shoppinglist, container, false);
         LogUtil.e(TAG, "onCreateView()");
-        findViews();
-        initViews();
-        setOnclick();
+
         return mView;
     }
 
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        findViews();
+        initViews();
+        setOnclick();
+    }
     public static ShoppingListPageFragment newInstance() {
         ShoppingListPageFragment fragment = new ShoppingListPageFragment();
         return  fragment;
@@ -62,8 +92,18 @@ public class ShoppingListPageFragment extends BaseFragment {
     }
 
     private void initViews() {
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.shoppinglist_parent_view) {
+            public void initData() {
+                initViewData();
+            }
+        };
+        mInternetOffLayout.showInternetOffLayout();
+        if(mInternetOffLayout.checkNerworkForView())
+            initViewData();
     }
+    private void initViewData() {
 
+    }
     private void setOnclick() {
 
     }
@@ -84,6 +124,9 @@ public class ShoppingListPageFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         LogUtil.e(TAG, "onResume");
+        if(mInternetOffLayout.checkNerworkForView() ) {
+            initViewData();
+        }
     }
 
     @Override

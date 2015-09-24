@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.mooreliu.event.NotifyInfo;
 import com.mooreliu.event.imple.EventObserver;
 import com.mooreliu.event.imple.EventSubject;
+import com.mooreliu.util.LogUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -13,6 +14,7 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseObserverActivity extends BaseActivity {
 
+    private static final String TAG= "BaseObserverActivity";
     private ActivityEventObserver mActivityEventObserver;
 
     @Override
@@ -34,6 +36,7 @@ public abstract class BaseObserverActivity extends BaseActivity {
         if(observerEventTypes!= null && observerEventTypes.length>0){
             final EventSubject eventSubject = EventSubject.getInstance();
             for(String eventType:observerEventTypes){
+                LogUtil.e(TAG, "BaseObserverFragment evetType = "+eventType + " observer = "+observer);
                 eventSubject.registerObserver(eventType,observer);
             }
         }

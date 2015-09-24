@@ -28,7 +28,8 @@ public class BroadcastReceiverNetCheck extends BroadcastReceiver implements OnNe
             if(NetWorkUtil.isNetworkConnected())
                  notifyInfo = new NotifyInfo(EventType.NETWORK_OK);
             else
-                notifyInfo = new NotifyInfo(EventType.NETWORK_NOT_OK);
+                 notifyInfo = new NotifyInfo(EventType.NETWORK_NOT_OK);
+            LogUtil.e(TAG, "notifyInfo "+notifyInfo.getEventType());
             Notify.getInstance().notifyFragment(notifyInfo);
 
         } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
