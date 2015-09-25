@@ -8,20 +8,18 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mooreliu.R;
 import com.mooreliu.controller.ShoppingChartController;
 import com.mooreliu.db.model.ShoppingChartModel;
 import com.mooreliu.util.CommonUtil;
-import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.DiskLruCacheUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.view.RatioImageView;
 
-import task.AddToShoppingChartTask;
+import com.mooreliu.task.AddToShoppingChartTask;
 
 /**
  * Created by liuyi on 15/9/3.

@@ -74,11 +74,10 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
     public int setUpLayout() {
         return R.layout.layout_mypage;
     }
+
     @Override
     public void onVisible() {
-
     }
-    private OnSwitchFragmentListener mOnSwitchFragmentListener;
 
     public MyPageFragment() {
         super();

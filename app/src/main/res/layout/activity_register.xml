@@ -7,12 +7,12 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_toolbar"/>
-    <LinearLayout
+    <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <LinearLayout
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -27,7 +27,7 @@
                 android:id="@+id/input_telephone_number"
                 android:hint="@string/please_input_username"
                 style="@style/RegisterEditText"/>
-        </LinearLayout>
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -114,5 +114,5 @@
             android:id="@+id/sms_error_message"
             android:textColor="@android:color/holo_red_dark"
             style="@style/CustomTextView" />
-    </LinearLayout>
+    </com.zhy.android.percent.support.PercentLinearLayout>
 </LinearLayout>

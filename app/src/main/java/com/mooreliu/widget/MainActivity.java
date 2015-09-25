@@ -6,6 +6,7 @@ package com.mooreliu.widget;
  * MainActivity主界面
  */
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -313,6 +314,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 }else {
                     mLoginOrLoginout.setText(getResources().getString(R.string.tv_logout));
                     Intent intent = new Intent(this , LoginActivity.class);
+                    //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
                     startActivity(intent);
                     mLeftMenu4.setBackgroundResource(R.color.white);
 
