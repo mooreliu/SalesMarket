@@ -1,6 +1,5 @@
 ## SalesMarket
-
-One SalesMarket App demo:
+One SalesMarket App demo:  
  ![image](http://ac-rzryaqf5.clouddn.com/f8ffc5dae42c4956.png)
  
 * Account Register
