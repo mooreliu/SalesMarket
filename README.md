@@ -1,7 +1,7 @@
 ## SalesMarket
 
 One SalesMarket App demo:
-
+ ![image](https://github.com/mooreliu/SalesMarket/photo/icon.png)
 * Account Register
 * Account Login & LoginOut
 * Add to Shopping Chart
