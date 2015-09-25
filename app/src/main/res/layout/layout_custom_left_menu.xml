@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--drawerlayout left menu -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
@@ -15,9 +15,6 @@
         android:orientation="vertical"
         android:layout_gravity="center">
 
-        <!-- login avator-->
-        <!--android:tint="@color/white"-->
-        <!--android:tintMode="src_in"-->
         <com.mooreliu.view.RatioImageView
             android:id="@+id/user_image_iv"
             android:layout_width="80dip"
@@ -41,8 +38,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_below="@id/login_ll"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
+        app:layout_heightPercent="50%"
         android:orientation="vertical"
         android:layout_weight="1">
 
@@ -61,4 +59,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>

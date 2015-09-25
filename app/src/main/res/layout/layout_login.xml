@@ -1,101 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
+    xmlns:andorid="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_toolbar"/>
-
-    <TextView
-        android:id="@+id/layout_login_username_tv"
-        android:text="@string/username"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="5%"
-        app:layout_marginTopPercent="4%"
-        app:layout_marginBottomPercent="1%"
-        app:layout_marginLeftPercent="10%"
-        android:gravity="center_vertical"
-        />
-    <com.mooreliu.view.ClearableEditText
-        android:layout_below="@id/layout_login_username_tv"
-        android:id="@+id/login_username"
-        android:hint="@string/please_input_username"
-        android:numeric="integer"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginRightPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        style="@style/CustomEditText"
+    <include
+        layout="@layout/layout_toolbar"
+        andorid:id="@+id/login_toolbar"
         />
 
-    <TextView
-        android:id="@+id/layout_login_password_tv"
-        android:layout_below="@id/login_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="5%"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        android:text="@string/password"
+    <android.support.percent.PercentRelativeLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        />
+        <TextView
+            android:id="@+id/layout_login_username_tv"
+            style="@style/CustomTextView"
+            android:text="@string/username"
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="5%"
+            app:layout_marginTopPercent="4%"
+            app:layout_marginBottomPercent="1%"
+            app:layout_marginLeftPercent="10%"
+            android:gravity="center_vertical"
+            />
+        <com.mooreliu.view.ClearableEditText
+            android:layout_below="@id/layout_login_username_tv"
+            android:id="@+id/login_username"
+            android:hint="@string/please_input_username"
+            android:numeric="integer"
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="10%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
+            style="@style/CustomEditText"
+            />
 
-    <com.mooreliu.view.ClearableEditText
-        android:id="@+id/login_password"
-        android:layout_below="@id/layout_login_password_tv"
-        android:password="true"
-        android:digits="@string/login_only_can_input"
-        android:hint="@string/please_input_login_password"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="10%"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginRightPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        style="@style/CustomEditText"
-        />
+        <TextView
+            android:id="@+id/layout_login_password_tv"
+            android:layout_below="@id/login_username"
+            style="@style/CustomTextView"
+            android:text="@string/password"
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="5%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_below="@id/login_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginRightPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        android:text="@string/login"
-        android:background="@drawable/drawable_loginbutton"
-        />
-    <TextView
-        android:id="@+id/login_error_msg"
-        android:layout_below="@id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginRightPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        android:textColor="@android:color/holo_red_dark"
-        />
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_below="@id/login_error_msg"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_marginLeftPercent="10%"
-        app:layout_marginRightPercent="10%"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        android:background="@drawable/drawable_registerbutton"
-        android:text="@string/register"
-        />
+            />
+
+        <com.mooreliu.view.ClearableEditText
+            android:id="@+id/login_password"
+            android:layout_below="@id/layout_login_password_tv"
+            android:password="true"
+            android:digits="@string/login_only_can_input"
+            android:hint="@string/please_input_login_password"
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
+            app:layout_marginLeftPercent="10%"
+            style="@style/CustomEditText"
+            />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_below="@id/login_password"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="8%"
+            app:layout_widthPercent="80%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
+            android:text="@string/login"
+            android:textSize="16sp"
+            android:background="@drawable/drawable_loginbutton"
+            />
+        <TextView
+            android:id="@+id/login_error_msg"
+            android:layout_below="@id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="4%"
+            app:layout_widthPercent="80%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
+            android:textColor="@android:color/holo_red_dark"
+
+            />
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_below="@id/login_error_msg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="8%"
+            app:layout_widthPercent="80%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="1%"
+            app:layout_marginBottomPercent="1%"
+            android:background="@drawable/drawable_registerbutton"
+            android:text="@string/register"
+            android:textSize="16sp"
+            />
 
 
-</android.support.percent.PercentRelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>

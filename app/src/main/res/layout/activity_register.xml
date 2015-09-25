@@ -1,118 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_toolbar"/>
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <com.zhy.android.percent.support.PercentLinearLayout
+
+        <android.support.percent.PercentRelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal">
             <TextView
+                android:id="@+id/input_telephone_number_tv"
                 style="@style/CustomTextView"
-                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
-                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                app:layout_marginTopPercent="3%"
+                app:layout_marginLeftPercent="10%"
                 android:text="@string/telephone_number" />
+
             <com.mooreliu.view.ClearableEditText
                 android:id="@+id/input_telephone_number"
+                android:layout_below="@id/input_telephone_number_tv"
                 android:hint="@string/please_input_username"
+                app:layout_heightPercent="7%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="15%"
                 style="@style/RegisterEditText"/>
-        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
             <TextView
+                android:id="@+id/password_tv"
+                android:layout_below="@id/input_telephone_number"
                 style="@style/CustomTextView"
-                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
-                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
                 android:text="@string/input_password" />
+
             <com.mooreliu.view.ClearableEditText
+                android:id="@+id/input_password"
+                android:layout_below="@id/password_tv"
                 style="@style/RegisterEditText"
                 android:hint="@string/please_input_password"
                 android:password="true"
                 android:maxLength="10"
+                app:layout_heightPercent="7%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="15%"
                 android:digits="qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"
-                android:id="@+id/input_password"/>
-        </LinearLayout>
+                />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
             <TextView
+                android:id="@+id/password_comfirm_tv"
+                android:layout_below="@id/input_password"
                 style="@style/CustomTextView"
-                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
-                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
                 android:text="@string/comfirm_password" />
+
             <com.mooreliu.view.ClearableEditText
+                android:id="@+id/input_comfirm_password"
+                android:layout_below="@id/password_comfirm_tv"
                 style="@style/RegisterEditText"
+                app:layout_heightPercent="7%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="15%"
                 android:hint="@string/please_input_confirm_password"
                 android:password="true"
                 android:maxLength="10"
                 android:digits="@string/login_only_can_input"
-                android:id="@+id/input_comfirm_password"/>
-        </LinearLayout>
+                />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
             <TextView
+                android:id="@+id/register_number_tv"
+                android:layout_below="@id/input_comfirm_password"
                 style="@style/CustomTextView"
-                android:layout_marginTop="@dimen/activity_register_margin_top_bottom"
-                android:layout_marginBottom="@dimen/activity_register_margin_top_bottom"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
                 android:text="@string/register_number" />
+
             <com.mooreliu.view.ClearableEditText
+                android:id="@+id/input_register_number"
+                android:layout_below="@id/register_number_tv"
                 style="@style/RegisterEditText"
+                app:layout_heightPercent="7%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="15%"
                 android:hint="@string/please_input_register_number"
                 android:maxLength="6"
                 android:numeric="integer"
-                android:id="@+id/input_register_number"/>
-        </LinearLayout>
+                />
 
-        <Button
-            android:id="@+id/btn_do_register"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_login_margin_left_right"
-            android:layout_marginRight="@dimen/activity_login_margin_left_right"
-            android:layout_marginTop="5dp"
-            android:text="@string/register"
-            android:background="@color/DodgerBlue"
-            />
-        <TextView
-            android:id="@+id/register_error_message"
-            android:textColor="@android:color/holo_red_dark"
-            style="@style/CustomTextView" />
-        <Button
-            android:id="@+id/btn_do_send_register_number"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_login_margin_left_right"
-            android:layout_marginRight="@dimen/activity_login_margin_left_right"
-            android:layout_marginTop="@dimen/activity_login_margin_top_bottom"
-            android:layout_marginBottom="@dimen/activity_login_margin_top_bottom"
-            android:background="@drawable/drawable_reload"
-            android:text="@string/get_register_number"
-            />
-        <TextView
-            android:id="@+id/sms_error_message"
-            android:textColor="@android:color/holo_red_dark"
-            style="@style/CustomTextView" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            <Button
+                android:id="@+id/btn_do_register"
+                android:layout_below="@id/input_register_number"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_widthPercent="80%"
+                app:layout_heightPercent="8%"
+                app:layout_marginTopPercent="3%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="10%"
+                android:text="@string/register"
+                android:textSize="18sp"
+                android:background="@color/DodgerBlue"
+                />
+
+            <TextView
+                android:id="@+id/register_error_message"
+                android:layout_below="@id/btn_do_register"
+                android:textColor="@android:color/holo_red_dark"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                style="@style/CustomTextView" />
+
+            <Button
+                android:id="@+id/btn_do_send_register_number"
+                android:layout_below="@id/register_error_message"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_widthPercent="80%"
+                app:layout_heightPercent="8%"
+                app:layout_marginLeftPercent="10%"
+                app:layout_marginRightPercent="10%"
+                android:background="@drawable/drawable_reload"
+                android:text="@string/get_register_number"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/sms_error_message"
+                android:layout_below="@id/btn_do_send_register_number"
+                android:textColor="@android:color/holo_red_dark"
+                app:layout_heightPercent="5%"
+                app:layout_widthPercent="100%"
+                style="@style/CustomTextView" />
+
+        </android.support.percent.PercentRelativeLayout>
+
 </LinearLayout>
