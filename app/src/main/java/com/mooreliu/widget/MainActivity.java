@@ -95,8 +95,8 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftMenu1 =findViewById(R.id.item_menu_1);
         mLeftMenu2 =findViewById(R.id.item_menu_2);
-        mLeftMenu3 =findViewById(R.id.item_menu_3);
-        mLeftMenu4 =findViewById(R.id.item_menu_4);
+        mLeftMenu3 =findViewById(R.id.item_menu_update);
+        mLeftMenu4 =findViewById(R.id.item_menu_login_logout);
         login_avatar = (ImageView) findViewById(R.id.user_image_iv);
         mTextViewUserName = (TextView) findViewById(R.id.username_tv);
         mLoginOrLoginout = (TextView) findViewById(R.id.left_menu4_tv);
@@ -286,6 +286,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 handler.postDelayed(r, 140);
                 break;
             case R.id.item_menu_3:
+                // update version
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.gray);
@@ -297,8 +298,10 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                     }
                 };
                 handler.postDelayed(r, 140);
+                // run update job
                 break;
             case R.id.item_menu_4:
+                //login && logout
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
                 mLeftMenu3.setBackgroundResource(R.color.white);

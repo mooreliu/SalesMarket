@@ -50,10 +50,10 @@
         <include android:id="@+id/item_menu_2"
             layout="@layout/layout_item2_left_menu"/>
 
-        <include android:id="@+id/item_menu_3"
+        <include android:id="@+id/item_menu_update"
             layout="@layout/layout_item3_left_menu"/>
 
-        <include android:id="@+id/item_menu_4"
+        <include android:id="@+id/item_menu_login_logout"
             layout="@layout/layout_item4_left_menu"/>
 
     </LinearLayout>

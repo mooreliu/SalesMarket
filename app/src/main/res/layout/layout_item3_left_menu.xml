@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/black"
-        android:text="邮件"
+        android:text="检查更新"
         android:textSize="14sp"/>
 
 </LinearLayout>
