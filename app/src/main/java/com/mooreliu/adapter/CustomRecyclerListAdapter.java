@@ -16,6 +16,7 @@ import com.mooreliu.R;
 import com.mooreliu.db.model.MerchandiseModel;
 import com.mooreliu.listener.OnProductClickListener;
 import com.mooreliu.util.DiskLruCacheUtil;
+import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.LruCacheUtil;
 import com.mooreliu.util.TextUtil;
 
@@ -64,9 +65,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
     public void onBindViewHolder(ViewHolder viewHolder ,int postion) {
         MerchandiseModel mMerchandiseModel = mProductList.get(postion);
         viewHolder.productModel = mMerchandiseModel;
-        String url = mMerchandiseModel.getmerchandiseImageUrl();
-        //LogUtil.e(TAG, url);
-        //LogUtil.e(TAG, mMerchandiseModel.getmerchandiseImageUrl());
+        //String url = mMerchandiseModel.getmerchandiseImageUrl();
         String key = TextUtil.hashKeyForDisk(mMerchandiseModel.getmerchandiseImageUrl());
         Bitmap mBitmap = LruCacheUtil.get(key);
 

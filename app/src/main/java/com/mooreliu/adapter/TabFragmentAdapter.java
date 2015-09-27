@@ -18,14 +18,9 @@ import com.mooreliu.listener.OnLoadingOverListener;
 import com.mooreliu.listener.OnSwitchFragmentListener;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
-import com.mooreliu.widget.LoadingFragment;
 import com.mooreliu.widget.MainPageFragment;
-import com.mooreliu.widget.MainPageRootFragment;
 import com.mooreliu.widget.MyPageFragment;
-import com.mooreliu.widget.ReloadFragment;
 import com.mooreliu.widget.ShoppingListPageFragment;
-import com.mooreliu.widget.ShoppingListRootFragment;
-import com.mooreliu.widget.MyPageRootFragment;
 
 /**
  * Description:  ViewPager适配器
@@ -69,7 +64,7 @@ public class TabFragmentAdapter extends FragmentPagerAdapter{
                // return new MyPageRootFragment();
                 return new MyPageFragment();
             default:
-                return ReloadFragment.newInstance();
+                throw new IllegalArgumentException(" illegal argument getItem");
         }
     }
 

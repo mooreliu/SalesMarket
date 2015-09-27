@@ -42,4 +42,12 @@
     <string name="reconnect_to_internet">重新连接到网络</string>
     <string name="add_to_shopping_chart">加入购物车</string>
 
+    <string name="version_update">版本升级</string>
+    <string name="ask_later">以后再说</string>
+    <string name="update_message">fix some crash bug</string>
+    <string name="do_download">下载</string>
+    <string name="update_version">版本升级</string>
+    <string name="no_external_storage">没有SDCard，不支持下载更新</string>
+    <string name="no_usable_storage">没有可用的存储介质</string>
+
 </resources>

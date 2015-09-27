@@ -325,19 +325,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
         }
     }
 
-    class signUpTask extends AsyncTask<Void  ,Void ,Boolean> {
-        @Override
-        protected  Boolean doInBackground(Void ... v) {
-
-                return true;
-        }
-
-        @Override
-        protected  void onPostExecute(Boolean isSuccess) {
-
-        }
-
-    }
 
     @Override
     public void onBackPressed() {

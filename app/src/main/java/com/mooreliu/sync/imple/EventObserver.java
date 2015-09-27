@@ -23,8 +23,6 @@ public abstract class EventObserver implements IEventObserver{
     }
     @Override
     public void update(NotifyInfo notifyInfo) {
-        LogUtil.e(TAG ,"update called");
-
         mHandler.post(new UpdateRunnable(notifyInfo));
     }
 
@@ -35,7 +33,7 @@ public abstract class EventObserver implements IEventObserver{
         }
         @Override
         public void run() {
-            LogUtil.e(TAG ,"UpdateRunnable run");
+            //LogUtil.e(TAG ,"UpdateRunnable run");
             onUpdate(mNotifyInfo);
         }
     }

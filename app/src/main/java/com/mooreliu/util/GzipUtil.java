@@ -12,6 +12,7 @@ import java.util.zip.GZIPOutputStream;
  * Created by mooreliu on 2015/9/1.
  */
 public class GzipUtil {
+
     public static String compress(String str) throws IOException {
         if (str == null || str.length() == 0) {
             return str;

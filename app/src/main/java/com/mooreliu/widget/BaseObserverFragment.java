@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseObserverFragment extends BaseFragment {
     private static final String TAG = "BaseObserverFragment";
-    public abstract int setUpLayout();
+
     private  FragmentObserver mFrgamentObserver;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public abstract class BaseObserverFragment extends BaseFragment {
     }
 
     private void registerFragment(FragmentObserver observer) {
-        LogUtil.e(TAG, "registerFragment observer = "+observer);
+        //LogUtil.e(TAG, "registerFragment observer = "+observer);
         String [] evenTypes = getObserverEventTypes();
         if(evenTypes != null && evenTypes.length != 0) {
             final EventObservable observable = EventObservable.getInstance();

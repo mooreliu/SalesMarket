@@ -27,7 +27,7 @@ public class Notify {
         String eventType = notifyInfo.getEventType();
         EventObservable eventObservable = EventObservable.getInstance();
         EventType eventTypes = EventType.getInstance();
-        LogUtil.e(TAG, "notify Fragment+" + notifyInfo.getEventType());
+        //LogUtil.e(TAG, "notify Fragment+" + notifyInfo.getEventType());
         if(eventTypes.contains(notifyInfo.getEventType()));
             eventObservable.notifyObservers(notifyInfo);
     }

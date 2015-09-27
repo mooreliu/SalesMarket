@@ -41,37 +41,16 @@ import com.mooreliu.view.InternetOffLayout;
 public class MyPageFragment extends BaseObserverFragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "MyPageFragment";
-    private View mView;
+    //private View mView;
     private ListView mListView;
     private SimpleCursorAdapter adapter;
     private ContentResolver mContentResolver;
     private InternetOffLayout mInternetOffLayout;
 
-    @Override
-    public String[] getObserverEventTypes() {
-        return new String[] {
-                EventType.NETWORK_OK,
-                EventType.NETWORK_NOT_OK
-        };
-    }
+
 
     @Override
-    public void onUpdate(NotifyInfo notifyInfo) {
-        switch (notifyInfo.getEventType()) {
-            case EventType.NETWORK_OK:
-                mInternetOffLayout.setInternetOnView();
-                break;
-
-            case EventType.NETWORK_NOT_OK:
-                mInternetOffLayout.setInternetOffView();
-                break;
-            default:
-                LogUtil.e(TAG, "default");
-        }
-    }
-
-    @Override
-    public int setUpLayout() {
+    public int onSetUpLayout() {
         return R.layout.layout_mypage;
     }
 
@@ -79,32 +58,14 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
     public void onVisible() {
     }
 
-    public MyPageFragment() {
-        super();
-        LogUtil.e(TAG, "MyPageFragment 构造函数");
-    }
-
-    public static MyPageFragment newInstance() {
-        MyPageFragment fragment = new MyPageFragment();
-        return  fragment;
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.layout_mypage, container, false);
+    protected void findViews() {
+        mListView = (ListView) mRootView.findViewById(R.id.myPagelist);
+    }
+    @Override
+    protected void initViews() {
         mContentResolver = getActivity().getContentResolver();
-        findViews();
-        initViews();
-        setOnclick();
-        return mView;
-    }
-
-    private void findViews() {
-        mListView = (ListView) mView.findViewById(R.id.myPagelist);
-    }
-
-    private void initViews() {
-        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.mypage_parent_view ) {
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mRootView, R.id.mypage_parent_view ) {
             @Override
             public void initData() {
                 initViewData();
@@ -112,8 +73,12 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
         };
 
         mInternetOffLayout.showInternetOffLayout();
-        if(mInternetOffLayout.checkNerworkForView())
-            initViewData();
+//        if(mInternetOffLayout.checkNerworkForView())
+//            initViewData();
+
+    }
+    @Override
+    protected void setOnClick() {
 
     }
 
@@ -129,11 +94,6 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
         mListView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
         registerForContextMenu(mListView);
-    }
-    private void setOnclick() {
-        LogUtil.e(TAG, "setOnclick notify ");
-        NotifyInfo notifyInfo = new NotifyInfo(EventType.TEST);
-        Notify.getInstance().notifyFragment(notifyInfo);
     }
 
     private void deleteItem(int id) {
@@ -224,7 +184,30 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
     @Override
     public void onDetach() {
         super.onDetach();
-        LogUtil.e(TAG,"onDetach");
+        LogUtil.e(TAG, "onDetach");
+    }
+
+
+    @Override
+    public String[] getObserverEventTypes() {
+        return new String[] {
+                EventType.NETWORK_OK,
+                EventType.NETWORK_NOT_OK
+        };
+    }
+
+    @Override
+    public void onUpdate(NotifyInfo notifyInfo) {
+        switch (notifyInfo.getEventType()) {
+            case EventType.NETWORK_OK:
+                mInternetOffLayout.setInternetOnView();
+                break;
+            case EventType.NETWORK_NOT_OK:
+                mInternetOffLayout.setInternetOffView();
+                break;
+            default:
+                LogUtil.e(TAG, "default");
+        }
     }
 }
 

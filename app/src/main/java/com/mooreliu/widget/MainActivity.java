@@ -7,10 +7,15 @@ package com.mooreliu.widget;
  */
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -32,10 +37,12 @@ import com.mooreliu.event.EventType;
 import com.mooreliu.event.Notify;
 import com.mooreliu.event.NotifyInfo;
 import com.mooreliu.receiver.BroadcastReceiverNetCheck;
+import com.mooreliu.task.UpdateVersionTask;
 import com.mooreliu.util.CommonUtil;
 import com.mooreliu.util.LogUtil;
 import com.mooreliu.util.UserUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,13 +64,15 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private ImageView login_avatar;
     private TextView mTextViewUserName;
     private TextView mLoginOrLoginout;
+    private Context mContext;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawer();
-        //initBroadcastRecevier();
         checkUserState();
+        mContext = this;
     }
 
     private void checkUserState() {
@@ -164,7 +173,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
             @Override
             public void onPageSelected(final int position) {
-                LogUtil.e(TAG, "position onPageSelected" + position);
+                //LogUtil.e(TAG, "position onPageSelected" + position);
 
             }
 
@@ -285,7 +294,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 };
                 handler.postDelayed(r, 140);
                 break;
-            case R.id.item_menu_3:
+            case R.id.item_menu_update:
                 // update version
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
@@ -299,8 +308,9 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 };
                 handler.postDelayed(r, 140);
                 // run update job
+                showUpdateDialog();
                 break;
-            case R.id.item_menu_4:
+            case R.id.item_menu_login_logout:
                 //login && logout
                 mLeftMenu1.setBackgroundResource(R.color.white);
                 mLeftMenu2.setBackgroundResource(R.color.white);
@@ -330,4 +340,28 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 break;
         }
     }
+
+    private void showUpdateDialog() {
+        Builder builder = new Builder(this);
+        builder.setTitle(getString(R.string.version_update));
+        builder.setMessage(getString(R.string.update_message));
+        builder.setPositiveButton(getString(R.string.do_download), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                UpdateVersionTask task = new UpdateVersionTask(mContext);
+                task.execute();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.ask_later), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+
+
 }

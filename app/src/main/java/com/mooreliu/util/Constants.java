@@ -8,6 +8,8 @@ public class Constants {
     public static final String PACKAGE_NAME = "com.mooreliu";
     public static final String AUTHORITY = Constants.PACKAGE_NAME + ".provider";
     public static final int TIMEOUT = 60;
+    public static final String MerchandiseServerUrl = "http://ac-rzryaqf5.clouddn.com/56fadadc4a75387c.json";
+
     public static final String merchandiseUrls[]={
         "http://ww3.sinaimg.cn/bmiddle/005EM0nggw1evjg5s5nkuj30hs0bvgmi.jpg",
         "http://ww1.sinaimg.cn/bmiddle/005EM0nggw1evjg5shlgfj30hs0bv0tn.jpg",
@@ -36,8 +38,9 @@ public class Constants {
         "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/22f67b33eb888654.png\"}," +
         "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/121c8c09a6d92dc4.png\"}," +
         "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/62cedd7ebb52262b.png\"}," +
-        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/7e69220d525ddb54.png\"}," +
+        "{\"merchandiseName\":\"1\",\"merchandisePrice\":\"1\",\"merchandiseDescription\":\"1\",\"merchandiseImageUrl\":\"http://ac-rzryaqf5.clouddn.com/7e69220d525ddb54.png\"}" +
         "]";
+
 
 //    public static final String jsonProductList =
 //        "[" +

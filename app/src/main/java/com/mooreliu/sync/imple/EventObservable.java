@@ -31,26 +31,26 @@ public class EventObservable implements IEventObservable{
     @Override
     public void registerObserver(EventObserver observer, String eventType) {
 
-        LogUtil.e(TAG, " registerObserver eventType= "+eventType+" observer "+observer);
-        LogUtil.e(TAG, " registerObserver notifyObservers mEventObservers.size() "+mEventObservers.size());
+        //LogUtil.e(TAG, " registerObserver eventType= "+eventType+" observer "+observer);
+        //LogUtil.e(TAG, " registerObserver notifyObservers mEventObservers.size() "+mEventObservers.size());
         if(observer != null && eventType != null) {
             synchronized (mEventObservers) {
                 ArrayList eventObservers = mEventObservers.get(eventType);
                 if (eventObservers == null) {
                     eventObservers = new ArrayList<EventObserver>();
-                    LogUtil.e(TAG, "eventObservers == null");
+                    //LogUtil.e(TAG, "eventObservers == null");
 
                 }
                 if (eventObservers.contains(observer)) {
-                    LogUtil.e(TAG, "eventObservers.contains(observer)  == true");
+                    //LogUtil.e(TAG, "eventObservers.contains(observer)  == true");
                     return;
                 }
 
                 eventObservers.add(observer);
                 mEventObservers.put(eventType, eventObservers);
-                LogUtil.e(TAG , "eventObservers .add(observer)  mEventObservers.size() "+mEventObservers.size());
-                if(eventObservers != null)
-                    LogUtil.e(TAG , "eventObservers  mEventObservers.get(eventType).size(); "+ mEventObservers.get(eventType).size());
+                //LogUtil.e(TAG , "eventObservers .add(observer)  mEventObservers.size() "+mEventObservers.size());
+//                if(eventObservers != null)
+                    //LogUtil.e(TAG , "eventObservers  mEventObservers.get(eventType).size(); "+ mEventObservers.get(eventType).size());
 
 
             }
@@ -73,15 +73,15 @@ public class EventObservable implements IEventObservable{
 
     @Override
     public void notifyObservers(NotifyInfo notifyInfo) {
-        LogUtil.e(TAG, " notifyObservers notifyInfo getEventType "+notifyInfo.getEventType());
-        LogUtil.e(TAG, " notifyObservers mEventObservers.size() "+mEventObservers.size());
-        LogUtil.e(TAG, " notifyObservers mEventObservers "+mEventObservers);
-        LogUtil.e(TAG, " notifyObservers mEventObservable "+mEventObservable);
+//        LogUtil.e(TAG, " notifyObservers notifyInfo getEventType "+notifyInfo.getEventType());
+//        LogUtil.e(TAG, " notifyObservers mEventObservers.size() "+mEventObservers.size());
+//        LogUtil.e(TAG, " notifyObservers mEventObservers "+mEventObservers);
+//        LogUtil.e(TAG, " notifyObservers mEventObservable "+mEventObservable);
 
         if (mEventObservers != null && mEventObservable != null && mEventObservers.size() != 0
                 &&mEventObservers.get(notifyInfo.getEventType()) != null&& notifyInfo != null) {
             for (EventObserver observer : mEventObservers.get(notifyInfo.getEventType())) {
-                LogUtil.e(TAG, " observer.update(notifyInfo);");
+                //LogUtil.e(TAG, " observer.update(notifyInfo);");
                 observer.update(notifyInfo);
             }
      }

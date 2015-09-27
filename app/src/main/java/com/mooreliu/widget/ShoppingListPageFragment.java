@@ -31,7 +31,7 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
     private static final String TAG = "ShoppingListPageFragment";
     private InternetOffLayout mInternetOffLayout;
     private OrderController oc;
-    private View mView;
+    //private View mView;
 
     @Override
     public String[] getObserverEventTypes() {
@@ -57,8 +57,8 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
     }
 
     @Override
-    public int setUpLayout() {
-        return R.layout.layout_mypage;
+    public int onSetUpLayout() {
+        return R.layout.layout_shoppinglist;
     }
     public void onVisible() {
     }
@@ -69,30 +69,27 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.layout_shoppinglist, container, false);
-        LogUtil.e(TAG, "onCreateView()");
-
-        return mView;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        mView = inflater.inflate(R.layout.layout_shoppinglist, container, false);
+//        LogUtil.e(TAG, "onCreateView()");
+//        return mView;
+//    }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        findViews();
-        initViews();
-        setOnclick();
     }
     public static ShoppingListPageFragment newInstance() {
         ShoppingListPageFragment fragment = new ShoppingListPageFragment();
         return  fragment;
     }
-    private void findViews() {
+    @Override
+    protected void findViews() {
 
     }
-
-    private void initViews() {
-        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.shoppinglist_parent_view) {
+    @Override
+    protected void initViews() {
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mRootView, R.id.shoppinglist_parent_view) {
             public void initData() {
                 initViewData();
             }
@@ -104,7 +101,8 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
     private void initViewData() {
 
     }
-    private void setOnclick() {
+    @Override
+    protected void setOnClick() {
 
     }
 
@@ -118,7 +116,6 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
         super.onCreate(onSavedInstanceState);
         LogUtil.e(TAG, "onCreate");
     }
-
 
     @Override
     public void onResume() {

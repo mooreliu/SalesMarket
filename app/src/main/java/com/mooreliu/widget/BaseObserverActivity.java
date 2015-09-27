@@ -36,7 +36,7 @@ public abstract class BaseObserverActivity extends BaseActivity {
         if(observerEventTypes!= null && observerEventTypes.length>0){
             final EventSubject eventSubject = EventSubject.getInstance();
             for(String eventType:observerEventTypes){
-                LogUtil.e(TAG, "BaseObserverFragment evetType = "+eventType + " observer = "+observer);
+                //LogUtil.e(TAG, "BaseObserverFragment evetType = "+eventType + " observer = "+observer);
                 eventSubject.registerObserver(eventType,observer);
             }
         }

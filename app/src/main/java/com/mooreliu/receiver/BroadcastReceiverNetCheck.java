@@ -20,16 +20,16 @@ public class BroadcastReceiverNetCheck extends BroadcastReceiver implements OnNe
 
     @Override
     public void onReceive(Context context ,Intent intent) {
-        LogUtil.e(TAG,"BroadcastReceiverNetCheck an action");
+        //LogUtil.e(TAG,"BroadcastReceiverNetCheck an action");
         String action = intent.getAction();
         if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-            LogUtil.e(TAG, "Connection Change");
+            //LogUtil.e(TAG, "Connection Change");
             NotifyInfo notifyInfo = null;
             if(NetWorkUtil.isNetworkConnected())
                  notifyInfo = new NotifyInfo(EventType.NETWORK_OK);
             else
                  notifyInfo = new NotifyInfo(EventType.NETWORK_NOT_OK);
-            LogUtil.e(TAG, "notifyInfo "+notifyInfo.getEventType());
+            //LogUtil.e(TAG, "notifyInfo "+notifyInfo.getEventType());
             Notify.getInstance().notifyFragment(notifyInfo);
 
         } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {

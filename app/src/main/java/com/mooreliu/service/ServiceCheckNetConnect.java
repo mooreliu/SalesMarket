@@ -15,7 +15,6 @@ import com.mooreliu.AppContext;
 import com.mooreliu.R;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.util.LogUtil;
-import com.mooreliu.widget.ReloadFragment;
 import com.mooreliu.widget.ShoppingListPageFragment;
 
 /**
@@ -28,7 +27,7 @@ public class ServiceCheckNetConnect extends IntentService {
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtil.e(TAG,"onReceive");
+            //LogUtil.e(TAG,"onReceive");
             mContext = context;
             String action = intent.getAction();
             if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
@@ -47,7 +46,7 @@ public class ServiceCheckNetConnect extends IntentService {
     }
     @Override
     public void onHandleIntent(Intent intent) {
-        LogUtil.e(TAG,"Service onHandleIntent()");
+        //LogUtil.e(TAG,"Service onHandleIntent()");
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(mReceiver ,intentFilter);

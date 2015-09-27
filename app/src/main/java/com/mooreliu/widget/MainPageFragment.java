@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
@@ -32,8 +33,11 @@ import com.mooreliu.net.HttpUtil;
 import com.mooreliu.net.NetWorkUtil;
 import com.mooreliu.sync.EventType;
 import com.mooreliu.sync.NotifyInfo;
+import com.mooreliu.task.TaskGetMerchandiseListFromServer;
 import com.mooreliu.util.Constants;
+import com.mooreliu.util.GsonHelper;
 import com.mooreliu.util.LogUtil;
+import com.mooreliu.util.NetUtil;
 import com.mooreliu.util.TextUtil;
 import com.mooreliu.util.UserUtil;
 import com.mooreliu.view.CustomProgressDialog;
@@ -49,7 +53,7 @@ import java.util.List;
 public class MainPageFragment extends BaseObserverFragment {
 
     private final static String TAG ="MainPageFragment";
-    private View mView;
+    //private View mView;
     private List<MerchandiseModel> mList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
@@ -59,7 +63,7 @@ public class MainPageFragment extends BaseObserverFragment {
     private static int count = 0;
 
     @Override
-    public int setUpLayout(){
+    public int onSetUpLayout(){
         return R.layout.layout_mainpage;
     }
 
@@ -72,69 +76,53 @@ public class MainPageFragment extends BaseObserverFragment {
         LogUtil.e(TAG, "MainPageFragment 构造函数  count=" + count);
     }
 
-    public static MainPageFragment newInstance() {
-        MainPageFragment fragment = new MainPageFragment();
-        return  fragment;
+    @Override
+    public void onActivityCreated(Bundle onSavedInstanceState) {
+        super.onActivityCreated(onSavedInstanceState);
+        LogUtil.e(TAG, "onActivityCreated");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtil.e(TAG, "onCreateView");
-        mView = inflater.inflate(R.layout.layout_mainpage, container, false);
-        mInternetOffLayout = new InternetOffLayout(getActivity(), mView, R.id.mainpage_parent_view) {
+    protected void findViews() {
+        mRecyclerView =(RecyclerView)mRootView.findViewById(R.id.mainpage_recyclerview);
+    }
+
+    @Override
+    protected void initViews() {
+        LogUtil.e(TAG, "initViews");
+        mInternetOffLayout = new InternetOffLayout(getActivity(), mRootView, R.id.mainpage_parent_view) {
             public void initData() {
                 initList();
             }
         };
-        //LogUtil.e(TAG, "onCreateView isLoadComplete"+isLoadComplete);
-        return mView;
-    }
-
-
-    @Override
-    public void onActivityCreated(Bundle onSavedInstanceState) {
-        super.onActivityCreated(onSavedInstanceState);
-        findView();
-        initView();
-        setClick();
-        LogUtil.e(TAG, "onActivityCreated");
-    }
-
-    private void findView() {
-        mRecyclerView =(RecyclerView)mView.findViewById(R.id.mainpage_recyclerview);
-
-    }
-    private void initView() {
         mInternetOffLayout.showInternetOffLayout();
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-        if(mInternetOffLayout.checkNerworkForView()&&isLoadComplete==false)
-                initList();
-    }
-    private void setClick() {
+        mList = new ArrayList<>();
+        initVoidRecyclerView();
 
+    }
+
+    @Override
+    protected void setOnClick() {
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(mInternetOffLayout.checkNerworkForView() ) {
-            LogUtil.e(TAG,"onResume isLoadComplete"+isLoadComplete);
-            initList();
-        }
-        LogUtil.e(TAG, "onResume");
+        mInternetOffLayout.checkNerworkForView();
     }
 
     @Override
     public void onPause() {
-        LogUtil.e(TAG,"onPause");
+        LogUtil.e(TAG, "onPause");
         super.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        LogUtil.e(TAG,"onStop");
+        LogUtil.e(TAG, "onStop");
     }
 
     @Override
@@ -159,76 +147,39 @@ public class MainPageFragment extends BaseObserverFragment {
         LogUtil.e(TAG, "MainPageFragment onDetach  count=" + count);
     }
 
-    private void initList(){
-        //LogUtil.e(TAG,"initList");
-        mList = new ArrayList<>();
-        //GzipTest();
+    private synchronized void initList(){
+        LogUtil.e(TAG, "initList");
         if(NetWorkUtil.isNetworkConnected()) {
-            TaskGetProductListFromServer getProductListTast = new TaskGetProductListFromServer();
-            getProductListTast.execute();
+            TaskGetMerchandiseListFromServer getMerichandiseListTast = new TaskGetMerchandiseListFromServer() {
+                @Override
+                public void postExecute(String response) {
+                mList = GsonHelper.getMerchandiseListFromGsonString(response);
+                initRecyclerView();
+                }
+            };
+            getMerichandiseListTast.execute();
         } else {
             LogUtil.e(TAG,getString(R.string.networkNotAvail));
             if(getActivity() != null) { // 要保证fragment没有被销毁
                 Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
-                GzipTest(Constants.jsonProductList, false);
+                GsonHelper.getMerchandiseListFromGsonString(Constants.jsonProductList);
                 LogUtil.e(TAG, "initRecyclerView");
                 initRecyclerView();
             }
         }
     }
 
-    private class TaskGetProductListFromServer extends AsyncTask<Void,Void ,Boolean> {
-        @Override
-        public Boolean doInBackground(Void ...parms) {
-            String getUrl = "http://192.168.1.115:8080/user";
-            String response;
-            response = HttpUtil.HttpGETResponseString(getUrl ,5*1000 ,5*1000);
-            if(response !=null) {
-                LogUtil.e(TAG ,"response ="+response);
-                GzipTest(response ,true);
-                return true;
-            }
-            return  false;
-        }
-
-        @Override
-        public void onPostExecute(Boolean isSuccess) {
-            LogUtil.e(TAG, "download RecyclerView data from server isSuccess   " + isSuccess);
-            if(isSuccess == false)
-                GzipTest(Constants.jsonProductList ,false);
-            if(getActivity() != null) {
-                LogUtil.e(TAG, "getActivity() != null");
-                initRecyclerView();
-            }
-        }
+    /**
+     * 在无网络或者网络数据没有加载前 set一个空的adapter
+     */
+    private void initVoidRecyclerView() {
+        CustomRecyclerListAdapter adapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
+        mRecyclerView.setAdapter(adapter);
     }
 
-    private void GzipTest(String response,boolean downloadSuccess) {
-        if(mList.size() != 0 &&downloadSuccess ==true) {
-            mList.clear();
-        }
-        Gson gson = new Gson();
-        //Gzip Compress
-//        try {
-//            String gzipStr = GzipUtil.compress(Constants.jsonProductList);
-//            LogUtil.e(TAG,"gzipStr Compressed "+gzipStr);
-//            String unCompressedStr = GzipUtil.decompress(gzipStr);
-//            LogUtil.e(TAG," decompressed "+unCompressedStr);
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        List<MerchandiseModel> retList = gson.fromJson(response,
-        // List<MerchandiseModel> retList = gson.fromJson(Constants.jsonProductList,
-                new TypeToken<List<MerchandiseModel>>() {
-                }.getType());
-        for(int i =0 ;i< retList.size()-1 ;i++) {
-            mList.add(new MerchandiseModel(retList.get(i).getmerchandiseImageUrl()));
-        }
-    }
     private void initRecyclerView() {
         LogUtil.e(TAG, "initRecyclerView start");
         mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView ,getActivity() ,mList ,this.getResources());
-        mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
             public void onTouch(View v, MerchandiseModel model) {
@@ -242,7 +193,7 @@ public class MainPageFragment extends BaseObserverFragment {
                 }
             }
         });
-
+        mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         isLoadComplete = true;
         LogUtil.e(TAG, " isLoadComplete" + isLoadComplete);
 
@@ -262,7 +213,6 @@ public class MainPageFragment extends BaseObserverFragment {
             case EventType.NETWORK_OK:
                 mInternetOffLayout.setInternetOnView();
                 break;
-
             case EventType.NETWORK_NOT_OK:
                 mInternetOffLayout.setInternetOffView();
                 break;
