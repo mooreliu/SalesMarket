@@ -2,149 +2,150 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <include layout="@layout/layout_toolbar"/>
 
-        <android.support.percent.PercentRelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-            <TextView
-                android:id="@+id/input_telephone_number_tv"
-                style="@style/CustomTextView"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                app:layout_marginTopPercent="3%"
-                app:layout_marginLeftPercent="10%"
-                android:text="@string/telephone_number" />
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
-            <com.mooreliu.view.ClearableEditText
-                android:id="@+id/input_telephone_number"
-                android:layout_below="@id/input_telephone_number_tv"
-                android:hint="@string/please_input_username"
-                app:layout_heightPercent="7%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="15%"
-                style="@style/RegisterEditText"/>
+        <TextView
+            android:id="@+id/input_telephone_number_tv"
+            style="@style/CustomTextView"
+            android:text="@string/telephone_number"
+            app:layout_heightPercent="5%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginTopPercent="3%"
+            app:layout_widthPercent="100%"/>
 
-            <TextView
-                android:id="@+id/password_tv"
-                android:layout_below="@id/input_telephone_number"
-                style="@style/CustomTextView"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                android:text="@string/input_password" />
+        <com.mooreliu.view.ClearableEditText
+            android:id="@+id/input_telephone_number"
+            style="@style/RegisterEditText"
+            android:layout_below="@id/input_telephone_number_tv"
+            android:hint="@string/please_input_username"
+            app:layout_heightPercent="7%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="15%"
+            app:layout_widthPercent="100%"/>
 
-            <com.mooreliu.view.ClearableEditText
-                android:id="@+id/input_password"
-                android:layout_below="@id/password_tv"
-                style="@style/RegisterEditText"
-                android:hint="@string/please_input_password"
-                android:password="true"
-                android:maxLength="10"
-                app:layout_heightPercent="7%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="15%"
-                android:digits="qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"
-                />
+        <TextView
+            android:id="@+id/password_tv"
+            style="@style/CustomTextView"
+            android:layout_below="@id/input_telephone_number"
+            android:text="@string/input_password"
+            app:layout_heightPercent="5%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_widthPercent="100%"/>
 
-            <TextView
-                android:id="@+id/password_comfirm_tv"
-                android:layout_below="@id/input_password"
-                style="@style/CustomTextView"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                android:text="@string/comfirm_password" />
+        <com.mooreliu.view.ClearableEditText
+            android:id="@+id/input_password"
+            style="@style/RegisterEditText"
+            android:layout_below="@id/password_tv"
+            android:digits="qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"
+            android:hint="@string/please_input_password"
+            android:maxLength="10"
+            android:password="true"
+            app:layout_heightPercent="7%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="15%"
+            app:layout_widthPercent="100%"
+            />
 
-            <com.mooreliu.view.ClearableEditText
-                android:id="@+id/input_comfirm_password"
-                android:layout_below="@id/password_comfirm_tv"
-                style="@style/RegisterEditText"
-                app:layout_heightPercent="7%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="15%"
-                android:hint="@string/please_input_confirm_password"
-                android:password="true"
-                android:maxLength="10"
-                android:digits="@string/login_only_can_input"
-                />
+        <TextView
+            android:id="@+id/password_comfirm_tv"
+            style="@style/CustomTextView"
+            android:layout_below="@id/input_password"
+            android:text="@string/comfirm_password"
+            app:layout_heightPercent="5%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_widthPercent="100%"/>
 
-            <TextView
-                android:id="@+id/register_number_tv"
-                android:layout_below="@id/input_comfirm_password"
-                style="@style/CustomTextView"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                android:text="@string/register_number" />
+        <com.mooreliu.view.ClearableEditText
+            android:id="@+id/input_comfirm_password"
+            style="@style/RegisterEditText"
+            android:layout_below="@id/password_comfirm_tv"
+            android:digits="@string/login_only_can_input"
+            android:hint="@string/please_input_confirm_password"
+            android:maxLength="10"
+            android:password="true"
+            app:layout_heightPercent="7%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="15%"
+            app:layout_widthPercent="100%"
+            />
 
-            <com.mooreliu.view.ClearableEditText
-                android:id="@+id/input_register_number"
-                android:layout_below="@id/register_number_tv"
-                style="@style/RegisterEditText"
-                app:layout_heightPercent="7%"
-                app:layout_widthPercent="100%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="15%"
-                android:hint="@string/please_input_register_number"
-                android:maxLength="6"
-                android:numeric="integer"
-                />
+        <TextView
+            android:id="@+id/register_number_tv"
+            style="@style/CustomTextView"
+            android:layout_below="@id/input_comfirm_password"
+            android:text="@string/register_number"
+            app:layout_heightPercent="5%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_widthPercent="100%"/>
 
-            <Button
-                android:id="@+id/btn_do_register"
-                android:layout_below="@id/input_register_number"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_widthPercent="80%"
-                app:layout_heightPercent="8%"
-                app:layout_marginTopPercent="3%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="10%"
-                android:text="@string/register"
-                android:textSize="18sp"
-                android:background="@color/DodgerBlue"
-                />
+        <com.mooreliu.view.ClearableEditText
+            android:id="@+id/input_register_number"
+            style="@style/RegisterEditText"
+            android:layout_below="@id/register_number_tv"
+            android:hint="@string/please_input_register_number"
+            android:maxLength="6"
+            android:numeric="integer"
+            app:layout_heightPercent="7%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="15%"
+            app:layout_widthPercent="100%"
+            />
 
-            <TextView
-                android:id="@+id/register_error_message"
-                android:layout_below="@id/btn_do_register"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                style="@style/CustomTextView" />
+        <Button
+            android:id="@+id/btn_do_register"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/input_register_number"
+            android:background="@color/DodgerBlue"
+            android:text="@string/register"
+            android:textSize="18sp"
+            app:layout_heightPercent="8%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_marginTopPercent="3%"
+            app:layout_widthPercent="80%"
+            />
 
-            <Button
-                android:id="@+id/btn_do_send_register_number"
-                android:layout_below="@id/register_error_message"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_widthPercent="80%"
-                app:layout_heightPercent="8%"
-                app:layout_marginLeftPercent="10%"
-                app:layout_marginRightPercent="10%"
-                android:background="@drawable/drawable_reload"
-                android:text="@string/get_register_number"
-                android:textSize="18sp"
-                />
+        <TextView
+            android:id="@+id/register_error_message"
+            style="@style/CustomTextView"
+            android:layout_below="@id/btn_do_register"
+            android:textColor="@android:color/holo_red_dark"
+            app:layout_heightPercent="5%"
+            app:layout_widthPercent="100%"/>
 
-            <TextView
-                android:id="@+id/sms_error_message"
-                android:layout_below="@id/btn_do_send_register_number"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_heightPercent="5%"
-                app:layout_widthPercent="100%"
-                style="@style/CustomTextView" />
+        <Button
+            android:id="@+id/btn_do_send_register_number"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/register_error_message"
+            android:background="@drawable/drawable_reload"
+            android:text="@string/get_register_number"
+            android:textSize="18sp"
+            app:layout_heightPercent="8%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_marginRightPercent="10%"
+            app:layout_widthPercent="80%"
+            />
 
-        </android.support.percent.PercentRelativeLayout>
+        <TextView
+            android:id="@+id/sms_error_message"
+            style="@style/CustomTextView"
+            android:layout_below="@id/btn_do_send_register_number"
+            android:textColor="@android:color/holo_red_dark"
+            app:layout_heightPercent="5%"
+            app:layout_widthPercent="100%"/>
+
+    </android.support.percent.PercentRelativeLayout>
 
 </LinearLayout>

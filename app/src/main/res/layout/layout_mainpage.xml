@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainpage_parent_view"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent">
-
-<!--&gt;-->
-<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <!--&gt;-->
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mainpage_recyclerview"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingLeft="2.5dp"
             android:paddingRight="2.5dp"
             android:visibility="visible"
             >
-    </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
-    </FrameLayout>
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+</FrameLayout>

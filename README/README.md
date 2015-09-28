@@ -17,11 +17,11 @@ Observer && Observable schema To notify Activity&Fragment whatever updates and c
 * InternetOffLayout , switch between InternetOffLayout && "InternetOnLayout" according  
 to Internet condition with BroadcastReceiver
 * Material Design 
-  ### <a href = "https://github.com/mooreliu/SalesMarket/blob/master/app/src/main/java/com/mooreliu/adapter/CustomRecyclerListAdapter.java"  target = "_blank" >
+    - <a href = "https://github.com/mooreliu/SalesMarket/blob/master/app/src/main/java/com/mooreliu/adapter/CustomRecyclerListAdapter.java"  target = "_blank" >
   RecyclerListView   </a>
-  ### <a href = ""  target="_blank">
+    - <a href = ""  target="_blank">
   DrawerLayout  </a>
-  ### <a href = "https://github.com/mooreliu/SalesMarket/blob/master/app/src/main/java/com/mooreliu/adapter/TabFragmentAdapter.java" target = "_blank">
+    - <a href = "https://github.com/mooreliu/SalesMarket/blob/master/app/src/main/java/com/mooreliu/adapter/TabFragmentAdapter.java" target = "_blank">
   TabLayout  </a>
 * ViewPager && FragmentPagerAdapter
 * LruCache - DiskLruCache - Internet  3-Layer Cache scheme
@@ -53,7 +53,10 @@ com.readystatesoftware.systembartint:systembartint:1.0.3   </a>
 * com.android.support:support-v4:21.0.3
 * com.android.support:percent:22.2.0
 
-
+Test
+====
+License
+---
 
 ##License
     Copyright 2015 mooreliu

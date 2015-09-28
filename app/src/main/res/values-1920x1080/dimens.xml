@@ -1,4 +1,4 @@
 <resources>
     <dimen name="login_register_textview_text_size">14sp</dimen>
-	<dimen name="login_register_edittext_text_size">12sp</dimen>
+    <dimen name="login_register_edittext_text_size">12sp</dimen>
 </resources>

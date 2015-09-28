@@ -3,57 +3,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/app_desc_viewpagers"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
 
-        <LinearLayout
-            android:id="@+id/dots"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/app_desc_viewpagers"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+    <LinearLayout
+        android:id="@+id/dots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:background="@android:color/transparent"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/activity_flash_dot_padding"
-                android:layout_margin="@dimen/activity_flash_dot_margin"
-                android:clickable="true"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/custom_dot"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/activity_flash_dot_padding"
-                android:layout_margin="@dimen/activity_flash_dot_margin"
-                android:clickable="true"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/custom_dot"
-                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/activity_flash_dot_padding"
-                android:layout_margin="@dimen/activity_flash_dot_margin"
-                android:clickable="true"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/custom_dot"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/activity_flash_dot_padding"
-                android:layout_margin="@dimen/activity_flash_dot_margin"
-                android:clickable="true"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/custom_dot"
-                />
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/activity_flash_dot_margin"
+            android:background="@drawable/custom_dot"
+            android:clickable="true"
+            android:padding="@dimen/activity_flash_dot_padding"
+            />
 
-        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/activity_flash_dot_margin"
+            android:background="@drawable/custom_dot"
+            android:clickable="true"
+            android:padding="@dimen/activity_flash_dot_padding"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/activity_flash_dot_margin"
+            android:background="@drawable/custom_dot"
+            android:clickable="true"
+            android:padding="@dimen/activity_flash_dot_padding"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/activity_flash_dot_margin"
+            android:background="@drawable/custom_dot"
+            android:clickable="true"
+            android:padding="@dimen/activity_flash_dot_padding"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

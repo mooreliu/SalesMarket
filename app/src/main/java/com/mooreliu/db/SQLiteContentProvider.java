@@ -7,7 +7,7 @@ import android.content.ContentProvider;
  */
 public abstract class SQLiteContentProvider extends ContentProvider {
 
-	private static final String TAG = "SQLiteContentProvider";
+  private static final String TAG = "SQLiteContentProvider";
 
 
 }

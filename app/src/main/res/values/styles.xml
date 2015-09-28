@@ -16,6 +16,7 @@
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
+
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
@@ -35,7 +36,7 @@
 
     <!-- CustomEditText -->
     <!--<item name="android:textSize">12sp</item>-->
-    <style name="CustomEditText"  parent="android:Widget.EditText">
+    <style name="CustomEditText" parent="android:Widget.EditText">
         <item name="android:textSize">@dimen/login_register_edittext_text_size</item>
         <item name="android:maxLength">15</item>
         <item name="android:singleLine">true</item>
@@ -44,7 +45,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="RegisterEditText"  parent="android:Widget.EditText">
+    <style name="RegisterEditText" parent="android:Widget.EditText">
         <item name="android:textSize">@dimen/login_register_edittext_text_size</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

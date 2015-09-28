@@ -17,44 +17,44 @@ import com.mooreliu.R;
 
 public class ExitDialog extends Dialog {
 
-    private static final String TAG = "ExitDialog";
-    private Context mContext;
-    private Button mConfirm;
-    private Button mCancel;
+  private static final String TAG = "ExitDialog";
+  private Context mContext;
+  private Button mConfirm;
+  private Button mCancel;
 
-    public ExitDialog(Context context) {
-        super(context,R.style.ExitDialog);
-        mContext=context;
-    }
+  public ExitDialog(Context context) {
+    super(context, R.style.ExitDialog);
+    mContext = context;
+  }
 
-    public ExitDialog(Context context, int theme) {
-        super(context, theme);
-        mContext=context;
-    }
+  public ExitDialog(Context context, int theme) {
+    super(context, theme);
+    mContext = context;
+  }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_dialog);
-        //设置为我们的布局
-        this.setCanceledOnTouchOutside(false);
-        //设置为点击对话框之外的区域对话框不消失
-        mConfirm= (Button) findViewById(R.id.dialog_confirm);
-        mCancel= (Button) findViewById(R.id.dialog_cancel);
-        //设置事件
-        mConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.exit(0);
-            }
-        });
-        mCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ExitDialog.this.dismiss();
-            }
-        });
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.layout_dialog);
+    //设置为我们的布局
+    this.setCanceledOnTouchOutside(false);
+    //设置为点击对话框之外的区域对话框不消失
+    mConfirm = (Button) findViewById(R.id.dialog_confirm);
+    mCancel = (Button) findViewById(R.id.dialog_cancel);
+    //设置事件
+    mConfirm.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        System.exit(0);
+      }
+    });
+    mCancel.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ExitDialog.this.dismiss();
+      }
+    });
 
-    }
+  }
 
 }

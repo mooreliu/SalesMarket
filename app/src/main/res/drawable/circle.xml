@@ -95,32 +95,32 @@
         </layer-list>
     </item>
     <item>
-    <shape android:shape="oval">
+        <shape android:shape="oval">
 
-    <solid android:color="@color/ColorPrimary" />
+            <solid android:color="@color/ColorPrimary"/>
 
 
-    </shape>
+        </shape>
     </item>
 
     <!--<item >-->
 
-        <!--<ripple xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:color="?android:colorControlHighlight">-->
+    <!--<ripple xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:color="?android:colorControlHighlight">-->
 
-                <!--<shape android:shape="oval">-->
-                    <!--<solid android:color="#FFBB00" />-->
-                <!--</shape>-->
+    <!--<shape android:shape="oval">-->
+    <!--<solid android:color="#FFBB00" />-->
+    <!--</shape>-->
 
-            <!--<item>-->
-                <!--<shape android:shape="oval">-->
+    <!--<item>-->
+    <!--<shape android:shape="oval">-->
 
-                    <!--<solid android:color="@color/ColorPrimary" />-->
+    <!--<solid android:color="@color/ColorPrimary" />-->
 
 
-                <!--</shape>-->
-            <!--</item>-->
-        <!--</ripple>-->
+    <!--</shape>-->
+    <!--</item>-->
+    <!--</ripple>-->
 
     <!--</item>-->
 

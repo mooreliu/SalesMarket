@@ -5,5 +5,5 @@ package com.mooreliu.sync;
  */
 public interface IEventObserver {
 
-	public void update(NotifyInfo notifyInfo);
+  public void update(NotifyInfo notifyInfo);
 }

@@ -6,24 +6,24 @@ import com.mooreliu.event.imple.EventSubject;
  * 通知工具类 @author zhiwu_yan @version 1.0 @since 2015-06-30  14:46
  */
 public class Notify {
-	private static volatile Notify mNotify;
+  private static volatile Notify mNotify;
 
-	private Notify() {
-	}
+  private Notify() {
+  }
 
-	public static Notify getInstance() {
-		if (mNotify == null) {
-			mNotify = new Notify();
-		}
-		return mNotify;
-	}
+  public static Notify getInstance() {
+    if (mNotify == null) {
+      mNotify = new Notify();
+    }
+    return mNotify;
+  }
 
-	public void NotifyActivity(NotifyInfo notifyInfo) {
-		EventSubject eventSubject = EventSubject.getInstance();
-		EventType eventTypes = EventType.getInstance();
-		if (eventTypes.contains(notifyInfo.getEventType())) {
-			eventSubject.notifyObserver(notifyInfo);
-		}
-	}
+  public void NotifyActivity(NotifyInfo notifyInfo) {
+    EventSubject eventSubject = EventSubject.getInstance();
+    EventType eventTypes = EventType.getInstance();
+    if (eventTypes.contains(notifyInfo.getEventType())) {
+      eventSubject.notifyObserver(notifyInfo);
+    }
+  }
 
 }
