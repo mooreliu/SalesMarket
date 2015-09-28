@@ -7,48 +7,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mooreliu.util.LogUtil;
-
 /**
  * Created by mooreliu on 2015/9/17.
  */
-public abstract class BaseFragment extends Fragment{
-    private static final String TAG = "BaseFragment";
-    protected boolean isVisible;
-    protected View mRootView;
+public abstract class BaseFragment extends Fragment {
+	private static final String TAG = "BaseFragment";
+	protected boolean isVisible;
+	protected View mRootView;
 
-    public abstract int onSetUpLayout();
-    protected abstract void initViews();
-    protected abstract void findViews();
-    protected abstract void setOnClick();
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mRootView == null) {
-            mRootView = inflater.inflate(onSetUpLayout(), container, false);
-            findViews();
-            initViews();
-            setOnClick();
-        }
-        return mRootView;
-    }
+	public abstract int onSetUpLayout();
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        //LogUtil.e(TAG, "setUserVisibleHint");
-        super.setUserVisibleHint(isVisibleToUser);
-        if(getUserVisibleHint()) {
-            isVisible = true;
-            //LogUtil.e(TAG, " isVisible = true");
-            onVisible();
-        } else {
-            isVisible = false;
-           //LogUtil.e(TAG, " isVisible = false");
-            onInvisible();
-        }
-    }
-    public abstract void onVisible();
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (mRootView == null) {
+			mRootView = inflater.inflate(onSetUpLayout(), container, false);
+			findViews();
+			initViews();
+			setOnClick();
+		}
+		return mRootView;
+	}
 
-    //lazyLoad();
-    //protected abstract void lazyLoad();
-    public void onInvisible(){}
+	protected abstract void initViews();
+
+	protected abstract void findViews();
+
+	protected abstract void setOnClick();
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (getUserVisibleHint()) {
+			isVisible = true;
+			onVisible();
+		} else {
+			isVisible = false;
+			onInvisible();
+		}
+	}
+
+	public abstract void onVisible();
+
+	//protected abstract void lazyLoad();
+	public void onInvisible() {
+	}
 }

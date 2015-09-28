@@ -16,9 +16,12 @@ import com.mooreliu.R;
  */
 
 public class ExitDialog extends Dialog {
+
+    private static final String TAG = "ExitDialog";
     private Context mContext;
     private Button mConfirm;
     private Button mCancel;
+
     public ExitDialog(Context context) {
         super(context,R.style.ExitDialog);
         mContext=context;

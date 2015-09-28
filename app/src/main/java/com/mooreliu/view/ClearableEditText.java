@@ -13,91 +13,88 @@ import android.widget.EditText;
 import com.mooreliu.R;
 
 public class ClearableEditText extends EditText implements View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
+	private Drawable _right;
+	private OnTouchListener _t;
+	private OnFocusChangeListener _f;
 
-    private Drawable _right;
-    private OnTouchListener _t;
-    private OnFocusChangeListener _f;
+	public ClearableEditText(Context context) {
+		super(context);
+		init();
+	}
 
-    public ClearableEditText(Context context) {
-        super(context);
-        init();
-    }
+	public ClearableEditText(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
 
-    public ClearableEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
+	public ClearableEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		init();
+	}
 
-    public ClearableEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+	private void init() {
+		_right = getCompoundDrawables()[2];
+		if (_right == null) _right = getResources().getDrawable(R.mipmap.et_delete);
+		_right.setBounds(0, 0, _right.getIntrinsicWidth(), _right.getIntrinsicHeight());
+		setCompoundDrawablePadding((int) getResources().getDimension(R.dimen.margin_micro));
+		super.setOnFocusChangeListener(this);
+		super.setOnTouchListener(this);
+		addTextChangedListener(this);
+	}
 
-    private void init() {
-        _right = getCompoundDrawables()[2];
-        if (_right == null) {
-            _right = getResources().getDrawable(R.mipmap.et_delete);
-        }
-        _right.setBounds(0, 0, _right.getIntrinsicWidth(), _right.getIntrinsicHeight());
-        setCompoundDrawablePadding((int) getResources().getDimension(R.dimen.margin_micro));
-        super.setOnFocusChangeListener(this);
-        super.setOnTouchListener(this);
-        addTextChangedListener(this);
-    }
+	@Override
+	public void setOnFocusChangeListener(OnFocusChangeListener l) {
+		this._f = l;
+	}
 
-    @Override
-    public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        this._f = l;
-    }
+	@Override
+	public void setOnTouchListener(OnTouchListener l) {
+		this._t = l;
+	}
 
-    @Override
-    public void setOnTouchListener(OnTouchListener l) {
-        this._t = l;
-    }
-
-    private void setClearIconVisible(boolean visible) {
-        Drawable temp = visible ? _right : null;
-        Drawable[] drawables = getCompoundDrawables();
-        setCompoundDrawables(drawables[0], drawables[1], temp, drawables[3]);
-    }
+	private void setClearIconVisible(boolean visible) {
+		Drawable temp = visible ? _right : null;
+		Drawable[] drawables = getCompoundDrawables();
+		setCompoundDrawables(drawables[0], drawables[1], temp, drawables[3]);
+	}
 
 
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        setClearIconVisible(hasFocus && !TextUtils.isEmpty(getText()));
-        if (_f != null) {
-            _f.onFocusChange(v, hasFocus);
-        }
-    }
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		setClearIconVisible(hasFocus && !TextUtils.isEmpty(getText()));
+		if (_f != null) {
+			_f.onFocusChange(v, hasFocus);
+		}
+	}
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (getCompoundDrawables()[2] != null) {
-            boolean tapped = event.getX() > (getWidth() - getPaddingRight() - _right.getIntrinsicWidth());
-            if (tapped) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    setText("");
-                }
-                return true;
-            }
-        }
-        if (_t != null) {
-            return _t.onTouch(v, event);
-        }
-        return false;
-    }
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (getCompoundDrawables()[2] != null) {
+			boolean tapped = event.getX() > (getWidth() - getPaddingRight() - _right.getIntrinsicWidth());
+			if (tapped) {
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					setText("");
+				}
+				return true;
+			}
+		}
+		if (_t != null) {
+			return _t.onTouch(v, event);
+		}
+		return false;
+	}
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //ignore
-    }
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		//ignore
+	}
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        setClearIconVisible(isFocused() && !TextUtils.isEmpty(s));
-    }
+	@Override
+	public void afterTextChanged(Editable s) {
+		setClearIconVisible(isFocused() && !TextUtils.isEmpty(s));
+	}
 
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        super.onTextChanged(s, start, before, count);
-    }
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		super.onTextChanged(s, start, before, count);
+	}
 }

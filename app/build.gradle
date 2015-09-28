@@ -1,4 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    source 'src'
+    configFile file("config/checkstyle.xml")
+    include '**/*.java'
+    exclude '**/gen/**'
+    ignoreFailures true
+
+    classpath = files()
+}
 
 android {
     compileSdkVersion 21

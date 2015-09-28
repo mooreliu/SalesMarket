@@ -40,14 +40,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     private TextView mTextViewSMSErrorMsg;
     private CountDownTimer timer;
 
-//    private String mUserNameInput;
     private String mTelephoneNumberInput;
     private String mPasswordInput;
     private String mPasswordComfirmInput;
     private String mRegisterNumberInput;
     private AVUser user;
-    private int SIGNUP_ERROR_CODE;
-    private int VERIFY_SMS_ERROR_CODE;
     private String SIGNUP_ERROR_MSG ;
     private String VERIFY_SMS_ERROR_MSG;
     private String REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG;
@@ -61,13 +58,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     private static final int VERIFY_SMS_SUCCESS_MSG =5;
     private static final int REQUEST_SMS_SUCCESS_MSG =6;
 
-    private int SIGN_UP_FAIL_ERROR_CODE;
     private int REQUEST_SMS_FAIL_ERROR_CODE;
-    private int VERIFY_SMS_FAIL_ERROR_CODE;
-
-    private boolean IS_SIGN_UP_SUCCESS;
-    private boolean IS_VERIFY_SMS_SUCCESS;
-    private boolean IS_REQUEST_SMS_SUCCESS;
 
     private DigitsKeyListener mDigitsKeyListender;
     @Override
@@ -201,13 +192,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
                 // TODO Auto-generated method stub
                 Message msg = new Message();
                 if( e == null) {
-                    IS_VERIFY_SMS_SUCCESS = true;
                     msg.what = VERIFY_SMS_SUCCESS_MSG;
                 }else {
-                    IS_VERIFY_SMS_SUCCESS = false;
                     msg.what = VERIFY_SMS_FAIL_MSG;
                     VERIFY_SMS_ERROR_MSG = e.getLocalizedMessage();
-                    VERIFY_SMS_FAIL_ERROR_CODE = e.getCode();
                     if(e.getCode() == Constants.AVOS_ERROR_CODE_INVALID_SNS_CODE) {
                         CommonUtil.toastMessage(getResources().getString(R.string.invalid_sms_code));
                         VERIFY_SMS_ERROR_MSG = getResources().getString(R.string.invalid_sms_code);
@@ -242,7 +230,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
             CommonUtil.toastMessage(getResources().getString(R.string.password_comfirm_error));
             return false;
         }
-
         return  true;
     }
 
@@ -258,18 +245,15 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
             public void done(AVException e) {
                 Message msg = new Message();
                 if (e == null) {
-                        IS_SIGN_UP_SUCCESS =true;
                         msg.what = SIGN_UP_SUCCESS_MSG;
                     } else {
-                        IS_SIGN_UP_SUCCESS =false;
                         msg.what = SIGN_UP_FAIL_MSG;
-                        SIGN_UP_FAIL_ERROR_CODE = e.getCode();
                         SIGNUP_ERROR_MSG = e.getLocalizedMessage();
                         if (e.getCode() == AVException.USER_MOBILE_PHONENUMBER_TAKEN) {
                            SIGNUP_ERROR_MSG = getResources().getString(R.string.user_mobile_phonenumber_taken);
                             // LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
-                            //  LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
-                            //  CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
+                            // LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
+                            // CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
                         }
                         e.printStackTrace();
                     }
@@ -285,12 +269,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
             public void done(AVException e) {
                 Message msg = new Message();
                 if (e == null) {
-                    IS_REQUEST_SMS_SUCCESS = true;
+                    //IS_REQUEST_SMS_SUCCESS = true;
                     msg.what = REQUEST_SMS_SUCCESS_MSG;
                     LogUtil.e(TAG, "Register Number send no error" + mTelephoneNumberInput);
 
                 } else {
-                    IS_REQUEST_SMS_SUCCESS = false;
+                    //IS_REQUEST_SMS_SUCCESS = false;
                     msg.what = REQUEST_SMS_FAIL_MSG;
                     REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = e.getLocalizedMessage();
                     REQUEST_SMS_FAIL_ERROR_CODE = e.getCode();

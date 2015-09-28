@@ -9,14 +9,13 @@ import android.os.Parcelable;
  * Created by liuyi on 15/9/13.
  */
 public interface IModel extends Parcelable {
+	public abstract Uri getContentUri();
 
-    public abstract Uri getContentUri();
+	public abstract <T extends BaseModel> T getModel(Cursor cursor);
 
-    public abstract <T extends BaseModel> T getModel(Cursor cursor);
+	public abstract String getTable();
 
-    public abstract String getTable();
-
-    public abstract ContentValues values();
+	public abstract ContentValues values();
 
 }
 
