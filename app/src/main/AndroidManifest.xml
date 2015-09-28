@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.mooreliu"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="com.mooreliu"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- permissoin -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>

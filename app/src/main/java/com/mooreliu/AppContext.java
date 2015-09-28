@@ -33,137 +33,137 @@ import timber.log.Timber;
  * Created by liuyi on 15/8/28.
  */
 public class AppContext extends Application {
-  public static final String TAG = "AppContext";
-  public final static boolean DEBUG = BuildConfig.DEBUG;
-  public static HashMap<String, WeakReference<Activity>> mContext = new HashMap<String, WeakReference<Activity>>();
-  public static DiskLruCache mDiskLruCache;
-  public static LruCache<String, Bitmap> mLruBitmapCache;
-  public static PackageInfo mpackageInfo;
-  public static String packageName;
-  public static String versionName;
-  public static int versionCode;
-  public static Context context;
-  private List<Activity> acitivityList = new ArrayList<Activity>();
-  private RefWatcher refWatcher;
-  private AppContext mInstance;
+    public static final String TAG = "AppContext";
+    public final static boolean DEBUG = BuildConfig.DEBUG;
+    public static HashMap<String, WeakReference<Activity>> mContext = new HashMap<String, WeakReference<Activity>>();
+    public static DiskLruCache mDiskLruCache;
+    public static LruCache<String, Bitmap> mLruBitmapCache;
+    public static PackageInfo mpackageInfo;
+    public static String packageName;
+    public static String versionName;
+    public static int versionCode;
+    public static Context context;
+    private List<Activity> acitivityList = new ArrayList<Activity>();
+    private RefWatcher refWatcher;
+    private AppContext mInstance;
 
-  public static LruCache<String, Bitmap> getLruBitmapCache() {
-    return mLruBitmapCache;
-  }
-
-  public static DiskLruCache getDistLruCache() {
-    return mDiskLruCache;
-  }
-
-  public static RefWatcher getRefWatcher(Context context) {
-    AppContext app = (AppContext) context.getApplicationContext();
-    return app.refWatcher;
-  }
-
-  public static Context getContext() {
-    return context;
-  }
-
-  public static synchronized void setActiveContext(Activity context) {
-    WeakReference<Activity> reference = new WeakReference<Activity>(context);
-    mContext.put(context.getClass().getSimpleName(), reference);
-  }
-
-  public static synchronized Activity getActiveContext(String className) {
-    WeakReference<Activity> reference = mContext.get(className);
-    if (reference == null) {
-      return null;
+    public static LruCache<String, Bitmap> getLruBitmapCache() {
+        return mLruBitmapCache;
     }
 
-    final Activity context = reference.get();
-    if (context == null) {
-      mContext.remove(className);
-      return null;
+    public static DiskLruCache getDistLruCache() {
+        return mDiskLruCache;
     }
 
-    return context;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    context = getApplicationContext();
-    Fresco.initialize(context);
-    init();
-    initPackage();
-    initDiskLruCache();
-    initLruCache();
-    initAVOS();
-    beginTestService();
-    refWatcher = LeakCanary.install(this);
-  }
-
-  private void initAVOS() {
-    AVOSCloud.initialize(this, Config.APP_ID, Config.APP_KEY);
-    AVAnalytics.enableCrashReport(this, true);
-  }
-
-  private void initLruCache() {
-    int cacheSize = (int) Runtime.getRuntime().maxMemory() / 8;
-    mLruBitmapCache = new LruCache<String, Bitmap>(cacheSize) {
-      @Override
-      public int sizeOf(String key, Bitmap bitmap) {
-        return bitmap.getByteCount();
-      }
-    };
-  }
-
-  private void initDiskLruCache() {
-    try {
-      File cacheDir = StorageUtil.getDiskCacheDir(context, "product");
-      if (!cacheDir.exists())
-        cacheDir.mkdir();
-      mDiskLruCache = DiskLruCache.open(cacheDir, AppContext.versionCode, 1, 10 * 1024 * 1024);
-    } catch (IOException e) {
-      e.printStackTrace();
+    public static RefWatcher getRefWatcher(Context context) {
+        AppContext app = (AppContext) context.getApplicationContext();
+        return app.refWatcher;
     }
-  }
 
-  private void beginTestService() {
+    public static Context getContext() {
+        return context;
+    }
+
+    public static synchronized void setActiveContext(Activity context) {
+        WeakReference<Activity> reference = new WeakReference<Activity>(context);
+        mContext.put(context.getClass().getSimpleName(), reference);
+    }
+
+    public static synchronized Activity getActiveContext(String className) {
+        WeakReference<Activity> reference = mContext.get(className);
+        if (reference == null) {
+            return null;
+        }
+
+        final Activity context = reference.get();
+        if (context == null) {
+            mContext.remove(className);
+            return null;
+        }
+
+        return context;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getApplicationContext();
+        Fresco.initialize(context);
+        init();
+        initPackage();
+        initDiskLruCache();
+        initLruCache();
+        initAVOS();
+        beginTestService();
+        refWatcher = LeakCanary.install(this);
+    }
+
+    private void initAVOS() {
+        AVOSCloud.initialize(this, Config.APP_ID, Config.APP_KEY);
+        AVAnalytics.enableCrashReport(this, true);
+    }
+
+    private void initLruCache() {
+        int cacheSize = (int) Runtime.getRuntime().maxMemory() / 8;
+        mLruBitmapCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            public int sizeOf(String key, Bitmap bitmap) {
+                return bitmap.getByteCount();
+            }
+        };
+    }
+
+    private void initDiskLruCache() {
+        try {
+            File cacheDir = StorageUtil.getDiskCacheDir(context, "product");
+            if (!cacheDir.exists())
+                cacheDir.mkdir();
+            mDiskLruCache = DiskLruCache.open(cacheDir, AppContext.versionCode, 1, 10 * 1024 * 1024);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void beginTestService() {
 //        Intent intent = new Intent("com.mooreliu.subService");
-    Intent intent = new Intent(AppContext.getContext(), ServiceCheckNetConnect.class);
-    startService(intent);
-    LogUtil.e(TAG, "startService(intent);");
-  }
-
-  public AppContext getInstance() {
-    return mInstance;
-
-  }
-
-  private void init() {
-    mInstance = this;
-    if (BuildConfig.DEBUG) {
-      Timber.plant(new Timber.DebugTree());
+        Intent intent = new Intent(AppContext.getContext(), ServiceCheckNetConnect.class);
+        startService(intent);
+        LogUtil.e(TAG, "startService(intent);");
     }
-  }
 
-  private void initPackage() {
-    PackageManager pm = getPackageManager();
-    try {
-      mpackageInfo = pm.getPackageInfo(getPackageName(), 0);
-      packageName = mpackageInfo.packageName;
-      versionCode = mpackageInfo.versionCode;
-      versionName = mpackageInfo.versionName;
+    public AppContext getInstance() {
+        return mInstance;
+
+    }
+
+    private void init() {
+        mInstance = this;
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+    }
+
+    private void initPackage() {
+        PackageManager pm = getPackageManager();
+        try {
+            mpackageInfo = pm.getPackageInfo(getPackageName(), 0);
+            packageName = mpackageInfo.packageName;
+            versionCode = mpackageInfo.versionCode;
+            versionName = mpackageInfo.versionName;
 //            LogUtil.e("initPackge",versionCode+": "+versionName);
-    } catch (PackageManager.NameNotFoundException e) {
-      e.printStackTrace();
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  public synchronized void addActivity(Activity activity) {
-    acitivityList.add(activity);
+    public synchronized void addActivity(Activity activity) {
+        acitivityList.add(activity);
 
-  }
+    }
 
-  public synchronized void removeActivity(Activity activity) {
-    if (acitivityList.contains(activity))
-      acitivityList.remove(activity);
-  }
+    public synchronized void removeActivity(Activity activity) {
+        if (acitivityList.contains(activity))
+            acitivityList.remove(activity);
+    }
 
 }

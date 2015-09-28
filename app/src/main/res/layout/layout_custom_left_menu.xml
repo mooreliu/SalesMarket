@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--drawerlayout left menu -->
-<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                               xmlns:app="http://schemas.android.com/apk/res-auto"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="match_parent"
-                                               android:background="@color/white"
-                                               android:fitsSystemWindows="true">
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:id="@+id/login_ll"
@@ -39,6 +40,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/login_ll"
         android:layout_weight="1"
         android:orientation="vertical"
@@ -46,21 +48,20 @@
 
         <include
             android:id="@+id/item_menu_1"
-            layout="@layout/layout_item1_left_menu"/>
+            layout="@layout/item_left_menu_1"/>
 
         <include
             android:id="@+id/item_menu_2"
-            layout="@layout/layout_item2_left_menu"/>
+            layout="@layout/item_left_menu_2"/>
 
         <include
             android:id="@+id/item_menu_update"
-            layout="@layout/layout_item3_left_menu"/>
+            layout="@layout/item_left_menu_3"/>
 
         <include
             android:id="@+id/item_menu_login_logout"
-            layout="@layout/layout_item4_left_menu"/>
+            layout="@layout/item_left_menu_4"/>
 
     </LinearLayout>
-
 
 </android.support.percent.PercentRelativeLayout>

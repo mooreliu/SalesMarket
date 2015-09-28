@@ -1,7 +1,4 @@
-<View
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<View xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="1px"
-    android:background="@color/snow"
-    />
+    android:background="@color/snow"/>

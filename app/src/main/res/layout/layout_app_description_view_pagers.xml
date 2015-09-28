@@ -27,8 +27,7 @@
             android:layout_margin="@dimen/activity_flash_dot_margin"
             android:background="@drawable/custom_dot"
             android:clickable="true"
-            android:padding="@dimen/activity_flash_dot_padding"
-            />
+            android:padding="@dimen/activity_flash_dot_padding"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
             android:layout_margin="@dimen/activity_flash_dot_margin"
             android:background="@drawable/custom_dot"
             android:clickable="true"
-            android:padding="@dimen/activity_flash_dot_padding"
-            />
+            android:padding="@dimen/activity_flash_dot_padding"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -47,8 +45,7 @@
             android:layout_margin="@dimen/activity_flash_dot_margin"
             android:background="@drawable/custom_dot"
             android:clickable="true"
-            android:padding="@dimen/activity_flash_dot_padding"
-            />
+            android:padding="@dimen/activity_flash_dot_padding"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -57,8 +54,7 @@
             android:layout_margin="@dimen/activity_flash_dot_margin"
             android:background="@drawable/custom_dot"
             android:clickable="true"
-            android:padding="@dimen/activity_flash_dot_padding"
-            />
+            android:padding="@dimen/activity_flash_dot_padding"/>
 
     </LinearLayout>
 </RelativeLayout>
