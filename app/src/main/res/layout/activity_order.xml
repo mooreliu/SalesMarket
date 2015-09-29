@@ -178,7 +178,7 @@
                     android:tintMode="src_in"/>
 
                 <Button
-                    android:id="@+id/add_to_shoppinglist"
+                    android:id="@+id/btn_add_to_shoppinglist"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

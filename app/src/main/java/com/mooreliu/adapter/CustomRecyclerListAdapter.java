@@ -100,7 +100,7 @@ public class CustomRecyclerListAdapter extends RecyclerView.Adapter<CustomRecycl
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.product_image);
+            imageView = (ImageView) itemView.findViewById(R.id.ratio_image_view_merchandise_image);
             imageView.setOnClickListener(this);
         }
 

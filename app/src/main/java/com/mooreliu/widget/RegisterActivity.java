@@ -4,6 +4,8 @@ package com.mooreliu.widget;
  * Created by mooreliu on 2015/9/7.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -35,6 +37,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
     private static final int SIGN_UP_SUCCESS_MSG = 4;
     private static final int VERIFY_SMS_SUCCESS_MSG = 5;
     private static final int REQUEST_SMS_SUCCESS_MSG = 6;
+
     private EditText mEditTextTelephoneNumber;
     private EditText mEditTextRegisterNumber;
     private EditText mEditTextPassword;
@@ -43,19 +46,25 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
     private Button mButtonGetRegisterNumber;
     private TextView mTextViewRegisterErrorMsg;
     private TextView mTextViewSMSErrorMsg;
+
     private CountDownTimer timer;
+    private Handler handler = null;
+    private AVUser user;
+
     private String mTelephoneNumberInput;
     private String mPasswordInput;
     private String mPasswordComfirmInput;
     private String mRegisterNumberInput;
-    private AVUser user;
-    private String SIGNUP_ERROR_MSG;
-    private String VERIFY_SMS_ERROR_MSG;
-    private String REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG;
-    private Handler handler = null;
-    private int REQUEST_SMS_FAIL_ERROR_CODE;
+    private String mErrorMsgSignup;
+    private String mErrorMsgVerifySms;
+    private String mErrorMsgReqPhone;
 
     private DigitsKeyListener mDigitsKeyListender;
+
+    public static Intent getStartIntent(Context context) {
+        Intent startRegisterActivityIntent = new Intent(context, RegisterActivity.class);
+        return startRegisterActivityIntent;
+    }
 
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
@@ -70,21 +79,21 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
                     case SIGN_UP_FAIL_MSG:
-                        LogUtil.e(TAG, " " + SIGNUP_ERROR_MSG);
-                        if (!TextUtil.isEmpty(SIGNUP_ERROR_MSG))
-                            mTextViewSMSErrorMsg.setText(SIGNUP_ERROR_MSG);
+                        LogUtil.e(TAG, " " + mErrorMsgSignup);
+                        if (!TextUtil.isEmpty(mErrorMsgSignup))
+                            mTextViewSMSErrorMsg.setText(mErrorMsgSignup);
                         break;
 
                     case VERIFY_SMS_FAIL_MSG:
-                        LogUtil.e(TAG, " " + VERIFY_SMS_ERROR_MSG);
-                        if (!TextUtil.isEmpty(VERIFY_SMS_ERROR_MSG))
-                            mTextViewRegisterErrorMsg.setText(VERIFY_SMS_ERROR_MSG);
+                        LogUtil.e(TAG, " " + mErrorMsgVerifySms);
+                        if (!TextUtil.isEmpty(mErrorMsgVerifySms))
+                            mTextViewRegisterErrorMsg.setText(mErrorMsgVerifySms);
                         break;
 
                     case REQUEST_SMS_FAIL_MSG:
-                        LogUtil.e(TAG, " " + REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
-                        if (!TextUtil.isEmpty(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG))
-                            mTextViewSMSErrorMsg.setText(REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG);
+                        LogUtil.e(TAG, " " + mErrorMsgReqPhone);
+                        if (!TextUtil.isEmpty(mErrorMsgReqPhone))
+                            mTextViewSMSErrorMsg.setText(mErrorMsgReqPhone);
                         break;
 
                     case SIGN_UP_SUCCESS_MSG:
@@ -92,7 +101,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                         break;
 
                     case VERIFY_SMS_SUCCESS_MSG:
-                        CommonUtil.toastMessage(getResources().getString(R.string.register_succuess));
+                        CommonUtil.toastMessage(getResources().getString(R.string.msg_register_succuess));
                         break;
 
                     case REQUEST_SMS_SUCCESS_MSG:
@@ -107,22 +116,22 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void findView() {
-        mEditTextTelephoneNumber = (EditText) findViewById(R.id.input_telephone_number);
-        mEditTextRegisterNumber = (EditText) findViewById(R.id.input_register_number);
-        mEditTextPassword = (EditText) findViewById(R.id.input_password);
-        mEditTextComfirmPassword = (EditText) findViewById(R.id.input_comfirm_password);
+        mEditTextTelephoneNumber = (EditText) findViewById(R.id.clearable_edit_text_input_telephone_number);
+        mEditTextRegisterNumber = (EditText) findViewById(R.id.clearable_edit_text_input_register_number);
+        mEditTextPassword = (EditText) findViewById(R.id.clearable_edit_text_input_password);
+        mEditTextComfirmPassword = (EditText) findViewById(R.id.clearable_edit_text_input_comfirm_password);
 
         mButtonRegister = (Button) findViewById(R.id.btn_do_register);
         mButtonGetRegisterNumber = (Button) findViewById(R.id.btn_do_send_register_number);
 
-        mTextViewRegisterErrorMsg = (TextView) findViewById(R.id.register_error_message);
-        mTextViewSMSErrorMsg = (TextView) findViewById(R.id.sms_error_message);
+        mTextViewRegisterErrorMsg = (TextView) findViewById(R.id.text_view_register_error_message);
+        mTextViewSMSErrorMsg = (TextView) findViewById(R.id.text_view_sms_error_message);
 
     }
 
     @Override
     public void initView() {
-        setToolBarTitle(getResources().getString(R.string.register));
+        setToolBarTitle(getResources().getString(R.string.action_register));
         mDigitsKeyListender = new DigitsKeyListener() {
             @Override
             public int getInputType() {
@@ -131,7 +140,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
             @Override
             protected char[] getAcceptedChars() {
-                char[] data = getResources().getString(R.string.login_only_can_input).toCharArray();
+                char[] data = getResources().getString(R.string.policy_login_only_can_input).toCharArray();
                 return data;
             }
         };
@@ -150,7 +159,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                     mButtonGetRegisterNumber.setClickable(false);
                     mButtonGetRegisterNumber.setText("(" + remain + ")s后可重新发送");
                 } else {
-                    mButtonGetRegisterNumber.setText(getResources().getString(R.string.get_register_number));
+                    mButtonGetRegisterNumber.setText(getResources().getString(R.string.action_get_register_number));
                 }
             }
 
@@ -195,10 +204,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                     msg.what = VERIFY_SMS_SUCCESS_MSG;
                 } else {
                     msg.what = VERIFY_SMS_FAIL_MSG;
-                    VERIFY_SMS_ERROR_MSG = e.getLocalizedMessage();
+                    mErrorMsgVerifySms = e.getLocalizedMessage();
                     if (e.getCode() == Constants.AVOS_ERROR_CODE_INVALID_SNS_CODE) {
-                        CommonUtil.toastMessage(getResources().getString(R.string.invalid_sms_code));
-                        VERIFY_SMS_ERROR_MSG = getResources().getString(R.string.invalid_sms_code);
+                        CommonUtil.toastMessage(getResources().getString(R.string.error_invalid_sms_code));
+                        mErrorMsgVerifySms = getResources().getString(R.string.error_invalid_sms_code);
                     }
                 }
                 handler.sendMessage(msg);
@@ -214,20 +223,20 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
         mPasswordInput = mEditTextPassword.getText().toString();
         mPasswordComfirmInput = mEditTextComfirmPassword.getText().toString();
         if (mTelephoneNumberInput.length() != 11) {
-            CommonUtil.toastMessage(getResources().getString(R.string.telephone_number_length_error));
+            CommonUtil.toastMessage(getResources().getString(R.string.error_telephone_number_length_error));
             return false;
         }
         if (mPasswordInput.isEmpty()) {
-            CommonUtil.toastMessage(getResources().getString(R.string.password_cannot_empty));
+            CommonUtil.toastMessage(getResources().getString(R.string.error_password_cannot_be_empty));
             return false;
         }
         if (mPasswordComfirmInput.isEmpty()) {
-            CommonUtil.toastMessage(getResources().getString(R.string.comfirm_password_cannot_empty));
+            CommonUtil.toastMessage(getResources().getString(R.string.error_comfirm_password_cannot_empty));
             return false;
         }
         if (!mPasswordInput.equals(mPasswordComfirmInput)) {
             LogUtil.e(TAG, "密码 =" + mPasswordInput + "  确认密码 " + mPasswordComfirmInput);
-            CommonUtil.toastMessage(getResources().getString(R.string.password_comfirm_error));
+            CommonUtil.toastMessage(getResources().getString(R.string.error_password_comfirm_error));
             return false;
         }
         return true;
@@ -248,9 +257,9 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                     msg.what = SIGN_UP_SUCCESS_MSG;
                 } else {
                     msg.what = SIGN_UP_FAIL_MSG;
-                    SIGNUP_ERROR_MSG = e.getLocalizedMessage();
+                    mErrorMsgSignup = e.getLocalizedMessage();
                     if (e.getCode() == AVException.USER_MOBILE_PHONENUMBER_TAKEN) {
-                        SIGNUP_ERROR_MSG = getResources().getString(R.string.user_mobile_phonenumber_taken);
+                        mErrorMsgSignup = getResources().getString(R.string.error_user_mobile_phonenumber_taken);
                         // LogUtil.e(TAG, "error code  " + AVException.USER_MOBILE_PHONENUMBER_TAKEN);
                         // LogUtil.e(TAG, "error message  " + e.getLocalizedMessage());
                         // CommonUtil.toastMessage(getResources().getString(R.string.user_mobile_phonenumber_taken));
@@ -277,9 +286,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                 } else {
                     //IS_REQUEST_SMS_SUCCESS = false;
                     msg.what = REQUEST_SMS_FAIL_MSG;
-                    REQUEST_MOBILEPHONE_VERIFY_ERROR_MSG = e.getLocalizedMessage();
-                    REQUEST_SMS_FAIL_ERROR_CODE = e.getCode();
-                    LogUtil.e(TAG, "requestMobilePhoneVerifyInBackground error code  " + REQUEST_SMS_FAIL_ERROR_CODE);
+                    mErrorMsgReqPhone = e.getLocalizedMessage();
+                    LogUtil.e(TAG, "requestMobilePhoneVerifyInBackground error code  " + e.getCode());
                 }
                 handler.sendMessage(msg);
             }

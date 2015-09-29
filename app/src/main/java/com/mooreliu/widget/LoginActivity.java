@@ -1,5 +1,6 @@
 package com.mooreliu.widget;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -38,7 +39,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     private String mPasswordInput;
     private String AVOS_LOGIN_ERROR_MSG;
     private int AVOS_LOGIN_ERROR_CODE;
-    private Handler handler;
+    private Handler mHandler;
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle onSavedInstanceState) {
@@ -46,18 +52,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         setContentView(R.layout.activity_login);
         mEditTextPassword.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.DST_ATOP);
         mEditTextPassword.getBackground().setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
-        handler = new Handler() {/*处理登陆错误信息*/
+        mHandler = new Handler() {/*处理登陆错误信息*/
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case AVOS_LOGIN_OVER_MSG:
                         LogUtil.e(TAG, "login error code" + AVOS_LOGIN_ERROR_CODE);
                         if (AVOS_LOGIN_ERROR_CODE == Constants.AVOS_ERROR_CODE_USERNAME_AND_PASSWORD_MISMATCH_)
-                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.username_and_password_mismatch));
+                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.error_username_and_password_mismatch));
                         else if (AVOS_LOGIN_ERROR_CODE == Constants.AVOS_ERROR_CODE_PHONENUMBER_ISNOT_VERIFIED)
-                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.phonenumer_is_not_verified));
+                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.error_phonenumer_is_not_verified));
                         else if (AVOS_LOGIN_ERROR_CODE == Constants.AVOS_ERROR_CODE_COUND_NOT_FIND_USER)
-                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.this_telephone_is_not_registered));
+                            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.error_this_telephone_is_not_registered));
                         else mTextViewLoginErrorMsg.setText(AVOS_LOGIN_ERROR_MSG);
                         mButtonLogin.setClickable(true);
                         mButtonRegister.setClickable(true);
@@ -73,22 +79,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    public void findView() {
-        mEditTextUserName = (EditText) findViewById(R.id.login_username);
-        mEditTextPassword = (EditText) findViewById(R.id.login_password);
+    protected void findView() {
+        mEditTextUserName = (EditText) findViewById(R.id.clearable_edit_text_login_username);
+        mEditTextPassword = (EditText) findViewById(R.id.clearable_edit_text_login_password);
         mButtonLogin = (Button) findViewById(R.id.btn_login);
         mButtonRegister = (Button) findViewById(R.id.btn_register);
-        mTextViewLoginErrorMsg = (TextView) findViewById(R.id.login_error_msg);
+        mTextViewLoginErrorMsg = (TextView) findViewById(R.id.text_view_login_error_msg);
     }
 
     @Override
-    public void initView() {
-        setToolBarTitle(getString(R.string.login));
+    protected void initView() {
+        setToolBarTitle(getString(R.string.action_login));
 
     }
 
     @Override
-    public void setOnClick() {
+    protected void setOnClick() {
         mButtonRegister.setOnClickListener(this);
         mButtonLogin.setOnClickListener(this);
 
@@ -104,23 +110,33 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 doLogin();
                 break;
             case R.id.btn_register:
-                Intent intent = new Intent(this, RegisterActivity.class);
+                //Intent intent = new Intent(this, RegisterActivity.class);
+                Intent intent = RegisterActivity.getStartIntent(this);
                 startActivity(intent);
                 break;
             default:
                 CommonUtil.toastMessage("Error in LoginAcitity");
         }
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        LogUtil.e(TAG, "onBackPressed()");
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
     private boolean checkLoginValidation() {
         mUserNameInput = mEditTextUserName.getText().toString();
         mPasswordInput = mEditTextPassword.getText().toString();
         if (TextUtil.isEmpty(mUserNameInput)) {
-            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.username_could_not_be_empty));
+            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.error_username_could_not_be_empty));
             return false;
         }
         if (TextUtil.isEmpty(mPasswordInput)) {
-            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.password_could_not_be_empty));
+            mTextViewLoginErrorMsg.setText(getResources().getString(R.string.error_password_could_not_be_empty));
             return false;
         }
         return true;
@@ -139,7 +155,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             @Override
             public void done(AVUser avUser, AVException e) {
                 if (e == null) {
-                    CommonUtil.toastMessage(getResources().getString(R.string.login_success));
+                    CommonUtil.toastMessage(getResources().getString(R.string.msg_login_success));
                     Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGIN));//通知登录成功
                     returnToAcitivityAhead();
                 } else {
@@ -148,7 +164,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     AVOS_LOGIN_ERROR_MSG = e.getLocalizedMessage();
                     Message msg = new Message();
                     msg.what = AVOS_LOGIN_OVER_MSG;
-                    handler.sendMessage(msg);
+                    mHandler.sendMessage(msg);
                 }
             }
         });
@@ -156,18 +172,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     private void returnToAcitivityAhead() {
-        this.finish(); // 直接销毁LoginAcitivity。
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        LogUtil.e(TAG, "onBackPressed()");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        this.finish();  // 直接销毁LoginAcitivity。
     }
 
 }

@@ -38,19 +38,19 @@ public abstract class InternetOffLayout {
         InternetOffView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         InternetOffView.setClickable(true);
         parentView.addView(InternetOffView);
-        final Button btnGotoSetting = (Button) InternetOffView.findViewById(R.id.goto_setting);
+        final Button btnGotoSetting = (Button) InternetOffView.findViewById(R.id.btn_goto_system_setting);
         btnGotoSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mContext.startActivity(new Intent(Settings.ACTION_SETTINGS));
             }
         });
-        final Button btnReload = (Button) InternetOffView.findViewById(R.id.reload);
+        final Button btnReload = (Button) InternetOffView.findViewById(R.id.btn_reload);
         if (InternetOffView != null) InternetOffView.setVisibility(View.GONE);
         btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View mview) {
-                showProgress(R.string.reconnect_to_internet);
+                showProgress(R.string.action_reconnect_to_internet);
                 checkNerworkForView();
             }
         });

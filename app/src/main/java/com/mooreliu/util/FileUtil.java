@@ -17,7 +17,7 @@ import java.net.URL;
  * Created by liuyi on 15/9/26.
  */
 public class FileUtil {
-    public static final int FILE_SIZE = 35 * 1024 * 1024;
+    public  static final int FILE_SIZE = 35 * 1024 * 1024;
     private static final String TAG = "FileUtil";
     private static String SDCARD_PATH;
 
@@ -28,7 +28,7 @@ public class FileUtil {
             SDCARD_PATH = Environment.getDataDirectory().toString() + File.separator;
         else if (Environment.getDownloadCacheDirectory() != null)
             SDCARD_PATH = Environment.getDownloadCacheDirectory().toString() + File.separator;
-        else LogUtil.e(TAG, AppContext.getContext().getString(R.string.no_usable_storage));
+        else LogUtil.e(TAG, AppContext.getContext().getString(R.string.error_no_usable_storage));
     }
 
     /**

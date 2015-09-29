@@ -40,7 +40,7 @@ public class UpdateVersionTask extends AsyncTask<Void, Integer, Boolean> {
         mNetUtil = new NetUtil();
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(mContext);
-        mBuilder.setContentText(mContext.getString(R.string.do_download)).setContentText(mContext.getString(R.string.update_version)).setSmallIcon(R.drawable.icon);
+        mBuilder.setContentText(mContext.getString(R.string.action_do_download)).setContentText(mContext.getString(R.string.msg_update_version)).setSmallIcon(R.drawable.icon);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UpdateVersionTask extends AsyncTask<Void, Integer, Boolean> {
     public void onProgressUpdate(Integer... percentDownloaded) {
         LogUtil.e(TAG, "onProgressUpdate lengthDownloaded =" + (int) percentDownloaded[0]);
         mBuilder.setProgress(100, percentDownloaded[0], false);
-        mBuilder.setContentText(mContext.getString(R.string.update_version) + "(" + percentDownloaded[0] + "%)");
+        mBuilder.setContentText(mContext.getString(R.string.msg_update_version) + "(" + percentDownloaded[0] + "%)");
         mNotificationManager.notify(id, mBuilder.build());
     }
 
@@ -127,7 +127,7 @@ public class UpdateVersionTask extends AsyncTask<Void, Integer, Boolean> {
             String downloadCacheDir = Environment.getDownloadCacheDirectory().toString();
             fileAbsolutePath = downloadCacheDir + File.separator + fileName;
         } else {
-            LogUtil.e(TAG, mContext.getString(R.string.no_usable_storage));
+            LogUtil.e(TAG, mContext.getString(R.string.error_no_usable_storage));
         }
 
 

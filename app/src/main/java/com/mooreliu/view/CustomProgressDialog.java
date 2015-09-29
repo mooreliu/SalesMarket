@@ -19,7 +19,7 @@ public class CustomProgressDialog extends Dialog {
         super(context, theme);
         this.setContentView(R.layout.dialog_custom_progress);
         this.getWindow().getAttributes().gravity = Gravity.CENTER;
-        TextView tvMsg = (TextView) this.findViewById(R.id.id_tv_loadingmsg);
+        TextView tvMsg = (TextView) this.findViewById(R.id.text_view_loadingmsg);
         if (tvMsg != null) {
             tvMsg.setText(strMessage);
         }

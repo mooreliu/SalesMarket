@@ -6,17 +6,17 @@
     >
 
     <ImageView
-        android:id="@+id/line_img"
+        android:id="@+id/image_view_line_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/line_text"
+        android:id="@+id/text_view_line_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <ImageView
-        android:id="@+id/line_tail"
+        android:id="@+id/image_view_line_tail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

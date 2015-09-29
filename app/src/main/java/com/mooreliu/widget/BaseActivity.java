@@ -78,11 +78,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
-    public abstract void findView();
+    protected abstract void findView();
 
-    public abstract void initView();
+    protected abstract void initView();
 
-    public abstract void setOnClick();
+    protected abstract void setOnClick();
 
     @Override
     protected void onDestroy() {

@@ -13,11 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
+ * Bitmap 图片处理工具类
  * Created by liuyi on 15/8/14.
  */
 public class BitmapUtil {
     private static final String TAG = "BitmapUtil";
-
+    /* */
     public static Bitmap bitmapDecode(Resources res, int resId, int reqHeight, int reqWidth) { /*Debug.startMethodTracing("bitmapDecode");*/
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
