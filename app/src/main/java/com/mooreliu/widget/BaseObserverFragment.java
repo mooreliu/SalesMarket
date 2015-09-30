@@ -11,6 +11,7 @@ import com.mooreliu.view.InternetOffLayout;
 import java.lang.ref.WeakReference;
 
 /**
+ * 带观察者模式的Fragment
  * Created by mooreliu on 2015/9/23.
  */
 public abstract class BaseObserverFragment extends BaseFragment {

@@ -16,6 +16,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
+ * Activity 基础类
  * Created by liuyi on 15/8/29.
  */
 public abstract class BaseActivity extends ActionBarActivity {
