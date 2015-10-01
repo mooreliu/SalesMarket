@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/text_view_title"
         android:layout_width="wrap_content"
         android:layout_height="50dip"
         android:layout_gravity="center"
@@ -19,7 +19,7 @@
         />
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/text_view_content"
         android:layout_width="wrap_content"
         android:layout_height="60sp"
         android:gravity="center_vertical"
@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/dialog_divider"
-
         />
 
     <LinearLayout
@@ -43,7 +42,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/dialog_cancel"
+            android:id="@+id/btn_dialog_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -56,11 +55,10 @@
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/dialog_divider"
-
             />
 
         <Button
-            android:id="@+id/dialog_confirm"
+            android:id="@+id/btn_dialog_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

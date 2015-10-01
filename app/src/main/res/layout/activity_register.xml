@@ -15,39 +15,39 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
-            android:id="@+id/input_telephone_number_tv"
+            android:id="@+id/text_view_input_telephone_number"
             style="@style/CustomTextView"
-            android:text="@string/telephone_number"
+            android:text="@string/text_telephone_number"
             app:layout_heightPercent="5%"
             app:layout_marginLeftPercent="10%"
             app:layout_marginTopPercent="3%"
             app:layout_widthPercent="100%"/>
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/input_telephone_number"
+            android:id="@+id/clearable_edit_text_input_telephone_number"
             style="@style/RegisterEditText"
-            android:layout_below="@id/input_telephone_number_tv"
-            android:hint="@string/please_input_username"
+            android:layout_below="@id/text_view_input_telephone_number"
+            android:hint="@string/hint_please_input_username"
             app:layout_heightPercent="7%"
             app:layout_marginLeftPercent="10%"
             app:layout_marginRightPercent="15%"
             app:layout_widthPercent="100%"/>
 
         <TextView
-            android:id="@+id/password_tv"
+            android:id="@+id/text_view_password"
             style="@style/CustomTextView"
-            android:layout_below="@id/input_telephone_number"
-            android:text="@string/input_password"
+            android:layout_below="@id/clearable_edit_text_input_telephone_number"
+            android:text="@string/text_input_password"
             app:layout_heightPercent="5%"
             app:layout_marginLeftPercent="10%"
             app:layout_widthPercent="100%"/>
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/input_password"
+            android:id="@+id/clearable_edit_text_input_password"
             style="@style/RegisterEditText"
-            android:layout_below="@id/password_tv"
+            android:layout_below="@id/text_view_password"
             android:digits="qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"
-            android:hint="@string/please_input_password"
+            android:hint="@string/hint_please_input_password"
             android:maxLength="10"
             android:password="true"
             app:layout_heightPercent="7%"
@@ -57,20 +57,20 @@
             />
 
         <TextView
-            android:id="@+id/password_comfirm_tv"
+            android:id="@+id/text_view_password_comfirm"
             style="@style/CustomTextView"
-            android:layout_below="@id/input_password"
-            android:text="@string/comfirm_password"
+            android:layout_below="@id/clearable_edit_text_input_password"
+            android:text="@string/text_comfirm_password"
             app:layout_heightPercent="5%"
             app:layout_marginLeftPercent="10%"
             app:layout_widthPercent="100%"/>
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/input_comfirm_password"
+            android:id="@+id/clearable_edit_text_input_comfirm_password"
             style="@style/RegisterEditText"
-            android:layout_below="@id/password_comfirm_tv"
-            android:digits="@string/login_only_can_input"
-            android:hint="@string/please_input_confirm_password"
+            android:layout_below="@id/text_view_password_comfirm"
+            android:digits="@string/policy_login_only_can_input"
+            android:hint="@string/hint_please_input_confirm_password"
             android:maxLength="10"
             android:password="true"
             app:layout_heightPercent="7%"
@@ -80,19 +80,19 @@
             />
 
         <TextView
-            android:id="@+id/register_number_tv"
+            android:id="@+id/text_view_register_number"
             style="@style/CustomTextView"
-            android:layout_below="@id/input_comfirm_password"
-            android:text="@string/register_number"
+            android:layout_below="@id/clearable_edit_text_input_comfirm_password"
+            android:text="@string/text_register_number"
             app:layout_heightPercent="5%"
             app:layout_marginLeftPercent="10%"
             app:layout_widthPercent="100%"/>
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/input_register_number"
+            android:id="@+id/clearable_edit_text_input_register_number"
             style="@style/RegisterEditText"
-            android:layout_below="@id/register_number_tv"
-            android:hint="@string/please_input_register_number"
+            android:layout_below="@id/text_view_register_number"
+            android:hint="@string/hint_please_input_register_number"
             android:maxLength="6"
             android:numeric="integer"
             app:layout_heightPercent="7%"
@@ -105,9 +105,9 @@
             android:id="@+id/btn_do_register"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_below="@id/input_register_number"
+            android:layout_below="@id/clearable_edit_text_input_register_number"
             android:background="@color/DodgerBlue"
-            android:text="@string/register"
+            android:text="@string/action_register"
             android:textSize="18sp"
             app:layout_heightPercent="8%"
             app:layout_marginLeftPercent="10%"
@@ -117,7 +117,7 @@
             />
 
         <TextView
-            android:id="@+id/register_error_message"
+            android:id="@+id/text_view_register_error_message"
             style="@style/CustomTextView"
             android:layout_below="@id/btn_do_register"
             android:textColor="@android:color/holo_red_dark"
@@ -128,9 +128,9 @@
             android:id="@+id/btn_do_send_register_number"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_below="@id/register_error_message"
+            android:layout_below="@id/text_view_register_error_message"
             android:background="@drawable/drawable_reload"
-            android:text="@string/get_register_number"
+            android:text="@string/action_get_register_number"
             android:textSize="18sp"
             app:layout_heightPercent="8%"
             app:layout_marginLeftPercent="10%"
@@ -139,7 +139,7 @@
             />
 
         <TextView
-            android:id="@+id/sms_error_message"
+            android:id="@+id/text_view_sms_error_message"
             style="@style/CustomTextView"
             android:layout_below="@id/btn_do_send_register_number"
             android:textColor="@android:color/holo_red_dark"

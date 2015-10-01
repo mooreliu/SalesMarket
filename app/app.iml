@@ -121,10 +121,18 @@
     <orderEntry type="library" exported="" name="avoscloud-sdk-v3.7.5" level="project" />
     <orderEntry type="library" exported="" name="percent-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="imagepipeline-0.6.0" level="project" />
     <orderEntry type="library" exported="" name="fresco-0.6.0" level="project" />
     <orderEntry type="library" exported="" name="fastjson-1.1.39-leancloud" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
+=======
+    <orderEntry type="library" exported="" name="httpcore-4.2.4" level="project" />
+    <orderEntry type="library" exported="" name="guava-12.0" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-sdk-v3.7.5" level="project" />
+    <orderEntry type="library" exported="" name="avoscloud-statistics-v3.7.2" level="project" />
+    <orderEntry type="library" exported="" name="timber-3.1.0" level="project" />
+>>>>>>> 95ce447b25a31a30d4fcf73e5cb606e8ec344433
     <orderEntry type="library" exported="" name="leakcanary-android-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />

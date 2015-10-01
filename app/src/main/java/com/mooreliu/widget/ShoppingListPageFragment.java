@@ -27,11 +27,6 @@ import com.mooreliu.view.InternetOffLayout;
 public class ShoppingListPageFragment extends BaseObserverFragment {
     private static final String TAG = "ShoppingListPageFragment";
 
-    public ShoppingListPageFragment() {
-        super();
-        LogUtil.e(TAG, "ShoppingListPageFragment 构造函数");
-    }
-
     public static ShoppingListPageFragment newInstance() {
         ShoppingListPageFragment fragment = new ShoppingListPageFragment();
         return fragment;
@@ -61,9 +56,11 @@ public class ShoppingListPageFragment extends BaseObserverFragment {
         return R.layout.fragment_shoppinglist;
     }
 
+    @Override
     public void onVisible() {
     }
 
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }

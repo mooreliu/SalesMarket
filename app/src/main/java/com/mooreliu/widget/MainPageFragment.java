@@ -31,10 +31,10 @@ import java.util.List;
  */
 public class MainPageFragment extends BaseObserverFragment {
     private final static String TAG = "MainPageFragment";
-    private List<MerchandiseModel> mList;
+    private List<MerchandiseModel> mMerchandiseList;
     private RecyclerView mRecyclerView;
     private CustomRecyclerListAdapter mCustomRecyclerListAdapter;
-    private LinearLayoutManager layoutManager;
+    private LinearLayoutManager mLayoutManager;
     private boolean isLoadComplete = false;
 
     @Override
@@ -55,7 +55,7 @@ public class MainPageFragment extends BaseObserverFragment {
 
     @Override
     protected void findViews() {
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mainpage_recyclerview);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerview_merchandise_list);
     }
 
     @Override
@@ -67,9 +67,9 @@ public class MainPageFragment extends BaseObserverFragment {
             }
         };
         mInternetOffLayout.showInternetOffLayout();
-        layoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mList = new ArrayList<>();
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mMerchandiseList = new ArrayList<>();
         initVoidRecyclerView();
     }
 
@@ -124,15 +124,15 @@ public class MainPageFragment extends BaseObserverFragment {
             TaskGetMerchandiseListFromServer getMerichandiseListTast = new TaskGetMerchandiseListFromServer() {
                 @Override
                 public void postExecute(String response) {
-                    mList = GsonHelper.getMerchandiseListFromGsonString(response);
+                    mMerchandiseList = GsonHelper.getMerchandiseListFromGsonString(response);
                     initRecyclerView();
                 }
             };
             getMerichandiseListTast.execute();
         } else {
-            LogUtil.e(TAG, getString(R.string.networkNotAvail));
+            LogUtil.e(TAG, getString(R.string.msg_networkNotAvail));
             if (getActivity() != null) { // 要保证fragment没有被销毁
-                Toast.makeText(getActivity(), getString(R.string.networkNotAvail), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.msg_networkNotAvail), Toast.LENGTH_SHORT).show();
                 GsonHelper.getMerchandiseListFromGsonString(Constants.jsonProductList);
                 LogUtil.e(TAG, "initRecyclerView");
                 initRecyclerView();
@@ -144,30 +144,63 @@ public class MainPageFragment extends BaseObserverFragment {
      * 在无网络或者网络数据没有加载前 set一个空的adapter
      */
     private void initVoidRecyclerView() {
-        CustomRecyclerListAdapter adapter = new CustomRecyclerListAdapter(mRecyclerView, getActivity(), mList, this.getResources());
+        CustomRecyclerListAdapter adapter = new CustomRecyclerListAdapter(mRecyclerView, getActivity(), mMerchandiseList, this.getResources());
         mRecyclerView.setAdapter(adapter);
     }
 
     private void initRecyclerView() {
         LogUtil.e(TAG, "initRecyclerView start");
-        mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView, getActivity(), mList, this.getResources());
+        mCustomRecyclerListAdapter = new CustomRecyclerListAdapter(mRecyclerView, getActivity(), mMerchandiseList, this.getResources());
         mCustomRecyclerListAdapter.setOnProductClick(new OnProductClickListener() {
             @Override
             public void onTouch(View v, MerchandiseModel model) {
                 if (UserUtil.isLogined()) {
                     Intent intent = new Intent(getActivity(), OrderActivity.class);
-                    intent.putExtra("ImageKey", TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
+                     /* Option 1  Bundle putString && putExtras*/
+//                    Bundle extras = new Bundle();
+//                    extras.putString(Constants.EXTRA_IMAGE_KEY,
+//                              TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
+//                    intent.putExtras(extras);
+
+                    /* Option 2  Bunndle putSerializable() && putExtras*/
+                    /* String类型是Serializable的 所以可以直接putSerializable */
+//                     extras.putSerializable(Constants.EXTRA_IMAGE_KEY,
+//                            TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
+//                    intent.putExtras(extras);
+
+                    /* Option 3  Intent.putExtra(String key, Bundle value)*/
+
+                    intent.putExtra(Constants.EXTRA_IMAGE_KEY,
+                            TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
+
+                    /* Option 3  error!!!..can not getExtras */
+                    //Bundle extras = intent.getExtras();
+                    //if(extras != null)
+                    //    extras.putString(Constants.EXTRA_IMAGE_KEY,
+                    //        TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()));
+                    //else
+                    //    LogUtil.e(TAG, "extras == null");
+
+                    /* Option TEST  StringArray putSerializable test */
+                    //String [] stringArray = new String[] {
+                    //        TextUtil.hashKeyForDisk(model.getmerchandiseImageUrl()),
+                    //        "line 2"
+                    //};
+                    //extras.putSerializable(Constants.EXTRA_IMAGE_KEY,
+                    //        stringArray);
+                    //intent.putExtras(extras);
+
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    //Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = LoginActivity.getStartIntent(getActivity());
                     startActivity(intent);
                 }
             }
         });
         mRecyclerView.setAdapter(mCustomRecyclerListAdapter);
         isLoadComplete = true;
-        LogUtil.e(TAG, " isLoadComplete" + isLoadComplete);
-
+        //LogUtil.e(TAG, " isLoadComplete" + isLoadComplete);
     }
 
     @Override

@@ -19,10 +19,10 @@
         android:fitsSystemWindows="true">
 
         <TextView
-            android:id="@+id/layout_login_username_tv"
+            android:id="@+id/tv_login_username"
             style="@style/CustomTextView"
             android:gravity="center_vertical"
-            android:text="@string/username"
+            android:text="@string/text_username"
             app:layout_heightPercent="5%"
             app:layout_marginBottomPercent="1%"
             app:layout_marginLeftPercent="10%"
@@ -31,10 +31,10 @@
             />
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/login_username"
+            android:id="@+id/clearable_edit_text_login_username"
             style="@style/CustomEditText"
-            android:layout_below="@id/layout_login_username_tv"
-            android:hint="@string/please_input_username"
+            android:layout_below="@id/tv_login_username"
+            android:hint="@string/hint_please_input_username"
             android:numeric="integer"
             app:layout_heightPercent="10%"
             app:layout_marginBottomPercent="1%"
@@ -45,10 +45,10 @@
             />
 
         <TextView
-            android:id="@+id/layout_login_password_tv"
+            android:id="@+id/text_view_login_password"
             style="@style/CustomTextView"
-            android:layout_below="@id/login_username"
-            android:text="@string/password"
+            android:layout_below="@id/clearable_edit_text_login_username"
+            android:text="@string/text_password"
             app:layout_heightPercent="5%"
             app:layout_marginBottomPercent="1%"
             app:layout_marginLeftPercent="10%"
@@ -58,11 +58,11 @@
             />
 
         <com.mooreliu.view.ClearableEditText
-            android:id="@+id/login_password"
+            android:id="@+id/clearable_edit_text_login_password"
             style="@style/CustomEditText"
-            android:layout_below="@id/layout_login_password_tv"
-            android:digits="@string/login_only_can_input"
-            android:hint="@string/please_input_login_password"
+            android:layout_below="@id/text_view_login_password"
+            android:digits="@string/policy_login_only_can_input"
+            android:hint="@string/hint_please_input_login_password"
             android:password="true"
             app:layout_heightPercent="10%"
             app:layout_marginBottomPercent="1%"
@@ -76,9 +76,9 @@
             android:id="@+id/btn_login"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_below="@id/login_password"
+            android:layout_below="@id/clearable_edit_text_login_password"
             android:background="@drawable/drawable_loginbutton"
-            android:text="@string/login"
+            android:text="@string/action_login"
             android:textSize="16sp"
             app:layout_heightPercent="8%"
             app:layout_marginBottomPercent="1%"
@@ -89,7 +89,7 @@
             />
 
         <TextView
-            android:id="@+id/login_error_msg"
+            android:id="@+id/text_view_login_error_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_login"
@@ -107,9 +107,9 @@
             android:id="@+id/btn_register"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/login_error_msg"
+            android:layout_below="@id/text_view_login_error_msg"
             android:background="@drawable/drawable_registerbutton"
-            android:text="@string/register"
+            android:text="@string/action_register"
             android:textSize="16sp"
             app:layout_heightPercent="8%"
             app:layout_marginBottomPercent="1%"
@@ -118,7 +118,6 @@
             app:layout_marginTopPercent="1%"
             app:layout_widthPercent="80%"
             />
-
 
     </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

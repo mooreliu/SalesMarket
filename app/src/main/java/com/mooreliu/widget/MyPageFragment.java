@@ -30,7 +30,7 @@ import com.mooreliu.view.InternetOffLayout;
 public class MyPageFragment extends BaseObserverFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "MyPageFragment";
     private ListView mListView;
-    private SimpleCursorAdapter adapter;
+    private SimpleCursorAdapter mSimpleCursorAdapter;
     private ContentResolver mContentResolver;
 
     @Override
@@ -44,7 +44,7 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
 
     @Override
     protected void findViews() {
-        mListView = (ListView) mRootView.findViewById(R.id.myPagelist);
+        mListView = (ListView) mRootView.findViewById(R.id.listview_myPagelist);
     }
 
     @Override
@@ -69,9 +69,9 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
         Cursor cursor = mContentResolver.query(uri, projection, null, null, null);
         LogUtil.e(TAG, cursor.getColumnIndex(MerchandiseColumns.MERCHANDISE_NAME) + "");
         String[] from = new String[]{MerchandiseColumns.MERCHANDISE_NAME, MerchandiseColumns._ID};
-        int[] to = new int[]{R.id.product_name, R.id.product_id};
-        adapter = new SimpleCursorAdapter(getActivity(), R.layout.item_test_mypage_product, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        mListView.setAdapter(adapter);
+        int[] to = new int[]{R.id.text_view_merchandise_name, R.id.text_view_merchandise_id};
+        mSimpleCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_test_mypage_product, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        mListView.setAdapter(mSimpleCursorAdapter);
         getLoaderManager().initLoader(0, null, this);
         registerForContextMenu(mListView);
     }
@@ -116,7 +116,7 @@ public class MyPageFragment extends BaseObserverFragment implements LoaderManage
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         //LogUtil.e(TAG, "数据发生变化 onLoadFinished");
-        adapter.changeCursor(data);
+        mSimpleCursorAdapter.changeCursor(data);
     }
 
     @Override

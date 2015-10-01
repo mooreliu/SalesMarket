@@ -9,10 +9,10 @@ import android.widget.Button;
 import com.mooreliu.R;
 
 /**
- * User: lizhangqu(513163535@qq.com)
- * Date: 2015-06-26
+ * User: mooreliu
+ * Date: 2015-10-01
  * Time: 15:34
- * FIXME
+ * Custom ExitDialog 仿QQ退出对话框
  */
 
 public class ExitDialog extends Dialog {
@@ -39,8 +39,8 @@ public class ExitDialog extends Dialog {
         //设置为我们的布局
         this.setCanceledOnTouchOutside(false);
         //设置为点击对话框之外的区域对话框不消失
-        mConfirm = (Button) findViewById(R.id.dialog_confirm);
-        mCancel = (Button) findViewById(R.id.dialog_cancel);
+        mConfirm = (Button) findViewById(R.id.btn_dialog_confirm);
+        mCancel = (Button) findViewById(R.id.btn_dialog_cancel);
         //设置事件
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

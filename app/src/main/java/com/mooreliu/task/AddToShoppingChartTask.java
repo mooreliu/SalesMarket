@@ -25,7 +25,7 @@ public abstract class AddToShoppingChartTask extends AsyncTask<ShoppingChartMode
     @Override
     public void onPreExecute() {
         mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setMessage(mContext.getResources().getString(R.string.add_to_shopping_chart));
+        mProgressDialog.setMessage(mContext.getResources().getString(R.string.action_add_to_shopping_chart));
         mProgressDialog.show();
     }
 

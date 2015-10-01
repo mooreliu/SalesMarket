@@ -4,6 +4,8 @@ package com.mooreliu.util;
  * Created by liuyi on 15/8/31.
  */
 public class Constants {
+    public static final String EXTRA_IMAGE_KEY = "com.mooreliu.image.key";
+    public static final String BUNLDE_IMAGE_KEY = "BUNDLE_IMAGE_KEY";
     public static final String PACKAGE_NAME = "com.mooreliu";
     public static final String AUTHORITY = Constants.PACKAGE_NAME + ".provider";
     public static final int TIMEOUT = 60;

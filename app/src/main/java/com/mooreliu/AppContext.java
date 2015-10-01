@@ -33,31 +33,32 @@ import timber.log.Timber;
  * Created by liuyi on 15/8/28.
  */
 public class AppContext extends Application {
-    public static final String TAG = "AppContext";
-    public final static boolean DEBUG = BuildConfig.DEBUG;
-    public static HashMap<String, WeakReference<Activity>> mContext = new HashMap<String, WeakReference<Activity>>();
-    public static DiskLruCache mDiskLruCache;
-    public static LruCache<String, Bitmap> mLruBitmapCache;
-    public static PackageInfo mpackageInfo;
-    public static String packageName;
-    public static String versionName;
-    public static int versionCode;
-    public static Context context;
-    private List<Activity> acitivityList = new ArrayList<Activity>();
-    private RefWatcher refWatcher;
+    private static final String TAG = "AppContext";
+    private static DiskLruCache DiskLruCache;
+    private static LruCache<String, Bitmap> LruBitmapCache;
+    private PackageInfo mPackageInfo;
+    private static String PACKAGE_NAME;
+    private static String VERSION_NAME;
+    private static int VERSION_CODE;
+    private static Context context;
+    private static HashMap<String, WeakReference<Activity>> mContext = new HashMap<String, WeakReference<Activity>>();
+    private List<Activity> mListAcitivity = new ArrayList<Activity>();
+    private RefWatcher mRefWatcher;
     private AppContext mInstance;
 
+    public final static boolean DEBUG = BuildConfig.DEBUG;
+
     public static LruCache<String, Bitmap> getLruBitmapCache() {
-        return mLruBitmapCache;
+        return LruBitmapCache;
     }
 
     public static DiskLruCache getDistLruCache() {
-        return mDiskLruCache;
+        return DiskLruCache;
     }
 
     public static RefWatcher getRefWatcher(Context context) {
         AppContext app = (AppContext) context.getApplicationContext();
-        return app.refWatcher;
+        return app.mRefWatcher;
     }
 
     public static Context getContext() {
@@ -95,7 +96,7 @@ public class AppContext extends Application {
         initLruCache();
         initAVOS();
         beginTestService();
-        refWatcher = LeakCanary.install(this);
+        mRefWatcher = LeakCanary.install(this);
     }
 
     private void initAVOS() {
@@ -105,7 +106,7 @@ public class AppContext extends Application {
 
     private void initLruCache() {
         int cacheSize = (int) Runtime.getRuntime().maxMemory() / 8;
-        mLruBitmapCache = new LruCache<String, Bitmap>(cacheSize) {
+        LruBitmapCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             public int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getByteCount();
@@ -118,14 +119,13 @@ public class AppContext extends Application {
             File cacheDir = StorageUtil.getDiskCacheDir(context, "product");
             if (!cacheDir.exists())
                 cacheDir.mkdir();
-            mDiskLruCache = DiskLruCache.open(cacheDir, AppContext.versionCode, 1, 10 * 1024 * 1024);
+            DiskLruCache = DiskLruCache.open(cacheDir, AppContext.VERSION_CODE, 1, 10 * 1024 * 1024);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void beginTestService() {
-//        Intent intent = new Intent("com.mooreliu.subService");
         Intent intent = new Intent(AppContext.getContext(), ServiceCheckNetConnect.class);
         startService(intent);
         LogUtil.e(TAG, "startService(intent);");
@@ -133,7 +133,6 @@ public class AppContext extends Application {
 
     public AppContext getInstance() {
         return mInstance;
-
     }
 
     private void init() {
@@ -146,24 +145,24 @@ public class AppContext extends Application {
     private void initPackage() {
         PackageManager pm = getPackageManager();
         try {
-            mpackageInfo = pm.getPackageInfo(getPackageName(), 0);
-            packageName = mpackageInfo.packageName;
-            versionCode = mpackageInfo.versionCode;
-            versionName = mpackageInfo.versionName;
-//            LogUtil.e("initPackge",versionCode+": "+versionName);
+            mPackageInfo = pm.getPackageInfo(getPackageName(), 0);
+            PACKAGE_NAME = mPackageInfo.packageName;
+            VERSION_CODE = mPackageInfo.versionCode;
+            VERSION_NAME = mPackageInfo.versionName;
+//            LogUtil.e("initPackge",VERSION_CODE+": "+VERSION_NAME);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public synchronized void addActivity(Activity activity) {
-        acitivityList.add(activity);
+        mListAcitivity.add(activity);
 
     }
 
     public synchronized void removeActivity(Activity activity) {
-        if (acitivityList.contains(activity))
-            acitivityList.remove(activity);
+        if (mListAcitivity.contains(activity))
+            mListAcitivity.remove(activity);
     }
 
 }

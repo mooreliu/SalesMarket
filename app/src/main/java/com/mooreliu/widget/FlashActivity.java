@@ -32,7 +32,7 @@ public class FlashActivity extends Activity implements OnPageChangeListener, OnC
     private static final int[] imageRes = {R.mipmap.flash, R.mipmap.flash2, R.mipmap.flash3, R.mipmap.flash1};
     private boolean isFirstLaunch = true;
     private int currentIndex;
-    private ImageView[] dots;
+    private ImageView[] mImageViewsDots;
     private ViewPager mViewPager;
 
     @Override
@@ -87,16 +87,16 @@ public class FlashActivity extends Activity implements OnPageChangeListener, OnC
     }
 
     private void initDots() {
-        dots = new ImageView[4];
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.dots);
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = (ImageView) linearLayout.getChildAt(i);
-            dots[i].setEnabled(true);
-            dots[i].setOnClickListener(this);
-            dots[i].setTag(i);
+        mImageViewsDots = new ImageView[4];
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ll_dots);
+        for (int i = 0; i < mImageViewsDots.length; i++) {
+            mImageViewsDots[i] = (ImageView) linearLayout.getChildAt(i);
+            mImageViewsDots[i].setEnabled(true);
+            mImageViewsDots[i].setOnClickListener(this);
+            mImageViewsDots[i].setTag(i);
         }
         currentIndex = 0;
-        dots[currentIndex].setEnabled(false);
+        mImageViewsDots[currentIndex].setEnabled(false);
     }
 
     private void initFlashPage() {

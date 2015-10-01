@@ -15,7 +15,7 @@
         android:src="@mipmap/app_network_off_tips"/>
 
     <Button
-        android:id="@+id/reload"
+        android:id="@+id/btn_reload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,11 +23,11 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/drawable_reload"
-        android:text="@string/reload"
+        android:text="@string/action_reload"
         />
 
     <Button
-        android:id="@+id/goto_setting"
+        android:id="@+id/btn_goto_system_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -35,7 +35,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/drawable_reload"
-        android:text="@string/goto_setting"
+        android:text="@string/action_goto_setting"
         />
 
 </LinearLayout>

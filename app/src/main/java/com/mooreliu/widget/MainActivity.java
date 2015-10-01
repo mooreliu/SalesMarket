@@ -37,7 +37,7 @@ import java.util.List;
 
 public class MainActivity extends BaseObserverActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    public static String POSITION = "POSITION";
+    public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
     private BroadcastReceiverNetCheck br;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -45,13 +45,13 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private Toolbar mToolbar;
-    private View mLeftMenu1;
-    private View mLeftMenu2;
-    private View mLeftMenu3;
-    private View mLeftMenu4;
-    private ImageView login_avatar;
+    private View mViewLeftMenu1;
+    private View mViewLeftMenu2;
+    private View mViewLeftMenu3;
+    private View mViewLeftMenu4;
+    private ImageView mImageViewAvatar;
     private TextView mTextViewUserName;
-    private TextView mLoginOrLoginout;
+    private TextView mTextViewLoginOrLogout;
     private Context mContext;
 
     @Override
@@ -67,13 +67,13 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     public void findView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mLeftMenu1 = findViewById(R.id.item_menu_1);
-        mLeftMenu2 = findViewById(R.id.item_menu_2);
-        mLeftMenu3 = findViewById(R.id.item_menu_update);
-        mLeftMenu4 = findViewById(R.id.item_menu_login_logout);
-        login_avatar = (ImageView) findViewById(R.id.user_image_iv);
+        mViewLeftMenu1 = findViewById(R.id.item_menu_1);
+        mViewLeftMenu2 = findViewById(R.id.item_menu_2);
+        mViewLeftMenu3 = findViewById(R.id.item_menu_update);
+        mViewLeftMenu4 = findViewById(R.id.item_menu_login_logout);
+        mImageViewAvatar = (ImageView) findViewById(R.id.user_image_iv);
         mTextViewUserName = (TextView) findViewById(R.id.username_tv);
-        mLoginOrLoginout = (TextView) findViewById(R.id.left_menu4_tv);
+        mTextViewLoginOrLogout = (TextView) findViewById(R.id.text_view_left_menu4_tv);
     }
 
     @Override
@@ -82,17 +82,17 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         setTabLayout();
         setViewPager();
         if (UserUtil.isLogined())
-            mLoginOrLoginout.setText(getResources().getString(R.string.logout));
-        else mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
+            mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_logout));
+        else mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_login));
     }
 
     @Override
     public void setOnClick() {
-        mLeftMenu1.setOnClickListener(this);
-        mLeftMenu2.setOnClickListener(this);
-        mLeftMenu3.setOnClickListener(this);
-        mLeftMenu4.setOnClickListener(this);
-        login_avatar.setOnClickListener(this);
+        mViewLeftMenu1.setOnClickListener(this);
+        mViewLeftMenu2.setOnClickListener(this);
+        mViewLeftMenu3.setOnClickListener(this);
+        mViewLeftMenu4.setOnClickListener(this);
+        mImageViewAvatar.setOnClickListener(this);
     }
 
     @Override
@@ -101,41 +101,41 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
         Handler handler = new Handler();
         switch (id) {
             case R.id.item_menu_1:
-                mLeftMenu1.setBackgroundResource(R.color.gray);
-                mLeftMenu2.setBackgroundResource(R.color.white);
-                mLeftMenu3.setBackgroundResource(R.color.white);
-                mLeftMenu4.setBackgroundResource(R.color.white);
+                mViewLeftMenu1.setBackgroundResource(R.color.gray);
+                mViewLeftMenu2.setBackgroundResource(R.color.white);
+                mViewLeftMenu3.setBackgroundResource(R.color.white);
+                mViewLeftMenu4.setBackgroundResource(R.color.white);
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        mLeftMenu1.setBackgroundResource(R.color.white);
+                        mViewLeftMenu1.setBackgroundResource(R.color.white);
                     }
                 };
                 handler.postDelayed(r, 140);
                 break;
             case R.id.item_menu_2:
-                mLeftMenu1.setBackgroundResource(R.color.white);
-                mLeftMenu2.setBackgroundResource(R.color.gray);
-                mLeftMenu3.setBackgroundResource(R.color.white);
-                mLeftMenu4.setBackgroundResource(R.color.white);
+                mViewLeftMenu1.setBackgroundResource(R.color.white);
+                mViewLeftMenu2.setBackgroundResource(R.color.gray);
+                mViewLeftMenu3.setBackgroundResource(R.color.white);
+                mViewLeftMenu4.setBackgroundResource(R.color.white);
                 r = new Runnable() {
                     @Override
                     public void run() {
-                        mLeftMenu2.setBackgroundResource(R.color.white);
+                        mViewLeftMenu2.setBackgroundResource(R.color.white);
                     }
                 };
                 handler.postDelayed(r, 140);
                 break;
             case R.id.item_menu_update:
                 // update version
-                mLeftMenu1.setBackgroundResource(R.color.white);
-                mLeftMenu2.setBackgroundResource(R.color.white);
-                mLeftMenu3.setBackgroundResource(R.color.gray);
-                mLeftMenu4.setBackgroundResource(R.color.white);
+                mViewLeftMenu1.setBackgroundResource(R.color.white);
+                mViewLeftMenu2.setBackgroundResource(R.color.white);
+                mViewLeftMenu3.setBackgroundResource(R.color.gray);
+                mViewLeftMenu4.setBackgroundResource(R.color.white);
                 r = new Runnable() {
                     @Override
                     public void run() {
-                        mLeftMenu3.setBackgroundResource(R.color.white);
+                        mViewLeftMenu3.setBackgroundResource(R.color.white);
                     }
                 };
                 handler.postDelayed(r, 140);
@@ -144,24 +144,24 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 break;
             case R.id.item_menu_login_logout:
                 //login && logout
-                mLeftMenu1.setBackgroundResource(R.color.white);
-                mLeftMenu2.setBackgroundResource(R.color.white);
-                mLeftMenu3.setBackgroundResource(R.color.white);
-                mLeftMenu4.setBackgroundResource(R.color.gray);
+                mViewLeftMenu1.setBackgroundResource(R.color.white);
+                mViewLeftMenu2.setBackgroundResource(R.color.white);
+                mViewLeftMenu3.setBackgroundResource(R.color.white);
+                mViewLeftMenu4.setBackgroundResource(R.color.gray);
                 if (UserUtil.isLogined()) {
                     UserUtil.loginout();
                     if (UserUtil.isLoginoutSuccess()) {
                         Notify.getInstance().NotifyActivity(new NotifyInfo(EventType.EVENT_LOGINOUT));//通知登录成功
                         CommonUtil.toastMessage("注销成功");
-                        mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
-                        mLeftMenu4.setBackgroundResource(R.color.white);
+                        mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_login));
+                        mViewLeftMenu4.setBackgroundResource(R.color.white);
                     }
                 } else {
-                    mLoginOrLoginout.setText(getResources().getString(R.string.tv_logout));
+                    mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_logout));
                     Intent intent = new Intent(this, LoginActivity.class);
                     //startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
                     startActivity(intent);
-                    mLeftMenu4.setBackgroundResource(R.color.white);
+                    mViewLeftMenu4.setBackgroundResource(R.color.white);
                 }
                 break;
             case R.id.user_image_iv:
@@ -173,7 +173,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     }
 
     private void setDrawer() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close) {
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.action_open, R.string.action_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -249,28 +249,28 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
     protected void onChange(NotifyInfo notifyInfo) {
         String eventType = notifyInfo.getEventType();
         if (eventType.equals(EventType.EVENT_LOGIN)) {
-            login_avatar.setImageResource(R.drawable.avatar_logined);
-            login_avatar.setClickable(false);
-            mLoginOrLoginout.setText(getResources().getString(R.string.tv_logout));
+            mImageViewAvatar.setImageResource(R.drawable.avatar_logined);
+            mImageViewAvatar.setClickable(false);
+            mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_logout));
             mTextViewUserName.setText("已登陆");
         } else if (eventType.equals(EventType.EVENT_LOGINOUT)) {
-            login_avatar.setImageResource(R.drawable.avatar_logout);
-            mTextViewUserName.setText(getResources().getString(R.string.unlogined));
-            mLoginOrLoginout.setText(getResources().getString(R.string.tv_login));
-            login_avatar.setClickable(true);
+            mImageViewAvatar.setImageResource(R.drawable.avatar_logout);
+            mTextViewUserName.setText(getResources().getString(R.string.msg_unlogined));
+            mTextViewLoginOrLogout.setText(getResources().getString(R.string.text_login));
+            mImageViewAvatar.setClickable(true);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(POSITION, mTabLayout.getSelectedTabPosition());
+        outState.putInt(BUNDLE_POSITION, mTabLayout.getSelectedTabPosition());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mViewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
+        mViewPager.setCurrentItem(savedInstanceState.getInt(BUNDLE_POSITION));
     }
 
     @Override
@@ -294,9 +294,9 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
 
     private void showUpdateDialog() {
         Builder builder = new Builder(this);
-        builder.setTitle(getString(R.string.version_update));
-        builder.setMessage(getString(R.string.update_message));
-        builder.setPositiveButton(getString(R.string.do_download), new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.action_version_update));
+        builder.setMessage(getString(R.string.msg_update_message));
+        builder.setPositiveButton(getString(R.string.action_do_download), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -304,7 +304,7 @@ public class MainActivity extends BaseObserverActivity implements View.OnClickLi
                 task.execute();
             }
         });
-        builder.setNegativeButton(getString(R.string.ask_later), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.action_ask_later), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

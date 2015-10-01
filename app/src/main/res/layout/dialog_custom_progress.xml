@@ -6,14 +6,14 @@
       android:padding="8dp">
 
     <ProgressBar
-        android:id="@+id/loadingImageView"
+        android:id="@+id/progress_bar_loading_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:indeterminateDrawable="@drawable/progress_medium"/>
 
     <TextView
-        android:id="@+id/id_tv_loadingmsg"
+        android:id="@+id/text_view_loadingmsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

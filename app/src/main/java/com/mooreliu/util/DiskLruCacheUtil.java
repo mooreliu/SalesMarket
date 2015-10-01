@@ -15,7 +15,7 @@ import libcore.io.DiskLruCache;
  * Created by liuyi on 15/9/3.
  */
 public class DiskLruCacheUtil {
-    private static final String TAG = "DistkLruCacheUtil"; /*    private static DiskLruCache mDiskLruCache;*/
+    private static final String TAG = "DistkLruCacheUtil"; /*    private static DiskLruCache DiskLruCache;*/
 
     public static Bitmap addToDiskLruCache(String key, String url) {
         DiskLruCache mDiskLruCache = null;
@@ -35,7 +35,7 @@ public class DiskLruCacheUtil {
                 }
             }
             mDiskLruCache.flush();
-//            LogUtil.e(TAG, "mDiskLruCache.flush()");
+//            LogUtil.e(TAG, "DiskLruCache.flush()");
         } catch (IOException e) {
             e.printStackTrace();
         }
