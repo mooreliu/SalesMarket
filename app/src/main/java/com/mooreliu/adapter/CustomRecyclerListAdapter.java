@@ -24,6 +24,7 @@ import java.util.List;
 import libcore.io.DiskLruCache;
 
 /**
+ * 自定义recyclerListAdapter
  * Created by liuyi on 15/8/30.
  * recyclerView
  */
