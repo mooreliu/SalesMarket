@@ -11,6 +11,7 @@ import com.mooreliu.util.LogUtil;
 import java.util.List;
 
 /**
+ * Content Provider 控制基类
  * Created by mooreliu on 2015/9/15.
  */
 public class BaseController implements IBaseController {
