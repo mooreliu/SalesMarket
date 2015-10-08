@@ -14,6 +14,7 @@ import com.mooreliu.util.DateUtil;
 import com.mooreliu.util.LogUtil;
 
 /**
+ * Database 帮助类
  * Created by liuyi on 15/9/13.
  */
 public class DbHelper extends SQLiteOpenHelper {
