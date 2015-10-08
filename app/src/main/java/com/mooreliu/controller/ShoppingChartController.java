@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 购物车Content Provider 控制器 实现类
  * Created by mooreliu on 2015/9/16.
  */
 public class ShoppingChartController extends BaseController {
