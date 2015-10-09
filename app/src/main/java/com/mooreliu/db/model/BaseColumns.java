@@ -1,6 +1,7 @@
 package com.mooreliu.db.model;
 
 /**
+ * 基础Columns类
  * Created by liuyi on 15/9/13.
  */
 public class BaseColumns {
