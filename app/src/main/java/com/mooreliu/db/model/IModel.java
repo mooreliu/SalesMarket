@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Parcelable;
 
 /**
+ * Model基础接口类
  * Created by liuyi on 15/9/13.
  */
 public interface IModel extends Parcelable {
